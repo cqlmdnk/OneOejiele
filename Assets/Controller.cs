@@ -23,6 +23,7 @@ public class Controller : MonoBehaviour
     public GameObject arrow;
     State archer_state;
     bool facingRight;
+    bool draw = false;
     float dash_time1;
     float dash_time2;
     bool isTap = false;
@@ -39,56 +40,41 @@ public class Controller : MonoBehaviour
     void Update()
     {
 
-        
 
         /* Run and Shoot animation will be added*/
-        if ((archer_state == State.Idle /*|| archer_state == State.Run */) && Input.GetMouseButton(0))
+        clearAnim();
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && draw)
         {
-            Vector3 mouseRelativePos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            double angle = Math.Atan2(mouseRelativePos.y, mouseRelativePos.x);
-            Debug.Log(angle);
-
-            if (angle > Math.PI / 2)
+            if (facingRight)
             {
-                facingRight = false;
-                transform.localRotation = Quaternion.Euler(0, 180, 0);
-                Vector3 rotateVector = new Vector3(0.0f, 0.0f, (float)-angle * 180);
-                transform.Rotate(rotateVector);
+                GameObject _arrow = Instantiate(arrow, transform.position, Quaternion.identity);
+                Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
+                arrow_body.velocity = new Vector2(20.0f, 0.0f);
             }
             else
             {
-                facingRight = true;
-                transform.localRotation = Quaternion.Euler(0, 0, 0);
-                Vector3 rotateVector = new Vector3(0.0f, 0.0f, (float)angle * 180);
-                transform.Rotate(rotateVector);
+                GameObject _arrow = Instantiate(arrow, transform.position, Quaternion.identity);
+                Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
+                arrow_body.velocity = new Vector2(-20.0f, 0.0f);
+                arrow_body.transform.localRotation = Quaternion.Euler(0, 180, 0);
             }
-            if ((angle > 0.0 && angle < Math.PI/4) || (angle > 3*Math.PI/4 && angle < Math.PI))
-            {
-                archer_state = State.AimUp;
-                UpdateState(archer_state);
-                //transform.rotation = Quaternion.LookRotation(Vector3.forward, mousePos - transform.position);
-
-            }
-            else
-            {
-                archer_state = State.AimUp;
-                UpdateState(archer_state);
-                
-                //transform.rotation = Quaternion.LookRotation(Vector3.forward, mousePos - transform.position);
-            }
+            draw = false;
            
-           
-
-
-            GameObject _arrow = Instantiate(arrow, transform.position, Quaternion.identity);
-            Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
-            arrow_body.velocity = new Vector2(20.0f, 0.0f);
         }
-        else
+
+        if (archer_state != State.Idle )
         {
             archer_state = State.Idle;
             UpdateState(archer_state);
         }
+
+
+
+
+
+
+
+
 
 
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -113,7 +99,7 @@ public class Controller : MonoBehaviour
         }
         
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             
             archer_state = State.Jump;
@@ -130,7 +116,7 @@ public class Controller : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)) // double tap dash control
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A)) // double tap dash control
         {
             if (isTap == true && dashDir == facingRight)
             {
@@ -155,8 +141,39 @@ public class Controller : MonoBehaviour
                 isTap = true;
             }
         }
-       
-        
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            archer_state = State.Attack;
+            UpdateState(archer_state);
+            Vector3 turn = new Vector3(-0.1f, 0.0f, 0.0f);
+            MoveHorizontal(turn);
+            
+            draw = true;
+
+            // Avoid any reload.
+
+            
+            
+            
+        }
+        else if(Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            archer_state = State.Attack;
+            UpdateState(archer_state);
+            Vector3 turn = new Vector3(0.1f, 0.0f, 0.0f);
+            MoveHorizontal(turn);
+
+            
+            draw = true;
+            // Avoid any reload.
+
+           
+            
+        }
+
+
+
+
     }
 
     void MoveHorizontal(Vector3 move)
@@ -186,7 +203,6 @@ public class Controller : MonoBehaviour
                 animator.SetBool("attack", false);
                 animator.SetBool("dash", false);
                 animator.SetBool("melee", false); 
-                animator.SetBool("aimUp", false);
                 break;
             case State.Run:
                 animator.SetBool("idle", false);
@@ -195,7 +211,6 @@ public class Controller : MonoBehaviour
                 animator.SetBool("attack", false);
                 animator.SetBool("dash", false);
                 animator.SetBool("melee", false);
-                animator.SetBool("aimUp", false);
                 break;
             case State.Jump:
                 animator.SetBool("idle", false);
@@ -204,7 +219,6 @@ public class Controller : MonoBehaviour
                 animator.SetBool("attack", false);
                 animator.SetBool("dash", false);
                 animator.SetBool("melee", false);
-                animator.SetBool("aimUp", false);
                 break;
             case State.Dash:
                 animator.SetBool("idle", false);
@@ -213,7 +227,6 @@ public class Controller : MonoBehaviour
                 animator.SetBool("attack", false);
                 animator.SetBool("dash", true);
                 animator.SetBool("melee", false);
-                animator.SetBool("aimUp", false);
                 break;
             case State.Melee:
                 animator.SetBool("idle", false);
@@ -222,7 +235,6 @@ public class Controller : MonoBehaviour
                 animator.SetBool("attack", false);
                 animator.SetBool("dash", false);
                 animator.SetBool("melee", true);
-                animator.SetBool("aimUp", false);
                 break;
             case State.Attack:
                 animator.SetBool("idle", false);
@@ -231,7 +243,6 @@ public class Controller : MonoBehaviour
                 animator.SetBool("attack", true);
                 animator.SetBool("dash", false);
                 animator.SetBool("melee", false);
-                animator.SetBool("aimUp", false);
                 break;
             case State.AimUp:
                 animator.SetBool("idle", false);
@@ -240,8 +251,18 @@ public class Controller : MonoBehaviour
                 animator.SetBool("attack", false);
                 animator.SetBool("dash", false);
                 animator.SetBool("melee", false);
-                animator.SetBool("aimUp", true);
                 break;
         }
     }
+    void clearAnim()
+    {
+        animator.SetBool("idle", false);
+        animator.SetBool("run", false);
+        animator.SetBool("jump", false);
+        animator.SetBool("attack", false);
+        animator.SetBool("dash", false);
+        animator.SetBool("melee", false);
+        
+    }
+    
 }
