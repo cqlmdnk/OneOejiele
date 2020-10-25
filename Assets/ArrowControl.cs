@@ -5,8 +5,8 @@ using UnityEngine;
 public class ArrowControl : MonoBehaviour
 {
     // Start is called before the first frame update
+    float particleTime = 5.0f;
 
-    
     void Start()
     {
         
@@ -17,7 +17,12 @@ public class ArrowControl : MonoBehaviour
     {
         if (!GetComponent<Renderer>().isVisible &&(gameObject.name.Contains("(Clone)")))
         {
-            Destroy(this.gameObject);
+            particleTime -= Time.deltaTime;
+            if (particleTime < 0)
+            {
+                Destroy(this.gameObject);
+            }
+            
         }
         
     }

@@ -17,6 +17,7 @@ enum State
 }
 public class Controller : MonoBehaviour
 {
+    public ParticleSystem dust;
     public GameObject cam;
     public Rigidbody2D archer;
     public Animator animator;
@@ -94,8 +95,10 @@ public class Controller : MonoBehaviour
             archer_state = State.Run;
             UpdateState(archer_state);
             MoveHorizontal(move);
-            
-           
+            if(archer.velocity.y <0.05f && archer.velocity.y > -0.05f)
+                dust.Play();
+
+
         }
         
 
@@ -105,6 +108,7 @@ public class Controller : MonoBehaviour
             archer_state = State.Jump;
             UpdateState(archer_state);
             archer.velocity = new Vector2(0.0f, 10.0f);
+            dust.Stop();
         }
 
 
