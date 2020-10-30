@@ -46,15 +46,18 @@ public class Controller : MonoBehaviour
         clearAnim();
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && draw)
         {
+            Vector3 transPos = transform.position;
             if (facingRight)
             {
-                GameObject _arrow = Instantiate(arrow, transform.position, Quaternion.identity);
+                transPos.x++;
+                GameObject _arrow = Instantiate(arrow, transPos, Quaternion.identity);
                 Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
                 arrow_body.velocity = new Vector2(20.0f, 0.0f);
             }
             else
             {
-                GameObject _arrow = Instantiate(arrow, transform.position, Quaternion.identity);
+                transPos.x--;
+                GameObject _arrow = Instantiate(arrow, transPos, Quaternion.identity);
                 Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
                 arrow_body.velocity = new Vector2(-20.0f, 0.0f);
                 arrow_body.transform.localRotation = Quaternion.Euler(0, 180, 0);
