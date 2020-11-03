@@ -9,8 +9,12 @@ public class ArrowControl : MonoBehaviour
 
     void Start()
     {
-        
-    }
+        if ( !gameObject.name.Contains("(Clone)"))
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
+
+       }
 
     // Update is called once per frame
     void Update()
@@ -23,6 +27,10 @@ public class ArrowControl : MonoBehaviour
                 Destroy(this.gameObject);
             }
             
+        }
+        if(GetComponent<Rigidbody2D>().velocity.x == 0 && gameObject.name.Contains("(Clone)"))
+        {
+            Destroy(this.gameObject);
         }
         
     }

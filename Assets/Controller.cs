@@ -17,6 +17,7 @@ enum State
 }
 public class Controller : MonoBehaviour
 {
+    public Transform healthBar;
     public ParticleSystem dust;
     public GameObject cam;
     public Rigidbody2D archer;
@@ -29,6 +30,7 @@ public class Controller : MonoBehaviour
     float dash_time2;
     bool isTap = false;
     bool dashDir = false;
+    float damage = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +42,7 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        healthBar.localScale -= new Vector3(damage, 0.0f, 0.0f);
 
         /* Run and Shoot animation will be added*/
         clearAnim();
@@ -271,5 +273,27 @@ public class Controller : MonoBehaviour
         animator.SetBool("melee", false);
         
     }
-    
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag.Equals("Enemy"))
+        {
+            if (col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
+            {
+                damage = 0.5f;
+                Debug.Log("Hit");
+            }
+        }
+       
+    }
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.tag.Equals("Enemy"))
+        {
+            if (col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
+            {
+                damage = 0.0f;
+            }
+        }
+    }
+
 }
