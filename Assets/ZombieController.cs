@@ -38,12 +38,9 @@ public class ZombieController : MonoBehaviour
             }
         }
        
-       
 
 
 
-
-       
 
 
         Vector3 start = transform.position;
@@ -76,13 +73,13 @@ public class ZombieController : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Düşman görünmüyor");
+                Debug.Log("Düşman görünmüyor");
                 animator.SetBool("attack", false);
             }
         }
         else
         {
-            //Debug.Log("Kimse görünmüyor");
+            animator.SetBool("attack", false);
         }
         Vector3 move = new Vector3(((0.1f + aggro) * Math.Sign(length)  + length / 30), 0, 0.0f);
         transform.position = transform.position + 5 * move * Time.deltaTime ;
