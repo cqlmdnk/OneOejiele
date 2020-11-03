@@ -206,61 +206,32 @@ public class Controller : MonoBehaviour
     {
         switch(state){
             case State.Idle:
+                clearAnim();
                 animator.SetBool("idle", true);
-                animator.SetBool("run", false);
-                animator.SetBool("jump", false);
-                animator.SetBool("attack", false);
-                animator.SetBool("dash", false);
-                animator.SetBool("melee", false); 
+                
                 break;
             case State.Run:
-                animator.SetBool("idle", false);
+                clearAnim(); 
                 animator.SetBool("run", true );
-                animator.SetBool("jump", false);
-                animator.SetBool("attack", false);
-                animator.SetBool("dash", false);
-                animator.SetBool("melee", false);
                 break;
             case State.Jump:
-                animator.SetBool("idle", false);
-                animator.SetBool("run", false);
+                clearAnim();
                 animator.SetBool("jump", true);
-                animator.SetBool("attack", false);
-                animator.SetBool("dash", false);
-                animator.SetBool("melee", false);
                 break;
             case State.Dash:
-                animator.SetBool("idle", false);
-                animator.SetBool("run", false);
-                animator.SetBool("jump", false);
-                animator.SetBool("attack", false);
+                clearAnim();
                 animator.SetBool("dash", true);
-                animator.SetBool("melee", false);
+                
                 break;
             case State.Melee:
-                animator.SetBool("idle", false);
-                animator.SetBool("run", false);
-                animator.SetBool("jump", false);
-                animator.SetBool("attack", false);
-                animator.SetBool("dash", false);
+                clearAnim();
                 animator.SetBool("melee", true);
                 break;
             case State.Attack:
-                animator.SetBool("idle", false);
-                animator.SetBool("run", false);
-                animator.SetBool("jump", false);
+                clearAnim();
                 animator.SetBool("attack", true);
-                animator.SetBool("dash", false);
-                animator.SetBool("melee", false);
                 break;
-            case State.AimUp:
-                animator.SetBool("idle", false);
-                animator.SetBool("run", false);
-                animator.SetBool("jump", false);
-                animator.SetBool("attack", false);
-                animator.SetBool("dash", false);
-                animator.SetBool("melee", false);
-                break;
+            
         }
     }
     void clearAnim()
