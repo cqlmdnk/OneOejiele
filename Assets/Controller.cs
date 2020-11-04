@@ -44,7 +44,6 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(archer.velocity.y);
         damage_asses_time -= Time.deltaTime;
         if(damage_asses_time <= 0)
         {
@@ -92,15 +91,6 @@ public class Controller : MonoBehaviour
             }
             
         }
-
-
-
-
-
-
-
-
-
 
         float horizontalInput = Input.GetAxis("Horizontal");
 
@@ -270,15 +260,8 @@ public class Controller : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag.Equals("Enemy"))
-        {
-            if (col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
-            {
-                
-                //Debug.Log("Hit");
-            }
-        }
-        else if (col.gameObject.tag.Equals("Ground"))
+        
+        if (col.gameObject.tag.Equals("Ground"))
         {
             onGround = true;
             animator.SetBool("onGround", true);
@@ -288,14 +271,8 @@ public class Controller : MonoBehaviour
     }
     void OnCollisionExit2D(Collision2D col)
     {
-        if (col.gameObject.tag.Equals("Enemy"))
-        {
-            if (col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
-            {
-                
-            }
-        }
-        else if (col.gameObject.tag.Equals("Ground"))
+      
+        if (col.gameObject.tag.Equals("Ground"))
         {
             onGround = false;
             animator.SetBool("onGround", false);

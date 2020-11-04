@@ -10,6 +10,7 @@ public class ZombieController : MonoBehaviour
     float length;
     public Rigidbody2D player;
     public Animator animator;
+    private bool stopForAttack;
     void Start()
     {
         Physics2D.queriesStartInColliders = false;
@@ -28,16 +29,23 @@ public class ZombieController : MonoBehaviour
             length = UnityEngine.Random.Range(-5, 5);
             if (length < 0)
             {
-                
+
                 transform.localRotation = Quaternion.Euler(0, 180, 0);
             }
 
-            else { 
+            else
+            {
                 transform.localRotation = Quaternion.Euler(0, 0, 0);
-                
+
             }
         }
-       
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
+        {
+            float harmonicForce = animator.GetCurrentAnimatorStateInfo(0).normalizedTime % (animator.GetCurrentAnimatorStateInfo(0).length * 2);
+            transform.position = new Vector3(transform.position.x + (harmonicForce / 40.0f) - 0.025f, transform.position.y, transform.position.z);
+        }
+
+
 
 
 
@@ -46,45 +54,67 @@ public class ZombieController : MonoBehaviour
         Vector3 start = transform.position;
         Vector3 direction = player.transform.position - transform.position;
 
-        
 
-        //draw ray in editor
-        RaycastHit2D sighttest;
+
+        //ray casting 90 degrees in 10 segments with respect to facing
+        List<RaycastHit2D> sighttest = new List<RaycastHit2D>();
         if (length < 0)
         {
-            sighttest = Physics2D.Raycast(transform.position, new Vector3(-1.0f, 0.0f, 0.0f), 6.0f);
+
+            for (int i = 0; i < 11; i++)
+            {
+                sighttest.Add(Physics2D.Raycast(transform.position, new Vector3(-1.0f + (i / 10.0f), (i / 10.0f), 0.0f), 6.0f));
+            }
 
         }
 
         else
         {
 
-            sighttest = Physics2D.Raycast(transform.position, new Vector3(1.0f, 0.0f, 0.0f), 6.0f);
+            for (int i = 0; i < 10; i++)
+            {
+                sighttest.Add(Physics2D.Raycast(transform.position, new Vector3((i / 10.0f), 1.0f-(i / 10.0f), 0.0f), 6.0f));
+            }
         }
         float aggro = 0.0f;
 
-        if (sighttest.collider != null)
-        {
-            if (sighttest.collider.tag == "Player")
+
+
+        foreach(RaycastHit2D testc in sighttest){
+            if (testc.collider != null)
             {
-                Debug.Log("Düşman görüldü");
-                animator.SetBool("attack", true);
-                aggro = 0.4f;
+                if (testc.collider.tag == "Player")
+                {
+
+                    aggro = 0.4f;
+                }
+
             }
-            else
-            {
-                Debug.Log("Düşman görünmüyor");
-                animator.SetBool("attack", false);
-            }
-        }
-        else
+        }  
+        
+        if (!stopForAttack)
         {
-            animator.SetBool("attack", false);
+            Vector3 move = new Vector3(((0.1f + aggro) * Math.Sign(length) + length / 30), 0, 0.0f);
+            transform.position = transform.position + 5 * move * Time.deltaTime;
+            length -= move.x * Time.deltaTime;
         }
-        Vector3 move = new Vector3(((0.1f + aggro) * Math.Sign(length)  + length / 30), 0, 0.0f);
-        transform.position = transform.position + 5 * move * Time.deltaTime ;
-        length -= move.x * Time.deltaTime;
+       
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag.Equals("Player"))
+        {
+            stopForAttack = true;
+            animator.SetBool("attack", true);
+        }
     }
 
-
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.tag.Equals("Player"))
+        {
+            stopForAttack = false;
+            animator.SetBool("attack", false);
+        }
+    }
 }
