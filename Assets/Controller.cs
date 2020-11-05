@@ -58,7 +58,7 @@ public class Controller : MonoBehaviour
             Vector3 transPos = transform.position;
             if (drawRight)
             {
-                faceMe(true);
+                faceMe(drawRight);
                 transPos.x++;
                 GameObject _arrow = Instantiate(arrow, transPos, Quaternion.identity);
                 Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
@@ -66,7 +66,7 @@ public class Controller : MonoBehaviour
             }
             else
             {
-                faceMe(false);
+                faceMe(drawRight);
                 transPos.x--;
                 GameObject _arrow = Instantiate(arrow, transPos, Quaternion.identity);
                 Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
@@ -74,10 +74,9 @@ public class Controller : MonoBehaviour
                 arrow_body.transform.localRotation = Quaternion.Euler(0, 180, 0);
             }
             draw = false;
-
         }
 
-        if (archer_state != State.Idle)
+        if (archer_state != State.Idle )
         {
             if(archer.velocity.y <0.02 && archer.velocity.y > -0.02)
             {
@@ -98,18 +97,33 @@ public class Controller : MonoBehaviour
         
 
 
-
-
-        if (horizontalInput != 0.0f && !(draw &&  !(drawRight == facingRight)))
+        if(draw && !(facingRight == drawRight))
         {
-            archer_state = State.Run;
-            UpdateState(archer_state);
-            MoveHorizontal(move);
-            if (archer.velocity.y < 0.05f && archer.velocity.y > -0.05f)
-                dust.Play();
-
-
+            Debug.Log("Tersime ok attım");
+            
         }
+        else if ( (horizontalInput > 0 && facingRight) || (horizontalInput < 0 && !facingRight) || !draw)
+        {
+            if (draw)
+            {
+                Debug.Log("Önüme ok attım");
+            }
+            if (horizontalInput != 0.0f)
+            {
+                archer_state = State.Run;
+                if (onGround)
+                {
+                    UpdateState(archer_state);
+                }
+
+                MoveHorizontal(move);
+                if (archer.velocity.y < 0.05f && archer.velocity.y > -0.05f)
+                    dust.Play();
+
+
+            }
+        }
+        
 
 
         if (Input.GetKeyDown(KeyCode.W) && onGround)
@@ -117,6 +131,7 @@ public class Controller : MonoBehaviour
 
             archer_state = State.Jump;
             UpdateState(archer_state);
+
             archer.velocity = new Vector2(0.0f, 10.0f);
             dust.Stop();
         }
@@ -159,8 +174,7 @@ public class Controller : MonoBehaviour
         {
             archer_state = State.Attack;
             UpdateState(archer_state);
-            Vector3 turn = new Vector3(-0.1f, 0.0f, 0.0f);
-            MoveHorizontal(turn);
+            faceMe(false);
             drawRight = false;
             draw = true;
 
@@ -174,8 +188,7 @@ public class Controller : MonoBehaviour
         {
             archer_state = State.Attack;
             UpdateState(archer_state);
-            Vector3 turn = new Vector3(0.1f, 0.0f, 0.0f);
-            MoveHorizontal(turn);
+            faceMe(true);
 
             drawRight = true;
             draw = true;
@@ -193,8 +206,7 @@ public class Controller : MonoBehaviour
     void MoveHorizontal(Vector3 move)
     {
 
-        if (!draw)
-        {
+        
             if (facingRight && move[0] < 0.0f)
             {
                 faceMe(false);
@@ -205,20 +217,24 @@ public class Controller : MonoBehaviour
             {
                 faceMe(true);
             }
-        
 
-        archer.transform.position = archer.transform.position + 5 * move * Time.deltaTime;
+        float vel = 5;
+        if (draw)
+        {
+            vel = 2;
         }
+        archer.transform.position = archer.transform.position + vel * move * Time.deltaTime;
+        
     }
 
     void UpdateState(State state)
     {
+        
         switch (state)
         {
             case State.Idle:
                 clearAnim();
                 animator.SetBool("idle", true);
-
                 break;
             case State.Run:
                 clearAnim();
@@ -231,7 +247,6 @@ public class Controller : MonoBehaviour
             case State.Dash:
                 clearAnim();
                 animator.SetBool("dash", true);
-
                 break;
             case State.Melee:
                 clearAnim();
@@ -243,7 +258,7 @@ public class Controller : MonoBehaviour
                 break;
             case State.OnAir:
                 clearAnim();
-                animator.SetBool("attack", true);
+                animator.SetBool("onAir", true);
                 break;
         }
     }
@@ -265,7 +280,7 @@ public class Controller : MonoBehaviour
         {
             onGround = true;
             animator.SetBool("onGround", true);
-            animator.SetBool("onAir", true);
+            animator.SetBool("onAir", false);
         }
 
     }
@@ -276,6 +291,8 @@ public class Controller : MonoBehaviour
         {
             onGround = false;
             animator.SetBool("onGround", false);
+            animator.SetBool("onAir", true);
+            
         }
     }
 
