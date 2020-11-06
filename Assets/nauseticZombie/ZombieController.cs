@@ -128,8 +128,7 @@ public class ZombieController : MonoBehaviour
                 length -= move.x * Time.deltaTime;
             }
         }
-        
-       
+
     }
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -138,6 +137,7 @@ public class ZombieController : MonoBehaviour
 
             stopForAttack = true;
             animator.SetBool("attack", true);
+            
         }
         else if (col.gameObject.tag.Equals("Throwable"))
         {
@@ -148,6 +148,9 @@ public class ZombieController : MonoBehaviour
             Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
             GameObject _popUp = Instantiate(damagePopUp, popUpPos, Quaternion.identity);
             _popUp.transform.SetParent(this.gameObject.transform);
+            _popUp.SetActive(true);
+            transform.GetChild(1).gameObject.SetActive(true);
+            transform.GetChild(1).GetComponent<ParticleSystem>().Play();
         }
     }
 
@@ -178,7 +181,7 @@ public class ZombieController : MonoBehaviour
         dead_zombie.transform.position = this.gameObject.transform.position;
         dead_zombie.transform.rotation = this.gameObject.transform.rotation;
         dead_zombie.gameObject.SetActive(true);
-       
+        dead_zombie.transform.SetParent(GameObject.Find("Container").transform);
     }
 
  }

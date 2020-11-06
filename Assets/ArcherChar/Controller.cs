@@ -28,6 +28,7 @@ public class Controller : MonoBehaviour
 
     bool facingRight;
     bool draw = false, drawRight = true;
+    bool drawedToOpposite;
 
     float dash_time1;
     float dash_time2;
@@ -49,6 +50,17 @@ public class Controller : MonoBehaviour
 
     void Update()
     {
+
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (mousePos.x > transform.position.x)
+        {
+            faceMe(true);
+
+        }
+        else
+        {
+            faceMe(false);
+        }
         damage_asses_time -= Time.deltaTime;
         if (damage_asses_time <= 0)
         {
@@ -57,24 +69,31 @@ public class Controller : MonoBehaviour
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && draw) // piece that arrow instantiated
         {
-            Vector3 transPos = transform.position;
-            if (drawRight) // check direction for arrow initialization
+            Vector3 transPos = GameObject.Find("Archer_bow").transform.position;
+
+            float angle = (float)Math.Atan2(mousePos.y - transPos.y, mousePos.x - transPos.x) * Mathf.Rad2Deg;
+
+            float arrowDrop;
+            if (drawedToOpposite)
             {
-                faceMe(drawRight);
-                transPos.x++;
-                GameObject _arrow = Instantiate(arrow, transPos, Quaternion.identity);
-                Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
-                arrow_body.velocity = new Vector2(20.0f, 0.0f);
+                arrowDrop = -0.01f + UnityEngine.Random.Range(-0.5f, 0.5f);
+                drawedToOpposite = false;
             }
             else
-            {
-                faceMe(drawRight);
-                transPos.x--;
-                GameObject _arrow = Instantiate(arrow, transPos, Quaternion.identity);
-                Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
-                arrow_body.velocity = new Vector2(-20.0f, 0.0f);
-                arrow_body.transform.localRotation = Quaternion.Euler(0, 180, 0);
-            }
+                arrowDrop = -0.01f;
+
+
+            faceMe(drawRight);
+
+            GameObject _arrow = Instantiate(arrow, transPos, Quaternion.AngleAxis(angle, Vector3.forward));
+            _arrow.SetActive(true);
+            Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
+            Vector3 veloctiy3d = Quaternion.AngleAxis(angle, Vector3.forward) * new Vector3(20, arrowDrop, 0);
+            arrow_body.velocity = (new Vector2(veloctiy3d.x, veloctiy3d.y));
+
+
+
+
             draw = false;
         }
 
@@ -96,15 +115,12 @@ public class Controller : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector3 move = new Vector3(horizontalInput, 0, 0.0f); // get input for horizontal movement
 
-        if (draw && !(facingRight == drawRight))
-        {
-            //arrow is drawed opposite direction of facing
 
-        }
-        else if ((horizontalInput > 0 && facingRight) || (horizontalInput < 0 && !facingRight) || !draw) // if direction is opposite do not move until drwaing animation ends
+        if ((horizontalInput > 0 && facingRight) || (horizontalInput < 0 && !facingRight) || !draw) // if direction is opposite do not move until drwaing animation ends
         {
             if (draw)
             {
+
                 //arrow is drawed same direction of facing
             }
             if (horizontalInput != 0.0f)
@@ -118,6 +134,10 @@ public class Controller : MonoBehaviour
                 if (archer.velocity.y < 0.05f && archer.velocity.y > -0.05f)
                     dust.Play(); // it is just for dust particles from character's feet
             }
+        }
+        else
+        {
+            drawedToOpposite = true;
         }
 
         if (Input.GetKeyDown(KeyCode.W) && onGround) // jumping if character on ground or on something concrete
@@ -159,21 +179,22 @@ public class Controller : MonoBehaviour
                 isTap = true;
             }
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && !draw) // drawing starts from here, until drawing animation ends there will be no arrow
-        {
-            archer_state = State.Attack;
-            UpdateState(archer_state); // change animation to draw
-            faceMe(false); // facing character with same direction
-            drawRight = false;
-            draw = true;
-
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && !draw)
+        if (Input.GetMouseButtonDown(0) && !draw) // drawing starts from here, until drawing animation ends there will be no arrow
         {
             archer_state = State.Attack;
             UpdateState(archer_state);
             faceMe(true);
-            drawRight = true;
+
+            if (mousePos.x > transform.position.x)
+            {
+                drawRight = true;
+
+            }
+            else
+            {
+                drawRight = false;
+            }
+
             draw = true;
         }
 
@@ -275,6 +296,7 @@ public class Controller : MonoBehaviour
                 if (col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime % col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length < 0.1)
                 {
                     damage += 0.5f;
+                    transform.GetChild(0).gameObject.SetActive(true);
                 }
             }
         }
@@ -284,6 +306,7 @@ public class Controller : MonoBehaviour
         healthBar.localScale -= new Vector3(damage, 0.0f, 0.0f);
         damage_asses_time = 1.0f;
         damage = 0;
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
 
