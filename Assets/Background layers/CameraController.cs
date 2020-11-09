@@ -11,7 +11,8 @@ public class CameraController : MonoBehaviour
     float camerafocus;
     void Start()
     {
-        
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame
@@ -24,7 +25,7 @@ public class CameraController : MonoBehaviour
         else
             camerafocus = player_pos.position.x;
 
-        if ((transform.position.x - camerafocus > 4.0f || transform.position.x - camerafocus < -1.0f)) // camera movement if player on edge of defined rectangle
+        if ((transform.position.x - camerafocus > 1.0f || transform.position.x - camerafocus < -1.0f)) // camera movement if player on edge of defined rectangle
         {
             transform.position = new Vector3(transform.position.x + cameraFollowSpeed * (-transform.position.x + camerafocus) / 4 * Time.deltaTime, transform.position.y, transform.position.z);
 

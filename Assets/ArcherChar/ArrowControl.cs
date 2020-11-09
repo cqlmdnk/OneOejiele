@@ -13,24 +13,17 @@ public class ArrowControl : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().enabled = false;
         }
+        else
+        {
+            GetComponent<SpriteRenderer>().enabled = true;
+        }
 
        }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GetComponent<Renderer>().isVisible &&(gameObject.name.Contains("(Clone)")))
-        {
-            particleTime -= Time.deltaTime;
-            if (particleTime < 0)
-            {
-                DetachParticles();
-
-
-                Destroy(this.gameObject);
-            }
-            
-        }
+       
        
             
         
@@ -40,9 +33,11 @@ public class ArrowControl : MonoBehaviour
     {
         if (col.gameObject.tag.Equals("Enemy"))
         {
-
             DetachParticles();
-            Destroy(this.gameObject);
+            Destroy(GetComponent<Rigidbody2D>());
+            Destroy(GetComponent<BoxCollider2D>());
+
+            this.transform.parent = col.gameObject.transform;
         }
     }
    
