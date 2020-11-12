@@ -18,6 +18,15 @@ public class ArmControl : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float angle = (float)Math.Atan2(mousePos.y- transform.position.y, mousePos.x- transform.position.x+0.5f)* Mathf.Rad2Deg ;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        
+        if (transform.parent.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("character_run"))
+        {
+            this.GetComponent<SpriteRenderer>().sortingOrder = 109;
+            this.GetComponentInChildren<SpriteRenderer> ().sortingOrder = 109;
+        }
+        else
+        {
+            this.GetComponent<SpriteRenderer>().sortingOrder = 115;
+            this.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 120;
+        }
     }
 }

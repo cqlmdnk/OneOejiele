@@ -23,15 +23,18 @@ public class ArrowControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-       
+      
             
         
         
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag.Equals("Enemy"))
+        if (!gameObject.name.Contains("(Clone)"))
+        {
+            return;
+        }
+        if (col.gameObject.tag.Equals("Enemy")) 
         {
             DetachParticles();
             Destroy(GetComponent<Rigidbody2D>());
@@ -39,6 +42,14 @@ public class ArrowControl : MonoBehaviour
 
             this.transform.parent = col.gameObject.transform;
         }
+        if (col.gameObject.tag.Equals("Ground"))
+        {
+            DetachParticles();
+            Destroy(GetComponent<Rigidbody2D>());
+            Destroy(GetComponent<BoxCollider2D>());
+            this.transform.SetParent(GameObject.Find("Container").transform);
+        }
+
     }
    
     
