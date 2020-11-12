@@ -10,12 +10,11 @@ public class Enemy : MonoBehaviour
     public Sprite deadBody;
     protected Rigidbody2D player;
     protected Animator animator;
-    protected ParticleSystem fluidParticles;
+    public ParticleSystem fluidParticles;
     protected bool stopForAttack;
     protected float length;
    protected void Init()
     {
-        fluidParticles = transform.Find("ZombieFluidParticles").GetComponent<ParticleSystem>();
         damagePopUp = GameObject.Find("/DamagePopUp");
         animator = GetComponent<Animator>();
         player = GetComponent<Rigidbody2D>();

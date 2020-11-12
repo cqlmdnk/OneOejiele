@@ -8,13 +8,13 @@ public class TankZombieController : Enemy
     // Start is called before the first frame update
     
     bool isParticlesAnimating = false;
-   
+    public ParticleSystem explosion, throwUp;
     float particleTimer = -0.1f;
     void Start()
     {
         Init();
-
-        health = 400;
+        explosion.Stop();
+        health = 200;
         length = UnityEngine.Random.Range(-1, 1);
         if (length < 0)
             transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -25,11 +25,19 @@ public class TankZombieController : Enemy
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        if(health < 0.0f)
+        {
+            
+            explosion.transform.parent = null;
+            animator.SetBool("isDying", true);
+            Destroy(this.gameObject, 3.0f);
+            
+        }
         
         if(UnityEngine.Random.Range(0, 100) < 1.0f  && particleTimer <0)
         {
-            GetComponent<ParticleSystem>().Play();
+            throwUp.Play();
             isParticlesAnimating = true;
             particleTimer = 3.0f;
         }
@@ -56,6 +64,7 @@ public class TankZombieController : Enemy
         Vector3 move = new Vector3(((0.01f) * Math.Sign(length) + length / 100), 0, 0.0f);
         transform.position = transform.position + 3 * move * Time.deltaTime;
         length -= move.x * Time.deltaTime;
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -84,4 +93,13 @@ public class TankZombieController : Enemy
         }
 
     }
+
+    void OnDestroy() // creating dead body
+    {
+        explosion.Play();
+        Destroy(explosion.gameObject, 3.0f);
+
+    }
+
+    
 }
