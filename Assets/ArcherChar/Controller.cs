@@ -28,6 +28,7 @@ public class Controller : MonoBehaviour
 
     bool facingRight;
     bool draw = false, drawRight = true;
+    float drawingTime = 1.5f;
     bool drawedToOpposite;
 
     float dash_time1;
@@ -67,10 +68,10 @@ public class Controller : MonoBehaviour
             assesDamage();
         }
 
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && draw) // piece that arrow instantiated
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && draw && !Input.GetMouseButton(0) ) // piece that arrow instantiated
         {
             Vector3 transPos = GameObject.Find("Archer_bow").transform.position;
-
+            Debug.Log("Bıraktım");
             float angle = (float)Math.Atan2(mousePos.y - transPos.y, mousePos.x - transPos.x) * Mathf.Rad2Deg;
 
             float arrowDrop;
@@ -88,13 +89,22 @@ public class Controller : MonoBehaviour
             GameObject _arrow = Instantiate(arrow, transPos, Quaternion.AngleAxis(angle, Vector3.forward));
             _arrow.SetActive(true);
             Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
-            Vector3 veloctiy3d = Quaternion.AngleAxis(angle, Vector3.forward) * new Vector3(20, arrowDrop, 0);
-            arrow_body.velocity = (new Vector2(veloctiy3d.x, veloctiy3d.y));
+            Vector3 veloctiy3d = Quaternion.AngleAxis(angle, Vector3.forward) * new Vector3((float)Math.Log((double)drawingTime, 2.0) * 20, arrowDrop, 0);
+            arrow_body.velocity = (new Vector2( veloctiy3d.x , veloctiy3d.y));
 
 
+            drawingTime = 1.5f;
 
-
+            animator.enabled = true;
             draw = false;
+        }
+        else if(draw && Input.GetMouseButton(0))
+        {
+            if(!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw"))
+                animator.enabled = false;
+            Debug.Log("Yayı geriyorum");
+            drawingTime += Time.deltaTime;
+            Debug.Log(drawingTime);
         }
 
         if (archer_state != State.Idle) // if state is not idle always turn idle except falling and jumping
@@ -181,6 +191,7 @@ public class Controller : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && !draw) // drawing starts from here, until drawing animation ends there will be no arrow
         {
+            Debug.Log("Oku aldım");
             archer_state = State.Attack;
             UpdateState(archer_state);
             faceMe(true);
