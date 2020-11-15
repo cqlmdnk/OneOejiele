@@ -35,7 +35,7 @@ public class TankZombieController : Enemy
             
         }
         
-        if(UnityEngine.Random.Range(0, 100) < 1.0f  && particleTimer <0)
+        if(UnityEngine.Random.Range(0, 100) < 1.0f   &&  SightCheck()  && particleTimer <0)
         {
             throwUp.Play();
             isParticlesAnimating = true;
@@ -98,7 +98,7 @@ public class TankZombieController : Enemy
     {
         explosion.Play();
         Destroy(explosion.gameObject, 3.0f);
-
+        base.OnBeforeDestroy();
     }
 
     

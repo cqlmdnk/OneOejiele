@@ -51,10 +51,8 @@ public class PopUpController : MonoBehaviour
     {
 
         i++;
-        Debug.Log("i");
         foreach (Renderer renderer in renderers)
         {
-            Debug.Log(renderer.material.color.a + " ," + i);
             newColor = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, (renderer.material.color.a - Time.deltaTime/2));
             transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime/10, transform.position.z);
             
