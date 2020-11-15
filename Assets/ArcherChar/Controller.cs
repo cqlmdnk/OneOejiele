@@ -71,7 +71,7 @@ public class Controller : MonoBehaviour
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && draw && !Input.GetMouseButton(0) ) // piece that arrow instantiated
         {
             Vector3 transPos = GameObject.Find("Archer_bow").transform.position;
-            Debug.Log("Bıraktım");
+            //Debug.Log("Bıraktım");
             float angle = (float)Math.Atan2(mousePos.y - transPos.y, mousePos.x - transPos.x) * Mathf.Rad2Deg;
 
             float arrowDrop;
@@ -102,9 +102,9 @@ public class Controller : MonoBehaviour
         {
             if(!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw"))
                 animator.enabled = false;
-            Debug.Log("Yayı geriyorum");
+            //Debug.Log("Yayı geriyorum");
             drawingTime += Time.deltaTime;
-            Debug.Log(drawingTime);
+            //Debug.Log(drawingTime);
         }
 
         if (archer_state != State.Idle) // if state is not idle always turn idle except falling and jumping
@@ -191,7 +191,7 @@ public class Controller : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && !draw) // drawing starts from here, until drawing animation ends there will be no arrow
         {
-            Debug.Log("Oku aldım");
+            //Debug.Log("Oku aldım");
             archer_state = State.Attack;
             UpdateState(archer_state);
             faceMe(true);
@@ -334,5 +334,10 @@ public class Controller : MonoBehaviour
             transform.localRotation = Quaternion.Euler(0, 180, 0);
         }
 
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        Debug.Log(other.tag);
     }
 }

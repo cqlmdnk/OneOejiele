@@ -14078,9 +14078,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 3
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -25251,7 +25251,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605619441}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.348, y: -4.62, z: -0.465}
+  m_LocalPosition: {x: 2.348, y: -4.62, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 360488922}
@@ -25320,8 +25320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e700f8668e7b4664d90f385d610c02d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deadBody: {fileID: 3186152373188854900, guid: 479351149e75380498ef69281528bb7c,
-    type: 3}
+  deadBody: {fileID: 21300000, guid: 10cddb4bbf9ece547bdcff30ec5f343d, type: 3}
   fluidParticles: {fileID: 360488924}
   explosion: {fileID: 1390604692}
   throwUp: {fileID: 1548271415}
@@ -25452,7 +25451,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.23995018, y: -3.7428155}
+  m_Offset: {x: 0.23995018, y: -3.6766472}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -25463,7 +25462,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 39.307278, y: 0.44436836}
+  m_Size: {x: 39.307278, y: 0.5767052}
   m_EdgeRadius: 0
 --- !u!1 &663732747
 GameObject:
@@ -25733,7 +25732,7 @@ GameObject:
   - component: {fileID: 757737989}
   - component: {fileID: 757737988}
   - component: {fileID: 757737987}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenBox (4)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -26127,7 +26126,7 @@ GameObject:
   - component: {fileID: 1004163682}
   - component: {fileID: 1004163681}
   - component: {fileID: 1004163680}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenBox (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -26394,7 +26393,7 @@ GameObject:
   - component: {fileID: 1045894956}
   - component: {fileID: 1045894955}
   - component: {fileID: 1045894954}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenBox (3)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -26501,7 +26500,7 @@ GameObject:
   - component: {fileID: 1170657398}
   - component: {fileID: 1170657400}
   - component: {fileID: 1170657399}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenBox (6)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -27028,7 +27027,7 @@ GameObject:
   - component: {fileID: 1390604691}
   m_Layer: 0
   m_Name: ExplosionParticles
-  m_TagString: Untagged
+  m_TagString: EnemyDamageParticles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27041,7 +27040,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390604689}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 605619444}
@@ -27737,15 +27736,15 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 2
+    type: 10
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 1.8222055, y: 180.55247, z: 181.36417}
-    m_Scale: {x: 1, y: 1, z: 1}
+    m_Position: {x: 0.0017819405, y: 0.005879402, z: 0.18479759}
+    m_Rotation: {x: 0, y: 0, z: 0}
+    m_Scale: {x: 1.2463169, y: 1.2463169, z: 1.2463169}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -30635,10 +30634,10 @@ ParticleSystem:
     enabled: 1
     serializedVersion: 3
     type: 1
-    collisionMode: 0
+    collisionMode: 1
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
-    multiplyColliderForceByParticleSpeed: 0
+    multiplyColliderForceByParticleSpeed: 1
     multiplyColliderForceByCollisionAngle: 1
     plane0: {fileID: 0}
     plane1: {fileID: 0}
@@ -30806,15 +30805,15 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 10000
+    maxKillSpeed: 5
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 55
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -32213,7 +32212,7 @@ GameObject:
   - component: {fileID: 1505704080}
   - component: {fileID: 1505704082}
   - component: {fileID: 1505704081}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenBox (5)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -32400,7 +32399,7 @@ GameObject:
   - component: {fileID: 1515672510}
   - component: {fileID: 1515672509}
   - component: {fileID: 1515672508}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenBox
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -32507,7 +32506,7 @@ GameObject:
   - component: {fileID: 1533014991}
   - component: {fileID: 1533014993}
   - component: {fileID: 1533014992}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenBox (7)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -32711,7 +32710,7 @@ GameObject:
   - component: {fileID: 1548271415}
   m_Layer: 0
   m_Name: ThrowUp
-  m_TagString: Untagged
+  m_TagString: EnemyDamageParticles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36353,7 +36352,7 @@ ParticleSystem:
   CollisionModule:
     enabled: 1
     serializedVersion: 3
-    type: 0
+    type: 1
     collisionMode: 1
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -36533,7 +36532,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -37526,7 +37525,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 115
+  m_SortingOrder: 121
   m_RenderMode: 1
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -37833,7 +37832,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1662385676}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37983,7 +37982,7 @@ GameObject:
   - component: {fileID: 1843649308}
   - component: {fileID: 1843649307}
   - component: {fileID: 1843649306}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenBox (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -43518,7 +43517,7 @@ GameObject:
   - component: {fileID: 2041402851}
   - component: {fileID: 2041402853}
   - component: {fileID: 2041402852}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenBox (8)
   m_TagString: Ground
   m_Icon: {fileID: 0}
