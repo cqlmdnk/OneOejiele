@@ -24,9 +24,10 @@ public class ArrowControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-            // code for direction of sprite changes with its velocity
-           transform.rotation = Quaternion.Euler(0, 0,((float)Math.Atan2((double)GetComponent<Rigidbody2D>().velocity.y, (double)GetComponent<Rigidbody2D>().velocity.x))  * Mathf.Rad2Deg);
+        // code for direction of sprite changes with its velocity
+
+        if ( GetComponent<Rigidbody2D>() != null)
+                transform.rotation = Quaternion.Euler(0, 0,((float)Math.Atan2((double)GetComponent<Rigidbody2D>().velocity.y, (double)GetComponent<Rigidbody2D>().velocity.x))  * Mathf.Rad2Deg);
 
 
     }
