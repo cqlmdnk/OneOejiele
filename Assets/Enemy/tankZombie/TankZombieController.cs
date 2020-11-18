@@ -69,19 +69,8 @@ public class TankZombieController : Enemy
 
     void OnCollisionEnter2D(Collision2D col)
     {
-       
-        if (col.gameObject.tag.Equals("Throwable"))
-        {
-         
-            health -= 25.0f;
-            damage = 25;
-            Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
-            GameObject _popUp = Instantiate(damagePopUp, popUpPos, Quaternion.identity);
-            _popUp.transform.SetParent(this.gameObject.transform);
-            _popUp.SetActive(true);
-            fluidParticles.gameObject.SetActive(true);
-            fluidParticles.Play();
-        }
+
+        base.OnCollisionEnter2D(col);
     }
 
     void OnCollisionExit2D(Collision2D col)
@@ -98,6 +87,8 @@ public class TankZombieController : Enemy
     {
         explosion.Play();
         Destroy(explosion.gameObject, 3.0f);
+        base.deleteChildrenPhysics();
+
         base.OnBeforeDestroy();
     }
 

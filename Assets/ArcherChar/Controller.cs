@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 enum State
@@ -23,9 +24,10 @@ public class Controller : MonoBehaviour
     public Rigidbody2D archer;
     public Animator animator;
     public GameObject arrow;
-
+    public Text coins;
+    public int coinsack = 0;
     State archer_state;
-
+    
     bool facingRight;
     bool draw = false, drawRight = true;
     float drawingTime = 1.5f;
@@ -51,7 +53,7 @@ public class Controller : MonoBehaviour
 
     void Update()
     {
-
+        coins.text = coinsack.ToString();
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (mousePos.x > transform.position.x)
         {
@@ -283,6 +285,14 @@ public class Controller : MonoBehaviour
             onGround = true;
             animator.SetBool("onGround", true);
             animator.SetBool("onAir", false);
+        }
+        else if (col.gameObject.tag.Equals("Collectable"))// hit ground
+        {
+            if(col.gameObject.name.Contains("Coin") ){
+                Destroy(col.gameObject);
+                coinsack++;
+
+            }
         }
 
     }

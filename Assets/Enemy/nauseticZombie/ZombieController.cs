@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,9 +33,9 @@ public class ZombieController : Enemy
         if(health <= 0)
         {
             animator.SetBool("dead", true);
-            Destroy(this.gameObject.GetComponent<Rigidbody2D>());
-            Destroy(this.gameObject.GetComponent<BoxCollider2D>());
-           
+            DestroyImmediate(this.gameObject.GetComponent<Rigidbody2D>());
+            DestroyImmediate(this.gameObject.GetComponent<BoxCollider2D>());
+            base.deleteChildrenPhysics();
             Destroy(this.gameObject,5.0f);
         }
         else
@@ -102,19 +103,7 @@ public class ZombieController : Enemy
             animator.SetBool("attack", true);
             
         }
-        else if (col.gameObject.tag.Equals("Throwable"))
-        {
-            stopForAttack = true;
-            animator.SetBool("takingDamage", true);
-            health -= 25.0f;
-            damage = 25;
-            Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
-            GameObject _popUp = Instantiate(damagePopUp, popUpPos, Quaternion.identity);
-            _popUp.transform.SetParent(this.gameObject.transform);
-            _popUp.SetActive(true);
-            fluidParticles.gameObject.SetActive(true);
-            fluidParticles.Play();
-        }
+        base.OnCollisionEnter2D(col);
     }
 
     void OnCollisionExit2D(Collision2D col)
