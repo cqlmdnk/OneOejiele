@@ -25,7 +25,9 @@ public class Controller : MonoBehaviour
     public Animator animator;
     public GameObject arrow;
     public Text coins;
+    public Text arrows;
     public int coinsack = 0;
+    public int arrow_count = 30;
     State archer_state;
     
     bool facingRight;
@@ -54,6 +56,7 @@ public class Controller : MonoBehaviour
     void Update()
     {
         coins.text = coinsack.ToString();
+        arrows.text = arrow_count.ToString();
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (mousePos.x > transform.position.x)
         {
@@ -94,7 +97,7 @@ public class Controller : MonoBehaviour
             Vector3 veloctiy3d = Quaternion.AngleAxis(angle, Vector3.forward) * new Vector3((float)Math.Log((double)drawingTime, 2.0) * 20, arrowDrop, 0);
             arrow_body.velocity = (new Vector2( veloctiy3d.x , veloctiy3d.y));
 
-
+            arrow_count--;
             drawingTime = 1.5f;
 
             animator.enabled = true;
@@ -336,12 +339,12 @@ public class Controller : MonoBehaviour
         if (right)
         {
             facingRight = true;
-            transform.localRotation = Quaternion.Euler(0, 0, 0);
+            GetComponent<SpriteRenderer>().flipX = false;
         }
         else
         {
             facingRight = false;
-            transform.localRotation = Quaternion.Euler(0, 180, 0);
+            GetComponent<SpriteRenderer>().flipX = true;
         }
 
     }

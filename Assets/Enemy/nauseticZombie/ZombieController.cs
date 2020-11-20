@@ -18,9 +18,9 @@ public class ZombieController : Enemy
         Physics2D.queriesStartInColliders = false;
         length = UnityEngine.Random.Range(-3, 3);
         if (length < 0)
-            transform.localRotation = Quaternion.Euler(0, 180, 0);
+            GetComponent<SpriteRenderer>().flipX = true;
         else
-            transform.localRotation = Quaternion.Euler(0, 0, 0);
+            GetComponent<SpriteRenderer>().flipX = false;
         damageTimer = zombieRecoverTime;
 
 

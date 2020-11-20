@@ -17,9 +17,9 @@ public class TankZombieController : Enemy
         health = 200;
         length = UnityEngine.Random.Range(-1, 1);
         if (length < 0)
-            transform.localRotation = Quaternion.Euler(0, 0, 0);
+            GetComponent<SpriteRenderer>().flipX = true;
         else
-            transform.localRotation = Quaternion.Euler(0, 180, 0);
+            GetComponent<SpriteRenderer>().flipX = false;
        
     }
 
