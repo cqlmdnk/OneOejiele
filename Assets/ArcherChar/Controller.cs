@@ -194,7 +194,7 @@ public class Controller : MonoBehaviour
                 isTap = true;
             }
         }
-        if (Input.GetMouseButtonDown(0) && !draw) // drawing starts from here, until drawing animation ends there will be no arrow
+        if (Input.GetMouseButtonDown(0) && !draw && arrow_count > 0) // drawing starts from here, until drawing animation ends there will be no arrow
         {
             //Debug.Log("Oku aldım");
             archer_state = State.Attack;
@@ -294,6 +294,13 @@ public class Controller : MonoBehaviour
             if(col.gameObject.name.Contains("Coin") ){
                 Destroy(col.gameObject);
                 coinsack++;
+
+            }
+            else if (col.gameObject.name.Contains("ArrowSack"))
+            {
+                Destroy(col.gameObject);
+                int arrowTaken = (int)UnityEngine.Random.Range(4.0f, 9.0f);
+                arrow_count += arrowTaken;
 
             }
         }

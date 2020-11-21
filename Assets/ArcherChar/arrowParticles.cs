@@ -14,6 +14,6 @@ public class arrowParticles : MonoBehaviour
     void Update()
     {
         if(transform.parent == null)
-            Destroy(gameObject, 4);
+            Destroy(gameObject,2);
     }
 }

@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     protected float health, damage, damageTimer;
     protected GameObject damagePopUp;
-    public GameObject coin;
+    public GameObject coin , arrowSack;
     public Sprite deadBody;
     protected Rigidbody2D player;
     protected Animator animator;
@@ -95,7 +95,10 @@ public class Enemy : MonoBehaviour
 
 
         }
-        
+
+        Instantiate(arrowSack, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+
+
     }
     protected void OnCollisionEnter2D(Collision2D col)
     {

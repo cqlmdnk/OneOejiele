@@ -17,9 +17,18 @@ public class TankZombieController : Enemy
         health = 200;
         length = UnityEngine.Random.Range(-1, 1);
         if (length < 0)
-            GetComponent<SpriteRenderer>().flipX = true;
-        else
+        {
+            transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 0, 0);
             GetComponent<SpriteRenderer>().flipX = false;
+        }
+
+
+        else
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
+            
        
     }
 
@@ -52,12 +61,14 @@ public class TankZombieController : Enemy
             if (length < 0)
             {
 
-                transform.localRotation = Quaternion.Euler(0, 0, 0);
+                GetComponent<SpriteRenderer>().flipX = false;
+                transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 0, 0);
             }
 
             else
             {
-                transform.localRotation = Quaternion.Euler(0, 180, 0);
+                GetComponent<SpriteRenderer>().flipX = true;
+                transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 180, 0);
 
             }
         }
