@@ -20,7 +20,6 @@ enum State
 public class Controller : MonoBehaviour
 {
     public Transform healthBar;
-    public ParticleSystem dust;
     public Rigidbody2D archer;
     public Animator animator;
     public GameObject arrow;
@@ -72,7 +71,6 @@ public class Controller : MonoBehaviour
         {
             assesDamage();
         }
-
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && draw && !Input.GetMouseButton(0) ) // piece that arrow instantiated
         {
             Vector3 transPos = GameObject.Find("Archer_bow").transform.position;
@@ -146,14 +144,14 @@ public class Controller : MonoBehaviour
                     UpdateState(archer_state);
                 }
                 MoveHorizontal(move); // although animation still fall or jump character can move on air like other platformers
-                if (archer.velocity.y < 0.05f && archer.velocity.y > -0.05f)
-                    dust.Play(); // it is just for dust particles from character's feet
+                
             }
         }
         else
         {
             drawedToOpposite = true;
         }
+        Debug.Log(Input.GetKeyDown(KeyCode.W));
 
         if (Input.GetKeyDown(KeyCode.W) && onGround) // jumping if character on ground or on something concrete
         {
@@ -161,7 +159,7 @@ public class Controller : MonoBehaviour
             archer_state = State.Jump;
             UpdateState(archer_state);
             archer.velocity = new Vector2(0.0f, 10.0f);
-            dust.Stop(); //no dust on air
+
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && archer_state != State.Dash) // melee attack will be expanded

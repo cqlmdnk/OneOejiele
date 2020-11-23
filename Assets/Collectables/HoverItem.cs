@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinScript : MonoBehaviour
+public class HoverItem : MonoBehaviour
 {
     // Start is called before the first frame update
     private float bounceRange;
