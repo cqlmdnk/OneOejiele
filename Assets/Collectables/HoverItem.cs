@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.ArcherChar;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class HoverItem : MonoBehaviour
 {
     // Start is called before the first frame update
     private float bounceRange;
+     
     bool dir = true;
     void Start()
     {

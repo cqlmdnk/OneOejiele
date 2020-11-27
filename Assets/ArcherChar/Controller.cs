@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Assets.ArcherChar;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using System;
 
 enum State
 {
@@ -23,12 +25,10 @@ public class Controller : MonoBehaviour
     public Rigidbody2D archer;
     public Animator animator;
     public GameObject arrow;
-    public Text coins;
-    public Text arrows;
-    public int coinsack = 0;
     public int arrow_count = 30;
     State archer_state;
-    
+
+
     bool facingRight;
     bool draw = false, drawRight = true;
     float drawingTime = 1.5f;
@@ -49,13 +49,15 @@ public class Controller : MonoBehaviour
         archer_state = State.Idle;
         UpdateState(archer_state);
         facingRight = true;
+       
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
-        coins.text = coinsack.ToString();
-        arrows.text = arrow_count.ToString();
+
+
+
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (mousePos.x > transform.position.x)
         {
@@ -287,21 +289,8 @@ public class Controller : MonoBehaviour
             animator.SetBool("onGround", true);
             animator.SetBool("onAir", false);
         }
-        else if (col.gameObject.tag.Equals("Collectable"))// hit ground
-        {
-            if(col.gameObject.name.Contains("Coin") ){
-                Destroy(col.gameObject);
-                coinsack++;
+       
 
-            }
-            else if (col.gameObject.name.Contains("ArrowSack"))
-            {
-                Destroy(col.gameObject);
-                int arrowTaken = (int)UnityEngine.Random.Range(4.0f, 9.0f);
-                arrow_count += arrowTaken;
-
-            }
-        }
 
     }
     void OnCollisionExit2D(Collision2D col) // exit from ground

@@ -66,6 +66,8 @@ public class Enemy : MonoBehaviour
 
     protected void OnBeforeDestroy() // creating dead body
     {
+        if (health > 0.0f) // deleted by ending execution not killed by player
+            return;
 
         GameObject dead_zombie = new GameObject("dead_zombie");
         SpriteRenderer renderer = dead_zombie.AddComponent<SpriteRenderer>();
