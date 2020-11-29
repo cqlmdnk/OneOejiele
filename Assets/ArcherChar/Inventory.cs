@@ -13,21 +13,21 @@ namespace Assets.ArcherChar
         private int coinsack, arrowsack;
         public Inventory()
         {
-            items = new List<Item>();
+            Items = new List<Item>();
         }
 
         public int Coinsack { get => coinsack; set => coinsack = value; }
         public int Arrowsack { get => arrowsack; set => arrowsack = value; }
+        public List<Item> Items { get => items; set => items = value; }
 
-
-        public int GetSizeOfItems() { return items.Count; }
+        public int GetSizeOfItems() { return Items.Count; }
         public void AddItem(Item item)
         {
-            items.Add(item);
+            Items.Add(item);
         }
         public bool RemoveItem(Item item)
         {
-            return items.Remove(item);
+            return Items.Remove(item);
         }
     }
 }

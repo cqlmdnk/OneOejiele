@@ -8,6 +8,7 @@ public class ArrowControl : MonoBehaviour
     // Start is called before the first frame update
     
     public ParticleSystem particles;
+    bool hit = false;
     void Start()
     {
         if ( !gameObject.name.Contains("(Clone)"))
@@ -25,8 +26,10 @@ public class ArrowControl : MonoBehaviour
     void Update()
     {
         // code for direction of sprite changes with its velocity
+        if (hit)
+            DestroyImmediate(this.gameObject);
 
-        if ( GetComponent<Rigidbody2D>() != null)
+        else if ( GetComponent<Rigidbody2D>() != null) /// !!!!
                 transform.rotation = Quaternion.Euler(0, 0,((float)Math.Atan2((double)GetComponent<Rigidbody2D>().velocity.y, (double)GetComponent<Rigidbody2D>().velocity.x))  * Mathf.Rad2Deg);
 
 
@@ -40,12 +43,10 @@ public class ArrowControl : MonoBehaviour
         if (col.gameObject.tag.Equals("Enemy")) 
         {
             DetachParticles();
-            Destroy(GetComponent<Rigidbody2D>());
-            Destroy(GetComponent<BoxCollider2D>());
+            hit = true;
 
-            this.transform.parent = col.gameObject.transform;
         }
-        if (col.gameObject.tag.Equals("Ground"))
+        else if (col.gameObject.tag.Equals("Ground") && !hit)
         {
             DetachParticles();
             Destroy(GetComponent<Rigidbody2D>());

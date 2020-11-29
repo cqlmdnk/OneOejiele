@@ -15,7 +15,7 @@ public class TankZombieController : Enemy
         Init();
         explosion.Stop();
         health = 200;
-        length = UnityEngine.Random.Range(-1, 1);
+        length = UnityEngine.Random.Range(-4, 4);
         if (length < 0)
         {
             transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -55,25 +55,28 @@ public class TankZombieController : Enemy
             particleTimer -= Time.deltaTime;
         }
 
-        if (length > -0.01 && length < 0.001)
+
+        if (length > -0.01 && length < 0.01)
         {
             length = UnityEngine.Random.Range(-5, 5);
-            if (length < 0)
-            {
 
-                GetComponent<SpriteRenderer>().flipX = false;
-                transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 0, 0);
-            }
-
-            else
-            {
-                GetComponent<SpriteRenderer>().flipX = true;
-                transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 180, 0);
-
-            }
         }
+        if (length < 0)
+        {
+
+            GetComponent<SpriteRenderer>().flipX = false;
+            transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        else
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+        }
+
         Vector3 move = new Vector3(((0.01f) * Math.Sign(length) + length / 100), 0, 0.0f);
-        transform.position = transform.position + 3 * move * Time.deltaTime;
+        transform.position = transform.position + 2 * move.normalized * Time.deltaTime;
         length -= move.x * Time.deltaTime;
 
     }
@@ -98,7 +101,6 @@ public class TankZombieController : Enemy
     {
         explosion.Play();
         Destroy(explosion.gameObject, 3.0f);
-        base.deleteChildrenPhysics();
 
         base.OnBeforeDestroy();
     }

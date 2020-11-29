@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     // Start is called before the first frame update
     protected float health, damage, damageTimer;
-    protected GameObject damagePopUp;
+    public GameObject damagePopUp;
     public GameObject coin , arrowSack;
     public Sprite deadBody;
     protected Rigidbody2D player;
@@ -16,19 +16,28 @@ public class Enemy : MonoBehaviour
     protected float length;
    protected void Init()
     {
-        damagePopUp = GameObject.Find("/DamagePopUp");
+       
         animator = GetComponent<Animator>();
         player = GetComponent<Rigidbody2D>();
 
     }
 
-    protected bool SightCheck()
+    protected GameObject SightCheck()
     {
+        /*             * * *    raycasting more than 90 degrees per direction         
+                     *    I *
+                   *      I
+                 *        I
+                *         I           
+                ---------------------        
+         */
+
+
         List<RaycastHit2D> sighttest = new List<RaycastHit2D>();
         if (length < 0)
         {
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 12; i++)
             {
                 sighttest.Add(Physics2D.Raycast(transform.position, new Vector3(-1.0f + (i / 10.0f), (i / 10.0f), 0.0f), 6.0f));
             }
@@ -38,7 +47,7 @@ public class Enemy : MonoBehaviour
         else
         {
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 12; i++)
             {
                 sighttest.Add(Physics2D.Raycast(transform.position, new Vector3((i / 10.0f), 1.0f - (i / 10.0f), 0.0f), 6.0f));
             }
@@ -54,12 +63,12 @@ public class Enemy : MonoBehaviour
                 if (testc.collider.tag == "Player")
                 {
 
-                    return true;
+                    return testc.collider.gameObject;
                 }
 
             }
         }
-        return false;
+        return null;
 
     }
 
@@ -116,21 +125,12 @@ public class Enemy : MonoBehaviour
             _popUp.SetActive(true);
             fluidParticles.gameObject.SetActive(true);
             fluidParticles.Play();
+
+            length = transform.position.x-col.transform.position.x > 0 ? -1.0f : 1.0f; // change direction to damage taken side
         }
     }
-    protected void deleteChildrenPhysics()
-    {
-        Rigidbody2D[] childrenRigidBody = GetComponentsInChildren<Rigidbody2D>();
-        for (int i = 0; i < childrenRigidBody.Length; i++)
-        {
-            Destroy(childrenRigidBody[i]);
-        }
-        Collider2D[] childrenColliders = GetComponentsInChildren<Collider2D>();
-        for (int i = 0; i < childrenRigidBody.Length; i++)
-        {
-            Destroy(childrenColliders[i]);
-        }
-    }
+   
+    
 
 
 

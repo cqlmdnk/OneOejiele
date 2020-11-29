@@ -4769,7 +4769,7 @@ GameObject:
   - component: {fileID: 5846552594213719462}
   - component: {fileID: 5846552594213719465}
   m_Layer: 0
-  m_Name: tankZombie (1)
+  m_Name: tankZombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4921,6 +4921,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e700f8668e7b4664d90f385d610c02d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damagePopUp: {fileID: 5938784169413650736, guid: 2611efc13f45ca14e948d8fbed5b27a7,
+    type: 3}
   coin: {fileID: 3506041712919427448, guid: 30c424429eb64d741bc1e0b75763e9f1, type: 3}
   arrowSack: {fileID: 8302777563365908913, guid: c8288de5539260f4eb07a1461e4d7807,
     type: 3}
@@ -5078,7 +5080,7 @@ ParticleSystem:
   m_GameObject: {fileID: 5846552594887931492}
   serializedVersion: 6
   lengthInSec: 3
-  simulationSpeed: 1
+  simulationSpeed: 0.5
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -5152,7 +5154,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0.6
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5205,7 +5207,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -8760,7 +8762,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
