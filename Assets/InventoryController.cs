@@ -41,7 +41,7 @@ public class InventoryController : MonoBehaviour
                 inventory.Arrowsack += arrowTaken;
 
             }
-            else
+            else // if there are same kind items stack them
             {
                 Item item = col.gameObject.GetComponent<Item>();
                 item.transform.parent = this.transform;

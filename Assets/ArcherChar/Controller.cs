@@ -21,14 +21,16 @@ enum State
 }
 public class Controller : MonoBehaviour
 {
-    public Transform healthBar;
+    public GameObject healthBar;
     public Rigidbody2D archer;
     public Animator animator;
     public GameObject arrow;
+
+    public Text hp;
     public int arrow_count = 30;
     State archer_state;
 
-
+    float health = 100;
     bool facingRight;
     bool draw = false, drawRight = true;
     float drawingTime = 1.5f;
@@ -40,7 +42,7 @@ public class Controller : MonoBehaviour
     bool dashDir = false;
 
     float damage = 0;
-    float damage_asses_time = 1.0f;
+    float damage_asses_time = 0.5f;
 
     bool onGround;
 
@@ -49,13 +51,13 @@ public class Controller : MonoBehaviour
         archer_state = State.Idle;
         UpdateState(archer_state);
         facingRight = true;
-       
+
     }
 
 
     void FixedUpdate()
     {
-
+        hp.text = health.ToString();
 
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -73,7 +75,7 @@ public class Controller : MonoBehaviour
         {
             assesDamage();
         }
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && draw && !Input.GetMouseButton(0) ) // piece that arrow instantiated
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && draw && !Input.GetMouseButton(0)) // piece that arrow instantiated
         {
             Vector3 transPos = GameObject.Find("Archer_bow").transform.position;
             //Debug.Log("Bıraktım");
@@ -95,7 +97,7 @@ public class Controller : MonoBehaviour
             _arrow.SetActive(true);
             Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
             Vector3 veloctiy3d = Quaternion.AngleAxis(angle, Vector3.forward) * new Vector3((float)Math.Log((double)drawingTime, 2.0) * 20, arrowDrop, 0);
-            arrow_body.velocity = (new Vector2( veloctiy3d.x , veloctiy3d.y));
+            arrow_body.velocity = (new Vector2(veloctiy3d.x, veloctiy3d.y));
 
             arrow_count--;
             drawingTime = 1.5f;
@@ -103,9 +105,9 @@ public class Controller : MonoBehaviour
             animator.enabled = true;
             draw = false;
         }
-        else if(draw && Input.GetMouseButton(0))
+        else if (draw && Input.GetMouseButton(0))
         {
-            if(!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw"))
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("character_draw"))
                 animator.enabled = false;
             //Debug.Log("Yayı geriyorum");
             drawingTime += Time.deltaTime;
@@ -146,14 +148,14 @@ public class Controller : MonoBehaviour
                     UpdateState(archer_state);
                 }
                 MoveHorizontal(move); // although animation still fall or jump character can move on air like other platformers
-                
+
             }
         }
         else
         {
             drawedToOpposite = true;
         }
-        Debug.Log(Input.GetKeyDown(KeyCode.W));
+
 
         if (Input.GetKeyDown(KeyCode.W) && onGround) // jumping if character on ground or on something concrete
         {
@@ -237,34 +239,28 @@ public class Controller : MonoBehaviour
 
     void UpdateState(State state) // changing animation // clearing all animation before change
     {
+        clearAnim();
         switch (state)
         {
             case State.Idle:
-                clearAnim();
                 animator.SetBool("idle", true);
                 break;
             case State.Run:
-                clearAnim();
                 animator.SetBool("run", true);
                 break;
             case State.Jump:
-                clearAnim();
                 animator.SetBool("jump", true);
                 break;
             case State.Dash:
-                clearAnim();
                 animator.SetBool("dash", true);
                 break;
             case State.Melee:
-                clearAnim();
                 animator.SetBool("melee", true);
                 break;
             case State.Attack:
-                clearAnim();
                 animator.SetBool("attack", true);
                 break;
             case State.OnAir:
-                clearAnim();
                 animator.SetBool("onAir", true);
                 break;
         }
@@ -289,7 +285,7 @@ public class Controller : MonoBehaviour
             animator.SetBool("onGround", true);
             animator.SetBool("onAir", false);
         }
-       
+
 
 
     }
@@ -304,27 +300,38 @@ public class Controller : MonoBehaviour
 
         }
     }
-
-    void OnCollisionStay2D(Collision2D col) // for damage taking syncing with enemy animation
+    private void OnTriggerStay2D(Collider2D col)
     {
         if (col.gameObject.tag.Equals("Enemy"))
         {
+            Debug.Log("Enemy Triggered Collider");
             if (col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
             {
-                if (col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime % col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length < 0.1)
-                {
-                    damage += 0.5f;
-                    transform.GetChild(0).gameObject.SetActive(true);
-                }
+
+                damage += 1.0f;
+                transform.GetChild(0).gameObject.SetActive(true);
+                Debug.Log("Damage added. Total damage : " + damage.ToString());
+                
             }
         }
     }
+   
     void assesDamage() // tried to do damages discrete like other platformers
     {
-        healthBar.localScale -= new Vector3(damage, 0.0f, 0.0f);
-        damage_asses_time = 1.0f;
-        damage = 0;
-        transform.GetChild(0).gameObject.SetActive(false);
+        if (health < 0)
+        {
+
+        }
+        else
+        {
+            healthBar.transform.localScale -= new Vector3(damage, 0.0f, 0.0f);
+            
+            health -= damage * 100 / 55;
+            damage_asses_time = 0.5f;
+            damage = 0;
+            transform.GetChild(0).gameObject.SetActive(false);
+            Debug.Log("Damage assessed : " + health.ToString());
+        }
     }
 
 
@@ -345,6 +352,22 @@ public class Controller : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.Log(other.tag);
+        
+    }
+
+    public void addHealth(float addedHealth)
+    {
+        if (health + addedHealth <= 100)
+        {
+            health += addedHealth;
+            healthBar.transform.localScale += new Vector3(addedHealth * 55 / 100, 0.0f, 0.0f);
+
+        }
+        else
+        {
+            health = 100.0f;
+            healthBar.transform.localScale = new Vector3(55, 10.5f, 1.0f);
+        }
+
     }
 }

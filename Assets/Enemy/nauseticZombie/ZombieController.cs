@@ -17,11 +17,18 @@ public class ZombieController : Enemy
         Init();
         health = 100000;
         Physics2D.queriesStartInColliders = false;
+
         length = UnityEngine.Random.Range(-2, 2);
         if (length < 0)
-            GetComponent<SpriteRenderer>().flipX = true;
+        {
+           transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+        }
+
         else
-            GetComponent<SpriteRenderer>().flipX = false;
+        {
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        }
+           
         damageTimer = zombieRecoverTime;
 
 
@@ -48,8 +55,8 @@ public class ZombieController : Enemy
             }
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
             {
-                float harmonicForce = animator.GetCurrentAnimatorStateInfo(0).normalizedTime % (animator.GetCurrentAnimatorStateInfo(0).length * 2);
-                transform.position = new Vector3(transform.position.x + (harmonicForce / 40.0f) - 0.025f, transform.position.y, transform.position.z);
+                //float harmonicForce = animator.GetCurrentAnimatorStateInfo(0).normalizedTime % (animator.GetCurrentAnimatorStateInfo(0).length * 2);
+                //transform.position = new Vector3(transform.position.x + (harmonicForce / 40.0f) - 0.025f, transform.position.y, transform.position.z);
             }
 
 
@@ -87,14 +94,27 @@ public class ZombieController : Enemy
                 Vector3 move = new Vector3(((0.1f ) * Math.Sign(length) + length / 30), 0, 0.0f);
                 transform.position = transform.position + 5 * move * Time.deltaTime;
                 length -= move.x * Time.deltaTime;
-                GetComponent<SpriteRenderer>().flipX = move.x > 0 ? false : true;
+                if(move.x < 0)
+                {
+                    transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                }
             }
-            else if (lockedTarget)
+            else if (!stopForAttack && lockedTarget)
             {
                 Vector3 move = new Vector3((0.1f ) * Math.Sign(seenObject.transform.position.x - transform.position.x) + seenObject.transform.position.x - transform.position.x, 0, 0);
                 transform.position = transform.position + 4 * move.normalized * Time.deltaTime;
-                
-                GetComponent<SpriteRenderer>().flipX = move.x > 0 ? false : true;
+                if (move.x < 0)
+                {
+                    transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                }
                 length = move.x > 0 ? 1.0f : -1.0f;
 
 

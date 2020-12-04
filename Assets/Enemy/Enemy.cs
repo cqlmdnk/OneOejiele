@@ -31,8 +31,8 @@ public class Enemy : MonoBehaviour
                 *         I           
                 ---------------------        
          */
-
-
+        GetComponent<CircleCollider2D>().enabled = false;
+        GameObject collider = null;
         List<RaycastHit2D> sighttest = new List<RaycastHit2D>();
         if (length < 0)
         {
@@ -63,12 +63,13 @@ public class Enemy : MonoBehaviour
                 if (testc.collider.tag == "Player")
                 {
 
-                    return testc.collider.gameObject;
+                    collider =  testc.collider.gameObject;
                 }
 
             }
         }
-        return null;
+        GetComponent<CircleCollider2D>().enabled = true;
+        return collider;
 
     }
 

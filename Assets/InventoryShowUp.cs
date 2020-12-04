@@ -13,20 +13,26 @@ public class InventoryShowUp : MonoBehaviour
     {
 
         inventory = GameObject.Find("Character").GetComponent<InventoryController>().inventory;
-        int counter = 0;
-       
+        int counterX = 0;
+        int counterY = 0;
 
         foreach (Item item in inventory.Items)
         {
-            
-            
+
+            if(counterX > 4)
+            {
+                counterY++;
+                counterX = 0;
+            }
             GameObject temp_holder = Instantiate(ItemHolder, transform);
             temp_holder.transform.SetParent(GameObject.Find("Inventory").transform);
             temp_holder.GetComponent<Button>().image.sprite = item.Sprite;
             Vector2 pos = temp_holder.GetComponent<RectTransform>().anchoredPosition;
-            pos.x += counter * 120;
+            pos.x += counterX * 120;
+            pos.y += 25 - counterY *130;
             temp_holder.GetComponent<RectTransform>().anchoredPosition = pos;
-            counter++;
+            temp_holder.GetComponent<Button>().onClick.AddListener(delegate { applyItem(item); }); 
+            counterX++;
         }
 
     }
@@ -38,11 +44,36 @@ public class InventoryShowUp : MonoBehaviour
     }
     private void OnDisable()
     {
-        while(transform.childCount > 4)
+        while(transform.childCount > 10)
         {
             DestroyImmediate(transform.GetChild(transform.childCount-1).gameObject);
         }
             
         
+    }
+    void applyItem(Item item)
+    {
+        GameObject characterObject = GameObject.Find("Character");
+        Controller controller = characterObject.GetComponent<Controller>();
+        applyPotions(controller, item);
+        Debug.Log(item.Value);
+    }
+    void applyPotions(Controller charController, Item item)
+    {
+        if (item.Value.Key.Contains("HP"))
+        {
+            if (item.Value.Key.Contains("MANA"))
+            {
+
+            }
+            else
+            {
+                charController.addHealth(item.Value.Value);
+            }
+        }
+        else if (item.Value.Key.Contains("MANA"))
+        {
+
+        }
     }
 }
