@@ -41,8 +41,8 @@ public class Controller : MonoBehaviour
     bool isTap = false;
     bool dashDir = false;
 
-    float damage = 0;
-    float damage_asses_time = 0.5f;
+    float m_damage = 0;
+    float m_damageAssesTime = 0.5f;
 
     bool onGround;
 
@@ -70,8 +70,8 @@ public class Controller : MonoBehaviour
         {
             faceMe(false);
         }
-        damage_asses_time -= Time.deltaTime;
-        if (damage_asses_time <= 0)
+        m_damageAssesTime -= Time.deltaTime;
+        if (m_damageAssesTime <= 0)
         {
             assesDamage();
         }
@@ -308,9 +308,9 @@ public class Controller : MonoBehaviour
             if (col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
             {
 
-                damage += 1.0f;
+               m_damage+= 1.0f;
                 transform.GetChild(0).gameObject.SetActive(true);
-                Debug.Log("Damage added. Total damage : " + damage.ToString());
+                Debug.Log("Damage added. Totalm_damage: " + m_damage.ToString());
                 
             }
         }
@@ -324,11 +324,11 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            healthBar.transform.localScale -= new Vector3(damage, 0.0f, 0.0f);
+            healthBar.transform.localScale -= new Vector3(m_damage, 0.0f, 0.0f);
             
-            health -= damage * 100 / 55;
-            damage_asses_time = 0.5f;
-            damage = 0;
+            health -=m_damage* 100 / 55;
+            m_damageAssesTime = 0.5f;
+            m_damage= 0;
             transform.GetChild(0).gameObject.SetActive(false);
             Debug.Log("Damage assessed : " + health.ToString());
         }

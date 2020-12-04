@@ -17,8 +17,8 @@ public class InventoryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        arrow.text = inventory.Arrowsack.ToString();
-        coin.text = inventory.Coinsack.ToString();
+       //arrow.text = inventory.Arrowsack.ToString();
+       //coin.text = inventory.Coinsack.ToString();
 
 
     }
