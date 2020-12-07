@@ -12,7 +12,7 @@ public class InventoryShowUp : MonoBehaviour
     void OnEnable()
     {
 
-        inventory = GameObject.Find("Character").GetComponent<InventoryController>().inventory;
+        inventory = GameObject.Find("HeavyBandit").GetComponent<InventoryController>().inventory;
         int counterX = 0;
         int counterY = 0;
 

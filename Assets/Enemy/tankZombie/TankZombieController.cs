@@ -15,7 +15,7 @@ public class TankZombieController : Enemy
         Init();
         explosion.Stop();
         health = 200;
-        length = UnityEngine.Random.Range(-4, 4);
+        length = UnityEngine.Random.Range(-1, 1);
         if (length < 0)
         {
             transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -58,7 +58,7 @@ public class TankZombieController : Enemy
 
         if (length > -0.01 && length < 0.01)
         {
-            length = UnityEngine.Random.Range(-5, 5);
+            length = UnityEngine.Random.Range(-1, 2);
 
         }
         if (length < 0)
@@ -75,9 +75,9 @@ public class TankZombieController : Enemy
 
         }
 
-        Vector3 move = new Vector3(((0.01f) * Math.Sign(length) + length / 100), 0, 0.0f);
-        transform.position = transform.position + 2 * move.normalized * Time.deltaTime;
-        length -= move.x * Time.deltaTime;
+        Vector3 move = new Vector3(((0.1f) * Math.Sign(length) + length / 100), 0, 0.0f);
+        transform.position = transform.position + 2 * move * Time.deltaTime;
+        length -= 2* move.x * Time.deltaTime;
 
     }
 
@@ -105,5 +105,8 @@ public class TankZombieController : Enemy
         base.OnBeforeDestroy();
     }
 
-    
+  
+
+
+
 }

@@ -129,9 +129,40 @@ public class Enemy : MonoBehaviour
 
             length = transform.position.x-col.transform.position.x > 0 ? -1.0f : 1.0f; // change direction to damage taken side
         }
+
+        if (col.gameObject.tag.Equals("Player"))
+        {
+            GetComponent<Rigidbody2D>().isKinematic = true;
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().isKinematic = false;
+        }
+
     }
-   
-    
+
+    void OnTriggerStay2D(Collider2D collision) // timer ekle
+    {
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+
+            if (collision.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Attack") && collision.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime % 0.8f > 0.78f)
+            {
+                stopForAttack = true;
+                animator.SetBool("takingDamage", true);
+                health -= 25.0f;
+                damage = 25;
+                Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
+                GameObject _popUp = Instantiate(damagePopUp, popUpPos, Quaternion.identity);
+                _popUp.transform.SetParent(this.gameObject.transform);
+                _popUp.SetActive(true);
+                fluidParticles.gameObject.SetActive(true);
+                fluidParticles.Play();
+
+                length = transform.position.x - collision.transform.position.x > 0 ? -1.0f : 1.0f;
+            }
+        }
+    }
 
 
 

@@ -127,4 +127,7 @@ public class Bandit : MonoBehaviour {
         else
             m_animator.SetInteger("AnimState", 0);
     }
+
+
+    
 }

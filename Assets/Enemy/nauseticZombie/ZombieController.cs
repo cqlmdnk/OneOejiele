@@ -15,7 +15,7 @@ public class ZombieController : Enemy
     void Start()
     {
         Init();
-        health = 100000;
+        health = 100;
         Physics2D.queriesStartInColliders = false;
 
         length = UnityEngine.Random.Range(-2, 2);
