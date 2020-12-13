@@ -54,11 +54,11 @@ public class InventoryShowUp : MonoBehaviour
     void applyItem(Item item)
     {
         GameObject characterObject = GameObject.Find("Character");
-        Controller controller = characterObject.GetComponent<Controller>();
+        CharacterController controller = characterObject.GetComponent<CharacterController>();
         applyPotions(controller, item);
         Debug.Log(item.Value);
     }
-    void applyPotions(Controller charController, Item item)
+    void applyPotions(CharacterController charController, Item item)
     {
         if (item.Value.Key.Contains("HP"))
         {
