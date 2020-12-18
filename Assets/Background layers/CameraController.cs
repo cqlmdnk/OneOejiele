@@ -5,12 +5,13 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Transform player_pos;
+    private Transform player_pos;
     public float lookAhead;
     public float cameraFollowSpeed;
     float camerafocus;
     void Start()
     {
+        player_pos = GameObject.FindGameObjectWithTag("Player").transform;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
     }

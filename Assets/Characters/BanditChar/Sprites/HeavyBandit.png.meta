@@ -4,28 +4,28 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: 21300000
-    second: HeavyBandit_0
+    second: HeavyBandit_x
   - first:
       213: 21300002
-    second: HeavyBandit_1
+    second: HeavyBandit_
   - first:
       213: 21300004
-    second: HeavyBandit_2
+    second: HeavyBandit__4
   - first:
       213: 21300006
     second: HeavyBandit_3
   - first:
       213: 21300008
-    second: HeavyBandit_4
+    second: HeavyBandit_3
   - first:
       213: 21300010
-    second: HeavyBandit_5
+    second: HeavyBandit_2
   - first:
       213: 21300012
-    second: HeavyBandit_6
+    second: HeavyBandit_1
   - first:
       213: 21300014
-    second: HeavyBandit_7
+    second: HeavyBandit_0
   - first:
       213: 21300016
     second: HeavyBandit_8
@@ -52,7 +52,7 @@ TextureImporter:
     second: HeavyBandit_15
   - first:
       213: 21300032
-    second: HeavyBandit_16
+    second: HeavyBandit_55
   - first:
       213: 21300034
     second: HeavyBandit_17
@@ -67,19 +67,19 @@ TextureImporter:
     second: HeavyBandit_20
   - first:
       213: 21300042
-    second: HeavyBandit_21
+    second: HeavyBandit_19
   - first:
       213: 21300044
-    second: HeavyBandit_22
+    second: HeavyBandit_18
   - first:
       213: 21300046
-    second: HeavyBandit_23
+    second: HeavyBandit_17
   - first:
       213: 21300048
-    second: HeavyBandit_24
+    second: HeavyBandit_55
   - first:
       213: 21300050
-    second: HeavyBandit_25
+    second: HeavyBandit_56
   - first:
       213: 21300052
     second: HeavyBandit_26
@@ -103,13 +103,16 @@ TextureImporter:
     second: HeavyBandit_32
   - first:
       213: 21300066
-    second: HeavyBandit_33
+    second: HeavyBandit_39
   - first:
       213: 21300068
-    second: HeavyBandit_34
+    second: HeavyBandit_39
   - first:
       213: 21300070
     second: HeavyBandit_35
+  - first:
+      213: 2009759679912139703
+    second: HeavyBandit_5
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -194,85 +197,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HeavyBandit_0
+      name: HeavyBandit_x
       rect:
         serializedVersion: 2
-        x: 0
-        y: 208
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 137
+        y: 210
+        width: 33
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bee6eab3ad70a3845ad4efc420d4c5d1
+      spriteID: 1c2b1a4d9963cfd49a5bc9eef193bc5f
       internalID: 21300000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_1
+      name: HeavyBandit_
       rect:
         serializedVersion: 2
-        x: 48
-        y: 208
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 185
+        y: 210
+        width: 33
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a0a06bba7f99a448abc93cabc082a2c
+      spriteID: 315f755a3b767804cb278d4223438078
       internalID: 21300002
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_2
+      name: HeavyBandit__4
       rect:
         serializedVersion: 2
-        x: 96
-        y: 208
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 233
+        y: 210
+        width: 33
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04e04917a66ccff42acee0e47553d9e9
+      spriteID: 40e02b3b8a2ea134bb601f3a2ba679ff
       internalID: 21300004
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HeavyBandit_3
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 208
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ec641d1d7004d7449a52823790f698ae
-      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -281,81 +263,102 @@ TextureImporter:
       name: HeavyBandit_4
       rect:
         serializedVersion: 2
-        x: 192
-        y: 208
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 282
+        y: 210
+        width: 33
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe927c35f5f419c41ae4869f951624fb
+      spriteID: d568146a0bb177542aa1b5c511a03027
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeavyBandit_3
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 210
+        width: 26
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bb4ae6ef1d0913499bf5df66a56728f
       internalID: 21300008
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_5
+      name: HeavyBandit_2
       rect:
         serializedVersion: 2
-        x: 240
-        y: 208
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 376
+        y: 210
+        width: 26
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38d9673bfef61854489fa79780a7ab8c
+      spriteID: 8f1d55a108c1d4b49afc4eda42746d96
       internalID: 21300010
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_6
+      name: HeavyBandit_1
       rect:
         serializedVersion: 2
-        x: 288
-        y: 208
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 424
+        y: 210
+        width: 26
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c469488d41fc20544a7431516b8f43f3
+      spriteID: 638e9fd3fa98a864b8289d07b8541cfc
       internalID: 21300012
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_7
+      name: HeavyBandit_0
       rect:
         serializedVersion: 2
-        x: 336
-        y: 208
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 473
+        y: 210
+        width: 26
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eff14b2615f429142904d4155745b32d
+      spriteID: 04f4938349dcc724abf4bfdeee717596
       internalID: 21300014
       vertices: []
       indices: 
@@ -365,18 +368,18 @@ TextureImporter:
       name: HeavyBandit_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 160
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 138
+        y: 162
+        width: 31
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3c90ec4bfd16bfb4db3c33e4c4976f91
+      spriteID: 11c341fa04065d84eb638cccd8ca1268
       internalID: 21300016
       vertices: []
       indices: 
@@ -386,18 +389,18 @@ TextureImporter:
       name: HeavyBandit_9
       rect:
         serializedVersion: 2
-        x: 48
-        y: 160
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 187
+        y: 162
+        width: 31
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa41a842201458849a1fb9123ee566f8
+      spriteID: fe08a2fd65d166246b9da770dda772c4
       internalID: 21300018
       vertices: []
       indices: 
@@ -407,18 +410,18 @@ TextureImporter:
       name: HeavyBandit_10
       rect:
         serializedVersion: 2
-        x: 96
-        y: 160
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 234
+        y: 164
+        width: 31
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5b998543f6e42d41a5b4f51dd99bd07
+      spriteID: 4d91dc3847132b442a9de3046f88abe7
       internalID: 21300020
       vertices: []
       indices: 
@@ -428,18 +431,18 @@ TextureImporter:
       name: HeavyBandit_11
       rect:
         serializedVersion: 2
-        x: 144
-        y: 160
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 283
+        y: 162
+        width: 21
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8d173e3c0508624b9d8119e36ce11de
+      spriteID: 358dbe877dcd344478965c8df884880c
       internalID: 21300022
       vertices: []
       indices: 
@@ -449,18 +452,18 @@ TextureImporter:
       name: HeavyBandit_12
       rect:
         serializedVersion: 2
-        x: 192
-        y: 160
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 329
+        y: 161
+        width: 25
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23809b2981984a449a06d8d52a104680
+      spriteID: 7bc6d9a421e89ce40b13187b12cfce11
       internalID: 21300024
       vertices: []
       indices: 
@@ -470,18 +473,18 @@ TextureImporter:
       name: HeavyBandit_13
       rect:
         serializedVersion: 2
-        x: 240
-        y: 160
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 376
+        y: 162
+        width: 31
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab6dc2f7ed3d46e4eaa534bf95d4bd32
+      spriteID: d0067ec3654da0843b3b1a9a4c03629f
       internalID: 21300026
       vertices: []
       indices: 
@@ -491,18 +494,18 @@ TextureImporter:
       name: HeavyBandit_14
       rect:
         serializedVersion: 2
-        x: 288
-        y: 160
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 425
+        y: 163
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49345b77369f91f40b329ddca2a59c77
+      spriteID: f64f900c9148871448fa3b9c3d9ceb30
       internalID: 21300028
       vertices: []
       indices: 
@@ -512,102 +515,102 @@ TextureImporter:
       name: HeavyBandit_15
       rect:
         serializedVersion: 2
-        x: 336
-        y: 160
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 473
+        y: 162
+        width: 25
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b7a70576ec8dab42aa9f316ca06508f
+      spriteID: 63acbe0e972b7f84787b6e1f23dd35ed
       internalID: 21300030
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_16
+      name: HeavyBandit_24
       rect:
         serializedVersion: 2
-        x: 0
-        y: 112
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 138
+        y: 114
+        width: 24
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dfe6d6f7adfa2f24293b6029bb5746d7
+      spriteID: 04da0e131f067a04684fc7011de5a10e
       internalID: 21300032
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_17
+      name: HeavyBandit_23
       rect:
         serializedVersion: 2
-        x: 48
-        y: 112
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 186
+        y: 114
+        width: 33
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6351f586344697b4a82eda690a2b194f
+      spriteID: ffd30024f4c6bcf42a92024f39f74699
       internalID: 21300034
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_18
+      name: HeavyBandit_22
       rect:
         serializedVersion: 2
-        x: 96
-        y: 112
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 234
+        y: 114
+        width: 36
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea597ef5a7235c64b8f374864344cae1
+      spriteID: 9c451f9931d80b54e8b23447af4a64a9
       internalID: 21300036
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_19
+      name: HeavyBandit_21
       rect:
         serializedVersion: 2
-        x: 144
-        y: 112
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 282
+        y: 114
+        width: 38
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae83aaa8fa662a441bf9247f4d39cecf
+      spriteID: 04e5b066396ece44187538afe940cc40
       internalID: 21300038
       vertices: []
       indices: 
@@ -617,123 +620,123 @@ TextureImporter:
       name: HeavyBandit_20
       rect:
         serializedVersion: 2
-        x: 192
-        y: 112
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 333
+        y: 114
+        width: 24
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 801f6735e40419044b36f3466772d7a6
+      spriteID: 074a422a1937cbd409aa08d17a41a66f
       internalID: 21300040
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_21
+      name: HeavyBandit_19
       rect:
         serializedVersion: 2
-        x: 240
-        y: 112
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 380
+        y: 114
+        width: 25
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b81785f4671b9474db9a45bc59f3ff17
+      spriteID: e0186c2446788834d82e36d88fe43162
       internalID: 21300042
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_22
+      name: HeavyBandit_18
       rect:
         serializedVersion: 2
-        x: 288
-        y: 112
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 428
+        y: 114
+        width: 25
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78554e2ce87d01a498a9e611a3bf081f
+      spriteID: 26da39df6c6f575459268542b6461f69
       internalID: 21300044
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_23
+      name: HeavyBandit_17
       rect:
         serializedVersion: 2
-        x: 336
-        y: 112
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 476
+        y: 114
+        width: 24
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93a681ee2139f8c41ab4f182980194ef
+      spriteID: cec386a02fed1c94ba00e91dc3364cc3
       internalID: 21300046
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_24
+      name: HeavyBandit_55
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 139
+        y: 66
+        width: 23
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c58f458fcd2d7424e933b3ea81c0b55b
+      spriteID: 0e48ac47a54123a4098d274c20394ec9
       internalID: 21300048
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_25
+      name: HeavyBandit_56
       rect:
         serializedVersion: 2
-        x: 48
-        y: 64
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 186
+        y: 66
+        width: 26
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a4b0223b4894e34fa15fcf7d02d5142
+      spriteID: f751e0368f7d90f4ea42132ac5f4bd23
       internalID: 21300050
       vertices: []
       indices: 
@@ -743,18 +746,18 @@ TextureImporter:
       name: HeavyBandit_26
       rect:
         serializedVersion: 2
-        x: 96
-        y: 64
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 234
+        y: 66
+        width: 26
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ef01f7b9a4de3b4bae51d65c9e0ee26
+      spriteID: cd191a246d0fe804ebb8612e1b2dca1b
       internalID: 21300052
       vertices: []
       indices: 
@@ -764,18 +767,18 @@ TextureImporter:
       name: HeavyBandit_27
       rect:
         serializedVersion: 2
-        x: 144
-        y: 64
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 282
+        y: 66
+        width: 26
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7caaca760d503bb45a89f61315421485
+      spriteID: 23e0f5244946e5041944036f0e2bfdfa
       internalID: 21300054
       vertices: []
       indices: 
@@ -785,18 +788,18 @@ TextureImporter:
       name: HeavyBandit_28
       rect:
         serializedVersion: 2
-        x: 192
-        y: 64
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 330
+        y: 66
+        width: 26
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac1f6cc0268db82419f30a293f17428b
+      spriteID: 1ae38e296486bb242903dc7ad84aa2e4
       internalID: 21300056
       vertices: []
       indices: 
@@ -806,18 +809,18 @@ TextureImporter:
       name: HeavyBandit_29
       rect:
         serializedVersion: 2
-        x: 240
-        y: 64
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 378
+        y: 66
+        width: 27
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14c59aeeaac0f104f8d62b0859f5997d
+      spriteID: 9a7831f7d0f1342458f56910e949e729
       internalID: 21300058
       vertices: []
       indices: 
@@ -827,18 +830,18 @@ TextureImporter:
       name: HeavyBandit_30
       rect:
         serializedVersion: 2
-        x: 288
-        y: 64
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 420
+        y: 66
+        width: 37
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9aafe91b9ee71e244ac69bc60dcd010a
+      spriteID: 63dfcc4e39e33f8469108843a4a4326e
       internalID: 21300060
       vertices: []
       indices: 
@@ -848,18 +851,18 @@ TextureImporter:
       name: HeavyBandit_31
       rect:
         serializedVersion: 2
-        x: 336
-        y: 64
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 467
+        y: 66
+        width: 40
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 112cb9b1ca09e1f4eabf3495798f4989
+      spriteID: b7472b94bb5a02b42b542b84b701d08a
       internalID: 21300062
       vertices: []
       indices: 
@@ -869,40 +872,19 @@ TextureImporter:
       name: HeavyBandit_32
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 323
+        y: 18
+        width: 44
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d1b74387f847614e9227ac7725d2581
+      spriteID: eb2cfe029d84ad6498bc40b55a72760b
       internalID: 21300064
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HeavyBandit_33
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 16
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 56b5c6e4acc349c4ebf0f7a38ea4eb66
-      internalID: 21300066
       vertices: []
       indices: 
       edges: []
@@ -911,40 +893,61 @@ TextureImporter:
       name: HeavyBandit_34
       rect:
         serializedVersion: 2
-        x: 96
-        y: 16
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 378
+        y: 18
+        width: 24
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f62dbb7b90ffa245b76d39fe6144324
+      spriteID: dc78db0d2dbfa1d4bbf0fd6236037018
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeavyBandit_39
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 18
+        width: 26
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e7a71c26f42fc9439a4bd83f22b1a72
       internalID: 21300068
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeavyBandit_35
+      name: HeavyBandit_5
       rect:
         serializedVersion: 2
-        x: 144
-        y: 16
-        width: 48
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 496
+        y: 40
+        width: 10
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63a13a56b2af8414e83b623768b678c3
-      internalID: 21300070
+      spriteID: 4b4eff5d7e77326479b6fd79c3fa9861
+      internalID: 2009759679912139703
       vertices: []
       indices: 
       edges: []
