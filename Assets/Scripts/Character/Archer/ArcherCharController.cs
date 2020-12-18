@@ -13,16 +13,15 @@ public class ArcherCharController : CharacterController
     
     
     
-    public GameObject  arrow;
+    public  GameObject  arrow;
     public  int         arrow_count = 30;
-    private bool        draw = false, drawRight = true;
+    private bool        drawRight = true;
     private float       drawingTime = 1.5f;
     private bool        drawedToOpposite;
     private float       dash_time1;
     private float       dash_time2;
     private bool        isTap = false;
     private bool        dashDir = false;
-    private Vector3     mousePos;
 
 
 
@@ -73,17 +72,15 @@ public class ArcherCharController : CharacterController
 
     private void HandleDrawArrow()
     {
-        if (Input.GetMouseButtonDown(0) && !draw && arrow_count > 0) // drawing starts from here, until drawing animation ends there will be no arrow
+        if (Input.GetMouseButtonDown(0) && !m_attackCooledDown&& arrow_count > 0) // drawing starts from here, until drawing animation ends there will be no arrow
         {
             Debug.Log("Oku aldım");
             m_characterState = CharacterState.Attack;
-            faceMe(true);
             DetermineDrawingDirection();
 
-            draw = true;
+            m_attackCooledDown= true;
         }
     }
-
     private void DetermineDrawingDirection()
     {
         if (mousePos.x > transform.position.x)
@@ -146,14 +143,14 @@ public class ArcherCharController : CharacterController
         Vector3 move = new Vector3(horizontalInput, 0, 0.0f); // get input for horizontal movement
 
 
-        if ((horizontalInput > 0 && m_facingRight) || (horizontalInput < 0 && !m_facingRight) || !draw) // if direction is opposite do not move until drwaing animation ends
+        if ((horizontalInput > 0 && m_facingRight) || (horizontalInput < 0 && !m_facingRight) || !m_attackCooledDown) // if direction is opposite do not move until drwaing animation ends
         {
-            if (draw)
+            if (m_attackCooledDown)
             {
                 m_characterState = CharacterState.Idle;
                 //arrow is drawed same direction of facing
             }
-            if (!draw && horizontalInput != 0.0f)
+            if (!m_attackCooledDown&& horizontalInput != 0.0f)
             {
                 
                 if (m_onGround) // if character is on ground animation can change
@@ -184,7 +181,7 @@ public class ArcherCharController : CharacterController
 
     private void HandleReleaseArrow()
     {
-        if (!m_charAnimator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && draw && !Input.GetMouseButton(0)) // piece that arrow instantiated
+        if (!m_charAnimator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && m_attackCooledDown&& !Input.GetMouseButton(0)) // piece that arrow instantiated
         {
             Vector3 transPos = GameObject.Find("Archer_bow").transform.position;
             //Debug.Log("Bıraktım");
@@ -211,9 +208,9 @@ public class ArcherCharController : CharacterController
             arrow_count--;
             drawingTime = 1.5f;
             m_charAnimator.enabled = true;
-            draw = false;
+            m_attackCooledDown= false;
         }
-        else if (draw && Input.GetMouseButton(0))
+        else if (m_attackCooledDown&& Input.GetMouseButton(0))
         {
 
             m_characterState = CharacterState.Idle;
@@ -223,20 +220,7 @@ public class ArcherCharController : CharacterController
         }
     }
 
-    private void HandleMouseMovement()
-    {
-        if (mousePos.x > transform.position.x)
-        {
-            faceMe(true);
-
-        }
-        else
-        {
-            faceMe(false);
-        }
-
-        
-    }
+    
     public CharacterState GetState()
     {
         return m_characterState;

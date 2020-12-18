@@ -9,6 +9,7 @@ TagManager:
   - Throwable
   - EnemyDamageParticles
   - Collectable
+  - EnemyTarget
   layers:
   - Default
   - TransparentFX

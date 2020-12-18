@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class ArcherAnimationController : MonoBehaviour
@@ -21,7 +20,7 @@ public class ArcherAnimationController : MonoBehaviour
     {
         CharacterState = ArcherCharController.GetState();
         UpdateState();
-        Debug.Log(CharacterState);
+
     }
 
 

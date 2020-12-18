@@ -29,6 +29,8 @@ public class CharacterController : MonoBehaviour
     protected   CharacterState  m_characterState;
     protected   float           m_damage = 0;
     protected   float           m_damageAssesTime = 0.5f;
+    protected   bool            m_attackCooledDown;
+    protected   Vector3         mousePos;
     protected void Start()
     {
         m_characterState = CharacterState.Idle;
@@ -61,12 +63,12 @@ public class CharacterController : MonoBehaviour
         if (right)
         {
             m_facingRight = true;
-            GetComponent<SpriteRenderer>().flipX = false;
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
         else
         {
             m_facingRight = false;
-            GetComponent<SpriteRenderer>().flipX = true;
+            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         }
 
     }
@@ -87,6 +89,22 @@ public class CharacterController : MonoBehaviour
             transform.GetChild(0).gameObject.SetActive(false);
             Debug.Log("Damage assessed : " + m_health.ToString());
         }
+    }
+
+    protected void HandleMouseMovement()
+    {
+        if (m_attackCooledDown || (m_characterState == CharacterState.Run))
+            return;
+        if (mousePos.x > transform.position.x)
+        {
+            faceMe(true);
+
+        }
+        else
+        {
+            faceMe(false);
+        }
+
     }
 
     public void addHealth(float addedHealth)

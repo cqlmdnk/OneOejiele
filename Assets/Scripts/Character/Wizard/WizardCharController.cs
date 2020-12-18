@@ -8,10 +8,9 @@ using UnityEngine;
 public class WizardCharController : CharacterController
 {
     // Start is called before the first frame update
-    private Vector3 mousePos;
+    
     public GameObject MagicSpell;
-    private float Attack1Time = 0.5f;
-    private bool attack = false, CastedSpell = false;
+    private float Attack1Time = 0.7f;
     void Start()
     {
         base.Start();
@@ -34,44 +33,39 @@ public class WizardCharController : CharacterController
 
     private void HandleAttack()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !m_attackCooledDown)
         {
             m_characterState = CharacterState.Attack;
-            attack = true;
-            CastedSpell = true;
-            
+
+            m_attackCooledDown = true;
             StartCoroutine(Attack1Timer());
         }
-        else if (Input.GetMouseButtonDown(1))
+        else if (Input.GetMouseButtonDown(1) && !m_attackCooledDown)
         {
             m_characterState = CharacterState.Dash;
-            attack = true;
-            //StartCoroutine(Attack1Timer());
+            m_attackCooledDown = true;
+
+            StartCoroutine(Attack1Timer());
+            
 
         }
     }
 
-    private void HandleCastSpell()
+    private void HandleCastSpell(float angle, Vector3 SpellPosition)
     {
-        Vector3 SpellPosition;
-        if (m_facingRight)
-        {
-            SpellPosition = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
-        }
-        else
-        {
-            SpellPosition = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
-        }
-        float angle = (float)Math.Atan2(mousePos.y - SpellPosition.y, mousePos.x - SpellPosition.x) * Mathf.Rad2Deg;
+        
+        
         GameObject _MagicSpell = Instantiate(MagicSpell, SpellPosition, Quaternion.AngleAxis(angle, Vector3.forward));
         _MagicSpell.SetActive(true);
         Rigidbody2D _MagicSpellBody = _MagicSpell.GetComponent<Rigidbody2D>();
-        Vector3 veloctiy3d = Quaternion.AngleAxis(angle, Vector3.forward) * new Vector3(5.0f, 0, 0);
+        Vector3 veloctiy3d = Quaternion.AngleAxis(angle, Vector3.forward) * new Vector3(8.0f, 0, 0);
         _MagicSpellBody.velocity = (new Vector2(veloctiy3d.x, veloctiy3d.y));
     }
 
     private void HandleMovement()
     {
+        if (m_attackCooledDown)
+            return;
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector3 move = new Vector3(horizontalInput, 0, 0.0f); // get input for horizontal movement
         MoveHorizontal(move);
@@ -93,19 +87,7 @@ public class WizardCharController : CharacterController
         }
     }
 
-    private void HandleMouseMovement()
-    {
-        if (mousePos.x > transform.position.x)
-        {
-            faceMe(true);
-
-        }
-        else
-        {
-            faceMe(false);
-        }
-
-    }
+    
 
     private void HandleState()
     {
@@ -119,7 +101,7 @@ public class WizardCharController : CharacterController
             {
                 m_characterState = CharacterState.Fall;
             }
-            else if(Input.GetAxis("Horizontal") == 0 && !attack)
+            else if(Input.GetAxis("Horizontal") == 0 && m_attackCooledDown)
             {
                 m_characterState = CharacterState.Idle;
             }
@@ -129,9 +111,20 @@ public class WizardCharController : CharacterController
 
     IEnumerator Attack1Timer()
     {
+        Vector3 SpellPosition;
+        if (m_facingRight)
+        {
+            SpellPosition = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
+        }
+        else
+        {
+            SpellPosition = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
+        }
+        float angle = (float)Math.Atan2(mousePos.y - SpellPosition.y, mousePos.x - SpellPosition.x) * Mathf.Rad2Deg;
         yield return new WaitForSeconds(Attack1Time);
-        HandleCastSpell();
-        
+        HandleCastSpell(angle, SpellPosition);
+        m_attackCooledDown = false;
+
     }
 
 

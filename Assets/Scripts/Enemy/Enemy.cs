@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
 
             for (int i = 0; i < 12; i++)
             {
-                sighttest.Add(Physics2D.Raycast(transform.position, new Vector3(-1.0f + (i / 10.0f), (i / 10.0f), 0.0f), 6.0f));
+                sighttest.Add(Physics2D.Raycast(transform.position, new Vector3(-1.0f + (i / 10.0f), (i / 10.0f), 0.0f)));
             }
 
         }
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 
             for (int i = 0; i < 12; i++)
             {
-                sighttest.Add(Physics2D.Raycast(transform.position, new Vector3((i / 10.0f), 1.0f - (i / 10.0f), 0.0f), 6.0f));
+                sighttest.Add(Physics2D.Raycast(transform.position, new Vector3((i / 10.0f), 1.0f - (i / 10.0f), 0.0f)));
             }
         }
        
@@ -61,10 +61,14 @@ public class Enemy : MonoBehaviour
         {
             if (testc.collider != null)
             {
-                if (testc.collider.tag == "Player")
+                if (testc.collider.tag == "Player" && testc.distance < 6.0f)
                 {
 
                     collider =  testc.collider.gameObject;
+                }
+                else if(testc.collider.tag == "EnemyTarget" && testc.distance < 10.0f)
+                {
+                    collider = testc.collider.gameObject;
                 }
 
             }
@@ -82,15 +86,17 @@ public class Enemy : MonoBehaviour
 
         GameObject dead_zombie = new GameObject("dead_zombie");
         SpriteRenderer renderer = dead_zombie.AddComponent<SpriteRenderer>();
+       
         renderer.sprite = deadBody;
         renderer.sortingOrder = 109;
+        
         dead_zombie.transform.position = this.gameObject.transform.position;
         dead_zombie.transform.rotation = this.gameObject.transform.rotation;
         dead_zombie.gameObject.SetActive(true);
         dead_zombie.transform.SetParent(GameObject.Find("Container").transform);
 
-
-
+        dead_zombie.transform.localScale = this.transform.localScale;
+        renderer.material = GetComponent<SpriteRenderer>().material;
         //DROP SYSTEM WILL BE WRITTEN HERE FURTHER
         int coin_count = (int)Random.Range(2.0f, 7.0f);
 

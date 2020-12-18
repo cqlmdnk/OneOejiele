@@ -12,7 +12,7 @@ public class InventoryShowUp : MonoBehaviour
     void OnEnable()
     {
 
-        inventory = GameObject.Find("HeavyBandit").GetComponent<InventoryController>().inventory;
+        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryController>().inventory;
         int counterX = 0;
         int counterY = 0;
 
@@ -53,7 +53,7 @@ public class InventoryShowUp : MonoBehaviour
     }
     void applyItem(Item item)
     {
-        GameObject characterObject = GameObject.Find("Character");
+        GameObject characterObject = GameObject.FindGameObjectWithTag("Player");
         CharacterController controller = characterObject.GetComponent<CharacterController>();
         applyPotions(controller, item);
         Debug.Log(item.Value);

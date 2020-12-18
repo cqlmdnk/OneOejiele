@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4588935210562790}
   - component: {fileID: 114999745408315450}
+  - component: {fileID: 2697261855408123239}
   - component: {fileID: 95734438044755836}
   - component: {fileID: 212652212501150786}
   - component: {fileID: 50959880312528810}
@@ -53,6 +54,19 @@ MonoBehaviour:
   m_healthBar: {fileID: 0}
   m_speed: 5
   m_jumpForce: 10
+  m_onAttack: 0
+--- !u!114 &2697261855408123239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463392086428580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b3c00f2aff83b46ab2ba5ab5b4853f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &95734438044755836
 Animator:
   serializedVersion: 3
@@ -110,7 +124,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 110
-  m_Sprite: {fileID: 21300000, guid: 317b8365a4649ab459f6cb58ec8f9f18, type: 3}
+  m_Sprite: {fileID: 21300014, guid: 317b8365a4649ab459f6cb58ec8f9f18, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -133,7 +147,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.96000004
+  m_Mass: 0.775716
   m_LinearDrag: 0.5
   m_AngularDrag: 0.05
   m_GravityScale: 2
@@ -141,7 +155,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 1
-  m_Constraints: 5
+  m_Constraints: 4
 --- !u!61 &61346583712760016
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -155,18 +169,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02, y: 0.662}
+  m_Offset: {x: 0.0112448335, y: -0.024906158}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.5, y: 1.5}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.8125, y: 1.1875}
     newSize: {x: 1.28, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 1.2}
+  m_Size: {x: 0.6729983, y: 1.152627}
   m_EdgeRadius: 0
 --- !u!114 &638225910081989684
 MonoBehaviour:
@@ -195,9 +209,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.6779384, y: 0.9081855}
+  m_Offset: {x: 0.63655347, y: 0.18724853}
   serializedVersion: 2
-  m_Radius: 0.24316046
+  m_Radius: 0.265593
 --- !u!1 &6447588728560938147
 GameObject:
   m_ObjectHideFlags: 0

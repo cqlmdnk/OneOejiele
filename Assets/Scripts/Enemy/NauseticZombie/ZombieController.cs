@@ -124,7 +124,7 @@ public class ZombieController : Enemy
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag.Equals("Player"))
+        if (col.gameObject.tag.Equals("Player") || col.gameObject.tag.Equals("EnemyTarget"))
         {
 
             stopForAttack = true;
@@ -137,7 +137,7 @@ public class ZombieController : Enemy
 
     void OnCollisionExit2D(Collision2D col)
     {
-        if (col.gameObject.tag.Equals("Player"))
+        if (col.gameObject.tag.Equals("Player") || col.gameObject.tag.Equals("EnemyTarget"))
         {
             stopForAttack = false;
             animator.SetBool("attack", false);

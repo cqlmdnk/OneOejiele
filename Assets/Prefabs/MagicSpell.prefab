@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 8329985936185093676}
   - component: {fileID: 3699297806242084349}
   - component: {fileID: 4041464581196633}
+  - component: {fileID: 4304192353288688466}
   m_Layer: 0
   m_Name: MagicSpell
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,3 +141,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &4304192353288688466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8329985936185093679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f91f86126737146a09a443aa500cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
