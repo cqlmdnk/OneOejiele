@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicSpellController : MonoBehaviour
+public class MagicSpellController : ThrowableController
 {
     // Start is called before the first frame update
     void Start()
@@ -11,9 +11,9 @@ public class MagicSpellController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private new void Update()
     {
-        
+        base.Update();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

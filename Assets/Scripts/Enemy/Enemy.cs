@@ -6,12 +6,13 @@ public class Enemy : MonoBehaviour
 {
     // Start is called before the first frame update
     protected float health, damage, damageTimer;
+
     public GameObject damagePopUp;
     public GameObject coin , arrowSack;
     public Sprite deadBody;
     protected Rigidbody2D player;
     protected Animator animator;
-    public ParticleSystem fluidParticles;
+    public ParticleSystem fluidParticles, explosion;
     protected bool stopForAttack;
     protected float length;
     protected float meleeDamageTakeInterval = 0.9f;
@@ -21,6 +22,53 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GetComponent<Rigidbody2D>();
 
+    }
+
+
+    protected void HandleNewPath()
+    {
+        if (length > -0.01 && length < 0.01)
+        {
+            length = UnityEngine.Random.Range(-1, 2);
+
+        }
+    }
+
+
+    protected void HandleDamageAssesment()
+    {
+        if (damage != 0)
+        {
+            damageTimer -= Time.deltaTime;
+            if (damageTimer < 0)
+            {
+                damageEnd();
+                damageTimer = 0.717f;
+            }
+        }
+    }
+
+    protected void damageEnd()
+    {
+        stopForAttack = false;
+        damage = 0;
+        animator.SetBool("takingDamage", false);
+
+
+        
+    }
+
+    protected bool HandleDeath()
+    {
+        if (health < 0.0f)
+        {
+            if(explosion != null)
+                explosion.transform.parent = null;
+            animator.SetBool("dead", true);
+            Destroy(this.gameObject, 4.0f);
+            return true;
+        }
+        return false;
     }
 
     protected GameObject SightCheck()
@@ -119,22 +167,27 @@ public class Enemy : MonoBehaviour
 
 
     }
-    protected void OnCollisionEnter2D(Collision2D col)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
-        if (col.gameObject.tag.Equals("Throwable"))
+        GameObject throwableObject = collision.gameObject;
+        Rigidbody2D throwableObjectBody = throwableObject.GetComponent<Rigidbody2D>();
+        if (throwableObject.tag.Equals("Throwable"))
         {
             stopForAttack = true;
             animator.SetBool("takingDamage", true);
-            health -= 25.0f;
-            damage = 25;
+            ThrowableController throwableController = throwableObject.GetComponent<ThrowableController>();
+            damage = throwableController.GetDamage();
+            health -= damage;
+            
             Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
             GameObject _popUp = Instantiate(damagePopUp, popUpPos, Quaternion.identity);
+            _popUp.GetComponent<TextMesh>().text = damage.ToString("#.00");
             _popUp.transform.SetParent(this.gameObject.transform);
             _popUp.SetActive(true);
             fluidParticles.gameObject.SetActive(true);
             fluidParticles.Play();
 
-            length = transform.position.x-col.transform.position.x > 0 ? -1.0f : 1.0f; // change direction to damage taken side
+            length = transform.position.x- throwableObject.transform.position.x > 0 ? -1.0f : 1.0f; // change direction to damage taken side
         }
 
         
@@ -145,7 +198,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-
+            GameObject throwableObject = collision.gameObject;
             if (collision.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             {
                 if(meleeDamageTakeInterval < 0)
@@ -157,6 +210,7 @@ public class Enemy : MonoBehaviour
                     damage = 25;
                     Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
                     GameObject _popUp = Instantiate(damagePopUp, popUpPos, Quaternion.identity);
+                    _popUp.GetComponent<TextMesh>().text = damage.ToString("#.00");
                     _popUp.transform.SetParent(this.gameObject.transform);
                     _popUp.SetActive(true);
                     fluidParticles.gameObject.SetActive(true);

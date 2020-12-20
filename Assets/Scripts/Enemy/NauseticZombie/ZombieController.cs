@@ -21,14 +21,14 @@ public class ZombieController : Enemy
         length = UnityEngine.Random.Range(-2, 2);
         if (length < 0)
         {
-           transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         }
 
         else
         {
             transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
-           
+
         damageTimer = zombieRecoverTime;
 
 
@@ -38,90 +38,71 @@ public class ZombieController : Enemy
     void Update()
     {
 
-        if (health <= 0)
-        {
-            animator.SetBool("dead", true);
-            DestroyImmediate(this.gameObject.GetComponent<Rigidbody2D>());
-            DestroyImmediate(this.gameObject.GetComponent<BoxCollider2D>());
+        if (HandleDeath())
+            return;
 
-            Destroy(this.gameObject, 5.0f);
+
+
+        HandleNewPath();
+        /*if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
+        {
+            //float harmonicForce = animator.GetCurrentAnimatorStateInfo(0).normalizedTime % (animator.GetCurrentAnimatorStateInfo(0).length * 2);
+            //transform.position = new Vector3(transform.position.x + (harmonicForce / 40.0f) - 0.025f, transform.position.y, transform.position.z);
         }
-        else
+        */
+
+        HandleDamageAssesment();
+        HandleMovement();
+
+    }
+
+    private void HandleMovement()
+    {
+        GameObject seenObject = SightCheck();
+
+        lockedTarget = seenObject == null ? false : true;
+
+        if (!stopForAttack)
         {
-            if (length > -0.01 && length < 0.001)
+            if (!lockedTarget)
             {
-                length = UnityEngine.Random.Range(-5, 5);
-                
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
-            {
-                //float harmonicForce = animator.GetCurrentAnimatorStateInfo(0).normalizedTime % (animator.GetCurrentAnimatorStateInfo(0).length * 2);
-                //transform.position = new Vector3(transform.position.x + (harmonicForce / 40.0f) - 0.025f, transform.position.y, transform.position.z);
-            }
-
-
-            if (damage != 0)
-            {
-                damageTimer -= Time.deltaTime;
-                if (damageTimer < 0)
-                {
-                    damageEnd();
-                    damageTimer = 0.717f;
-                }
-            }
-
-
-
-            Vector3 start = transform.position;
-            Vector3 direction = player.transform.position - transform.position;
-
-            /*
-             if raycast angle is greater than 80(maybe 70 ) then it should turn other direction while assuming the character is jumped off him.
-             
-             
-             
-             */
-            
-
-            //ray casting 90 degrees in 10 segments with respect to facing
-            GameObject seenObject = SightCheck();
-            
-            lockedTarget = seenObject == null ? false : true;
-           
-
-            if (!stopForAttack && !lockedTarget)
-            {
-                Vector3 move = new Vector3(((0.1f ) * Math.Sign(length) + length / 30), 0, 0.0f);
+                Vector3 move = new Vector3(((0.1f) * Math.Sign(length) + length / 30), 0, 0.0f);
                 transform.position = transform.position + 5 * move * Time.deltaTime;
                 length -= move.x * Time.deltaTime;
-                if(move.x < 0)
-                {
-                    transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-                }
-                else
-                {
-                    transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                }
+                DetermineDirection(move.x);
             }
-            else if (!stopForAttack && lockedTarget)
+            else
             {
-                Vector3 move = new Vector3((0.1f ) * Math.Sign(seenObject.transform.position.x - transform.position.x) + seenObject.transform.position.x - transform.position.x, 0, 0);
+                Vector3 move = new Vector3((0.1f) * Math.Sign(seenObject.transform.position.x - transform.position.x) + seenObject.transform.position.x - transform.position.x, 0, 0);
                 transform.position = transform.position + 4 * move.normalized * Time.deltaTime;
-                if (move.x < 0)
-                {
-                    transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-                }
-                else
-                {
-                    transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                }
+                DetermineDirection(move.x);
                 length = move.x > 0 ? 1.0f : -1.0f;
 
 
             }
         }
-
     }
+
+    private void DetermineDirection(float moveX)
+    {
+        if (moveX < 0)
+        {
+            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            if (this.transform.childCount > 1)
+            {
+                transform.FindChild("DamagePopUp(Clone)").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            }
+        }
+        else
+        {
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            if (this.transform.childCount > 1)
+            {
+                transform.FindChild("DamagePopUp(Clone)").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag.Equals("Player") || col.gameObject.tag.Equals("EnemyTarget"))
@@ -144,20 +125,13 @@ public class ZombieController : Enemy
         }
 
     }
-    void damageEnd()
-    {
-        stopForAttack = false;
-        animator.SetBool("takingDamage", false);
-
-
-        damage = 0;
-    }
+    
     void OnDestroy() // creating dead body
     {
 
         base.OnBeforeDestroy();
     }
 
-    
+
 
 }

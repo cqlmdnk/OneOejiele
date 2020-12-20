@@ -11,7 +11,6 @@ public class CameraController : MonoBehaviour
     float camerafocus;
     void Start()
     {
-        player_pos = GameObject.FindGameObjectWithTag("Player").transform;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
     }
@@ -19,7 +18,11 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetAxis("Horizontal") < -0.01)
+        if (player_pos == null && GameObject.FindGameObjectWithTag("Player") != null)
+            player_pos = GameObject.FindGameObjectWithTag("Player").transform;
+        else if(GameObject.FindGameObjectWithTag("Player") == null)
+            return;
+        if (Input.GetAxis("Horizontal") < -0.01)
             camerafocus = player_pos.position.x- lookAhead;
         else if(Input.GetAxis("Horizontal") > 0.01)
             camerafocus = player_pos.position.x+ lookAhead;

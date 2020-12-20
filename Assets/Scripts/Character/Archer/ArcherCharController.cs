@@ -10,9 +10,6 @@ using System;
 
 public class ArcherCharController : CharacterController
 {
-    
-    
-    
     public  GameObject  arrow;
     public  int         arrow_count = 30;
     private bool        drawRight = true;
@@ -23,45 +20,23 @@ public class ArcherCharController : CharacterController
     private bool        isTap = false;
     private bool        dashDir = false;
 
-
-
-
+    /*Bugs
+     -Arrow instantiate position
+         */
     void Start()
     {
         base.Start();
-        
-        
-
     }
 
-
-    void FixedUpdate()
+    private new void Update()
     {
-        HandleMouseMovement();
-        HandleState();
-        HandleMovement();
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
+        base.Update();
         HandleReleaseArrow();
         HandleDrawArrow();
-
-        
-        
         HandleMeleeAttack();
         HandleDashMechanic();
         
-        HandleDamageAssesment();
     }
-
-    private void HandleDamageAssesment()
-    {
-        m_damageAssesTime -= Time.deltaTime;
-        if (m_damageAssesTime <= 0)
-        {
-            assesDamage();
-        }
-    }
-
     private void HandleMeleeAttack()
     {
         if (Input.GetKeyDown(KeyCode.Space) && m_characterState != CharacterState.Dash) // melee attack will be expanded
@@ -77,7 +52,7 @@ public class ArcherCharController : CharacterController
             Debug.Log("Oku aldım");
             m_characterState = CharacterState.Attack;
             DetermineDrawingDirection();
-
+            faceMe(drawRight);
             m_attackCooledDown= true;
         }
     }
@@ -121,67 +96,9 @@ public class ArcherCharController : CharacterController
         }
     }
 
-    private void HandleState()
-    {
-        if (m_characterState != CharacterState.Idle) // if state is not idle always turn idle except falling and jumping
-        {
-            if (m_charBody.velocity.y < 0.02 && m_charBody.velocity.y > -0.02)
-            {
-               
-            }
-            else
-            {
-                m_characterState = CharacterState.OnAir;
-            }
-
-        }
-    }
-
-    private void HandleMovement()
-    {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        Vector3 move = new Vector3(horizontalInput, 0, 0.0f); // get input for horizontal movement
-
-
-        if ((horizontalInput > 0 && m_facingRight) || (horizontalInput < 0 && !m_facingRight) || !m_attackCooledDown) // if direction is opposite do not move until drwaing animation ends
-        {
-            if (m_attackCooledDown)
-            {
-                m_characterState = CharacterState.Idle;
-                //arrow is drawed same direction of facing
-            }
-            if (!m_attackCooledDown&& horizontalInput != 0.0f)
-            {
-                
-                if (m_onGround) // if character is on ground animation can change
-                {
-                    m_characterState = CharacterState.Run;
-                }
-                MoveHorizontal(move); // although animation still fall or jump character can move on air like other platformers
-
-            }
-            else
-            {
-                m_characterState = CharacterState.Idle;
-            }
-        }
-        else
-        {
-            drawedToOpposite = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.W) && m_onGround) // jumping if character on ground or on something concrete
-        {
-
-            m_characterState = CharacterState.Jump;
-            m_charBody.velocity = new Vector2(0.0f, 10.0f);
-
-        }
-    }
-
     private void HandleReleaseArrow()
     {
-        if (!m_charAnimator.GetCurrentAnimatorStateInfo(0).IsName("character_draw") && m_attackCooledDown&& !Input.GetMouseButton(0)) // piece that arrow instantiated
+        if (drawingTime > 2.0f && m_attackCooledDown && !Input.GetMouseButton(0)) // piece that arrow instantiated
         {
             Vector3 transPos = GameObject.Find("Archer_bow").transform.position;
             //Debug.Log("Bıraktım");
@@ -196,7 +113,6 @@ public class ArcherCharController : CharacterController
             else
                 arrowDrop = -0.01f;
 
-
             faceMe(drawRight);
 
             GameObject _arrow = Instantiate(arrow, transPos, Quaternion.AngleAxis(angle, Vector3.forward));
@@ -204,6 +120,7 @@ public class ArcherCharController : CharacterController
             Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
             Vector3 veloctiy3d = Quaternion.AngleAxis(angle, Vector3.forward) * new Vector3((float)Math.Log((double)drawingTime, 2.0) * 20, arrowDrop, 0);
             arrow_body.velocity = (new Vector2(veloctiy3d.x, veloctiy3d.y));
+            _arrow.GetComponent<ArrowController>().SetDamage(arrow_body.velocity.magnitude);
 
             arrow_count--;
             drawingTime = 1.5f;
@@ -213,24 +130,14 @@ public class ArcherCharController : CharacterController
         else if (m_attackCooledDown&& Input.GetMouseButton(0))
         {
 
-            m_characterState = CharacterState.Idle;
-            Debug.Log("Yayı geriyorum");
+            if(drawingTime > 2.0f)
+            {
+
+                m_charAnimator.enabled = false;
+            }
             drawingTime += Time.deltaTime;
             //Debug.Log(drawingTime);
         }
     }
 
-    
-    public CharacterState GetState()
-    {
-        return m_characterState;
-    }
-
-
-    
-    
-   
-   
-
-    
 }

@@ -19,22 +19,25 @@ public class CharacterController : MonoBehaviour
 {
     
     // Start is called before the first frame update
-    public      GameObject      m_healthBar;
+    protected   GameObject      m_healthBar;
     protected   float           m_health = 100;
     protected   bool            m_facingRight;
     protected   GameObject      m_character;
     protected   Rigidbody2D     m_charBody;
     protected   Animator        m_charAnimator;
     protected   bool            m_onGround;
+    [SerializeField]
     protected   CharacterState  m_characterState;
     protected   float           m_damage = 0;
     protected   float           m_damageAssesTime = 0.5f;
+    protected   bool            m_damageTaken = false;
+    [SerializeField]
     protected   bool            m_attackCooledDown;
     protected   Vector3         mousePos;
     protected void Start()
     {
         m_characterState = CharacterState.Idle;
-
+        m_healthBar = GameObject.FindGameObjectWithTag("HealthBar");
         m_charBody = GetComponent<Rigidbody2D>();
         m_charAnimator = GetComponent<Animator>();
     }
@@ -42,7 +45,35 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        HandleMouseMovement();
+        HandleMovement();
+        HandleState();
+    }
+
+    protected void HandleMovement()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+         // get input for horizontal movement
+
+        if (horizontalInput != 0.0f && m_characterState != CharacterState.Attack)
+        {
+            if (m_onGround) // if character is on ground animation can change
+            {
+                m_characterState = CharacterState.Run;
+            }
+            Vector3 move = new Vector3(horizontalInput, 0, 0.0f);
+            MoveHorizontal(move); // although animation still fall or jump character can move on air like other platformers
+
+        }
         
+        if (Input.GetKeyDown(KeyCode.W) && m_onGround) // jumping if character on ground or on something concrete
+        {
+
+            m_characterState = CharacterState.Jump;
+            m_charBody.velocity = new Vector2(0.0f, 10.0f);
+
+        }
     }
     protected void MoveHorizontal(Vector3 move)
     {
@@ -87,7 +118,7 @@ public class CharacterController : MonoBehaviour
             m_damageAssesTime = 0.5f;
             m_damage = 0;
             transform.GetChild(0).gameObject.SetActive(false);
-            Debug.Log("Damage assessed : " + m_health.ToString());
+
         }
     }
 
@@ -123,6 +154,35 @@ public class CharacterController : MonoBehaviour
 
     }
 
+    protected void HandleState()
+    {
+        assesDamage();
+        if (m_characterState != CharacterState.Idle) // if state is not idle always turn idle except falling and jumping
+        {
+            if (m_charBody.velocity.y > 0.02)
+            {
+                m_characterState = CharacterState.Jump;
+            }
+            else if (m_charBody.velocity.y < -0.02)
+            {
+                m_characterState = CharacterState.Fall;
+            }
+            if (!m_attackCooledDown)
+            {
+                if (Input.GetAxis("Horizontal") == 0)
+                {
+                    m_characterState = CharacterState.Idle;
+                }
+                else
+                {
+                    m_characterState = CharacterState.Run;
+                }
+            }
+            
+
+        }
+    }
+
     void OnParticleCollision(GameObject other)
     {
 
@@ -135,10 +195,15 @@ public class CharacterController : MonoBehaviour
 
             if (col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
             {
-
-                m_damage += 1.0f;
-                transform.GetChild(0).gameObject.SetActive(true);
-                Debug.Log("Damage added. Total_damage: " + m_damage.ToString());
+                if (!m_damageTaken)
+                {
+                    m_damage += 1.0f;
+                    transform.GetChild(0).gameObject.SetActive(true);
+                    Debug.Log("Damage added. Total_damage: " + m_damage.ToString());
+                    m_damageTaken = true;
+                    StartCoroutine(DamageTakeTimer());
+                }
+                
 
             }
         }
@@ -167,5 +232,14 @@ public class CharacterController : MonoBehaviour
             m_charAnimator.SetBool("onAir", true);
 
         }
+    }
+    public CharacterState GetState()
+    {
+        return m_characterState;
+    }
+    IEnumerator DamageTakeTimer()
+    {
+        yield return new WaitForSeconds(0.2f);
+        m_damageTaken = false;
     }
 }

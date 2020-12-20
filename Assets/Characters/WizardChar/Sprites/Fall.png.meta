@@ -95,10 +95,10 @@ TextureImporter:
       name: Fall_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 231
-        height: 190
+        x: 68
+        y: 61
+        width: 59
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -106,7 +106,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19cf30eedbbb42a41ad4d8377ae3d5e5
+      spriteID: d11cd90ecb98baf40a6308a7bb36688f
       internalID: -5966621866309598838
       vertices: []
       indices: 
@@ -116,10 +116,10 @@ TextureImporter:
       name: Fall_1
       rect:
         serializedVersion: 2
-        x: 231
-        y: 0
-        width: 231
-        height: 190
+        x: 299
+        y: 61
+        width: 59
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,7 +127,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2bbef18bc8733c040a28b9d934a3fdf7
+      spriteID: f7aefbe2847110848aedbd5482e01e56
       internalID: -2069157278089061004
       vertices: []
       indices: 

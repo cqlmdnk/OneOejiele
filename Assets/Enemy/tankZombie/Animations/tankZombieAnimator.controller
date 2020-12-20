@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isDying
+    m_ConditionEvent: dead
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4165413499242139238}
@@ -113,7 +113,7 @@ AnimatorController:
   m_Name: tankZombieAnimator
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: isDying
+  - m_Name: dead
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0

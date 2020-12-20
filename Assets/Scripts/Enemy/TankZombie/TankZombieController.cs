@@ -8,7 +8,7 @@ public class TankZombieController : Enemy
     // Start is called before the first frame update
     
     bool isParticlesAnimating = false;
-    public ParticleSystem explosion, throwUp;
+    public ParticleSystem throwUp;
     float particleTimer = -0.1f;
     void Start()
     {
@@ -34,51 +34,51 @@ public class TankZombieController : Enemy
 
     // Update is called once per frame
     void Update()
-    {   
-        if(health < 0.0f)
-        {
-            
-            explosion.transform.parent = null;
-            animator.SetBool("isDying", true);
-            Destroy(this.gameObject, 3.0f);
-            
-        }
-        
-        if(UnityEngine.Random.Range(0, 100) < 1.0f   &&  SightCheck()  && particleTimer <0)
+    {
+        if (HandleDeath())
+            return;
+        HandleThrowUp();
+        HandleNewPath();
+        HandleMovement();
+
+    }
+
+    private void HandleMovement()
+    {
+        Vector3 move = new Vector3(((0.1f) * Math.Sign(length) + length / 100), 0, 0.0f);
+        DetermineDirection(move.x);
+        transform.position = transform.position + 2 * move * Time.deltaTime;
+        length -= 2 * move.x * Time.deltaTime;
+    }
+
+    
+
+    private void HandleThrowUp()
+    {
+        if (UnityEngine.Random.Range(0, 100) < 1.0f && SightCheck() && particleTimer < 0)
         {
             throwUp.Play();
             isParticlesAnimating = true;
             particleTimer = 3.0f;
         }
-        else if(isParticlesAnimating)
+        else if (isParticlesAnimating)
         {
             particleTimer -= Time.deltaTime;
         }
+    }
 
-
-        if (length > -0.01 && length < 0.01)
+    private void DetermineDirection(float moveX)
+    {
+        if (moveX < 0)
         {
-            length = UnityEngine.Random.Range(-1, 2);
-
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            
         }
-        if (length < 0)
-        {
-
-            GetComponent<SpriteRenderer>().flipX = false;
-            transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 0, 0);
-        }
-
         else
         {
-            GetComponent<SpriteRenderer>().flipX = true;
-            transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 180, 0);
-
+            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            
         }
-
-        Vector3 move = new Vector3(((0.1f) * Math.Sign(length) + length / 100), 0, 0.0f);
-        transform.position = transform.position + 2 * move * Time.deltaTime;
-        length -= 2* move.x * Time.deltaTime;
-
     }
 
     void OnCollisionEnter2D(Collision2D col)

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowControl : MonoBehaviour
+public class ArrowController : ThrowableController
 {
     // Start is called before the first frame update
     
@@ -23,14 +23,14 @@ public class ArrowControl : MonoBehaviour
        }
 
     // Update is called once per frame
-    void Update()
+    private new void Update()
     {
         // code for direction of sprite changes with its velocity
         if (hit)
             DestroyImmediate(this.gameObject);
+        else
+            base.Update();
 
-        else if ( GetComponent<Rigidbody2D>() != null) /// !!!!
-                transform.rotation = Quaternion.Euler(0, 0,((float)Math.Atan2((double)GetComponent<Rigidbody2D>().velocity.y, (double)GetComponent<Rigidbody2D>().velocity.x))  * Mathf.Rad2Deg);
 
 
     }

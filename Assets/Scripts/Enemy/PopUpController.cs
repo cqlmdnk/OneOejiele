@@ -6,26 +6,14 @@ public class PopUpController : MonoBehaviour
 {
     // Start is called before the first frame update
     public Renderer myRenderer;
-    private List<Renderer> renderers;
-    public float popUpDieTime;
+    public float popUpDieTime = 1.0f;
     Color newColor;
     private int i = 0;
     void Start()
     {
         myRenderer.sortingLayerName = "Default";
         myRenderer.sortingOrder = 130;
-        renderers = new List<Renderer>();
-        renderers.Add(this.gameObject.GetComponent<Renderer>());
-        Transform bubble = this.gameObject.transform.GetChild(0);
-
-        renderers.Add(bubble.GetComponent<Renderer>());
-
-        Transform white = this.gameObject.transform.GetChild(1);
-
-        renderers.Add(white.GetComponent<Renderer>());
-
-        Transform white_end = white.transform.GetChild(0);
-        renderers.Add(white_end.GetComponent<Renderer>());
+        
 
     }
     private void Awake()
@@ -51,14 +39,12 @@ public class PopUpController : MonoBehaviour
     {
 
         i++;
-        foreach (Renderer renderer in renderers)
-        {
-            newColor = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, (renderer.material.color.a - Time.deltaTime/2));
-            transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime/10, transform.position.z);
-            
-            renderer.material.color = newColor;
+
+        newColor = new Color(myRenderer.material.color.r, myRenderer.material.color.g, myRenderer.material.color.b, myRenderer.material.color.a - Time.deltaTime / 2);
+        transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime/10, transform.position.z);
+        myRenderer.material.color = newColor;
             
 
-        }
+        
     }
 }
