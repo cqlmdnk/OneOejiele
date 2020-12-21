@@ -71,7 +71,7 @@ Shader "Cartoon FX/Particle Multiply Colored"
 					COMPUTE_EYEDEPTH(o.projPos.z);
 					#endif
 					o.color = v.color;
-					o.texcoord = TRANSFORM_TEX(v.texcoord,_MainTex);
+					o.texcoord = TRANSFORTEX(v.texcoord,_MainTex);
 					return o;
 				}
 				

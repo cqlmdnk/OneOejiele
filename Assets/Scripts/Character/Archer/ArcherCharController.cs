@@ -28,7 +28,7 @@ public class ArcherCharController : CharacterController
         base.Start();
     }
 
-    private new void Update()
+    protected override void Update()
     {
         base.Update();
         HandleReleaseArrow();
@@ -39,21 +39,21 @@ public class ArcherCharController : CharacterController
     }
     private void HandleMeleeAttack()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && m_characterState != CharacterState.Dash) // melee attack will be expanded
+        if (Input.GetKeyDown(KeyCode.Space) && characterState != CharacterState.Dash) // melee attack will be expanded
         {
-            m_characterState = CharacterState.Melee;
+            characterState = CharacterState.Melee;
         }
     }
 
     private void HandleDrawArrow()
     {
-        if (Input.GetMouseButtonDown(0) && !m_attackCooledDown&& arrow_count > 0) // drawing starts from here, until drawing animation ends there will be no arrow
+        if (Input.GetMouseButtonDown(0) && !attackCooledDown&& arrow_count > 0) // drawing starts from here, until drawing animation ends there will be no arrow
         {
             Debug.Log("Oku aldım");
-            m_characterState = CharacterState.Attack;
+            characterState = CharacterState.Attack;
             DetermineDrawingDirection();
             faceMe(drawRight);
-            m_attackCooledDown= true;
+            attackCooledDown= true;
         }
     }
     private void DetermineDrawingDirection()
@@ -73,24 +73,24 @@ public class ArcherCharController : CharacterController
     {
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A)) // double tap dash control
         {
-            if (isTap == true && dashDir == m_facingRight)
+            if (isTap == true && dashDir == facingRight)
             {
                 dash_time1 = Time.time;
                 isTap = false;
 
                 if (dash_time1 - dash_time2 < 0.2f)
                 {
-                    m_characterState = CharacterState.Dash;
-                    if (m_facingRight)
-                        m_charBody.velocity = new Vector2(5.0f, 0.0f); // velocity gives deeling like quick spin like on dash
+                    characterState = CharacterState.Dash;
+                    if (facingRight)
+                        charBody.velocity = new Vector2(5.0f, 0.0f); // velocity gives deeling like quick spin like on dash
                     else
-                        m_charBody.velocity = new Vector2(-5.0f, 0.0f);
+                        charBody.velocity = new Vector2(-5.0f, 0.0f);
                 }
             }
             else
             {
                 dash_time2 = Time.time;
-                dashDir = m_facingRight;
+                dashDir = facingRight;
                 isTap = true;
             }
         }
@@ -98,7 +98,7 @@ public class ArcherCharController : CharacterController
 
     private void HandleReleaseArrow()
     {
-        if (drawingTime > 2.0f && m_attackCooledDown && !Input.GetMouseButton(0)) // piece that arrow instantiated
+        if (drawingTime > 2.0f && attackCooledDown && !Input.GetMouseButton(0)) // piece that arrow instantiated
         {
             Vector3 transPos = GameObject.Find("Archer_bow").transform.position;
             //Debug.Log("Bıraktım");
@@ -124,16 +124,16 @@ public class ArcherCharController : CharacterController
 
             arrow_count--;
             drawingTime = 1.5f;
-            m_charAnimator.enabled = true;
-            m_attackCooledDown= false;
+            charAnimator.enabled = true;
+            attackCooledDown= false;
         }
-        else if (m_attackCooledDown&& Input.GetMouseButton(0))
+        else if (attackCooledDown&& Input.GetMouseButton(0))
         {
 
             if(drawingTime > 2.0f)
             {
 
-                m_charAnimator.enabled = false;
+                charAnimator.enabled = false;
             }
             drawingTime += Time.deltaTime;
             //Debug.Log(drawingTime);

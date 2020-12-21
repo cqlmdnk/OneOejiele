@@ -6,7 +6,7 @@ using UnityEngine;
 public class ThrowableController : MonoBehaviour
 {
     // Start is called before the first frame update
-    protected float m_damage;
+    protected float damage;
     void Start()
     {
         
@@ -21,10 +21,10 @@ public class ThrowableController : MonoBehaviour
     }
     public float GetDamage()
     {
-        return m_damage;
+        return damage;
     }
     public void SetDamage(float damage)
     {
-        m_damage = damage;
+        damage = damage;
     }
 }

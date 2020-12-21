@@ -4,13 +4,15 @@ using System;
 
 public class BanditCharController : CharacterController
 {
-    private bool m_attackReverse = false;
+    public float attackRange = 0.4f;
+    public Transform attackPoint;
+    public LayerMask enemyLayers;
     void Start()
     {
         base.Start();
 
     }
-    private new void Update()
+    protected override void Update()
     {
         base.Update();
         HandleAttack();
@@ -18,18 +20,30 @@ public class BanditCharController : CharacterController
 
     private void HandleAttack()
     {
-        if (Input.GetMouseButtonDown(0) && !m_attackCooledDown)
+        if (Input.GetMouseButtonDown(0))
         {
-            m_attackCooledDown = true;
+            
             StartCoroutine(AttackTimer());
+           
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             float angle = (float)Math.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x + 0.5f) * Mathf.Rad2Deg;
-            m_characterState = CharacterState.Attack;
+            characterState = CharacterState.Attack;
         }
     }
     IEnumerator AttackTimer()
     {
         yield return new WaitForSeconds(0.5f);
-        m_attackCooledDown = false;
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            enemy.GetComponent<Enemy>().TakeDamage(25.0f);
+        }
+
+        
+        yield break;
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }

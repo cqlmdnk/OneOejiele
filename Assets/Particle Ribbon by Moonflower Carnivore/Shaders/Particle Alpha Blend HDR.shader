@@ -68,7 +68,7 @@ Category {
 				#endif
 				o.color = v.color * _TintColor;
 				o.emissive = v.color.rgb * v.color.a * _EmissiveColor.rgb * _EmissiveColor.a * _EmissivePow;
-				o.texcoord = TRANSFORM_TEX(v.texcoord,_MainTex);
+				o.texcoord = TRANSFORTEX(v.texcoord,_MainTex);
 				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
 			}

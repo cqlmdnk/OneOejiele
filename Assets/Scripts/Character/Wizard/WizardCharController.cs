@@ -16,27 +16,27 @@ public class WizardCharController : CharacterController
         base.Start();
     }
     // Update is called once per frame
-    private new void Update()
+    protected override void Update()
     {
         base.Update();
         HandleAttack();
     }
     private void HandleAttack()
     {
-        if (Input.GetMouseButtonDown(0) && !m_attackCooledDown)
+        if (Input.GetMouseButtonDown(0) && !attackCooledDown)
         {
             if (mousePos.x > transform.position.x)
                 faceMe(true);
             else
                 faceMe(false);
-            m_characterState = CharacterState.Attack;
-            m_attackCooledDown = true;
+            characterState = CharacterState.Attack;
+            attackCooledDown = true;
             StartCoroutine(Attack1Timer());
         }
-        else if (Input.GetMouseButtonDown(1) && !m_attackCooledDown)
+        else if (Input.GetMouseButtonDown(1) && !attackCooledDown)
         { // will be initiate the AttackTimer2 in future
-            m_characterState = CharacterState.Dash;
-            m_attackCooledDown = true;
+            characterState = CharacterState.Dash;
+            attackCooledDown = true;
             StartCoroutine(Attack1Timer());
         }
     }
@@ -53,7 +53,7 @@ public class WizardCharController : CharacterController
     {
         Vector3 SpellPosition;
         ///BUGGGGG
-        if (m_facingRight)
+        if (facingRight)
         {
             SpellPosition = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
         }
@@ -64,8 +64,8 @@ public class WizardCharController : CharacterController
         float angle = (float)Math.Atan2(mousePos.y - SpellPosition.y, mousePos.x - SpellPosition.x) * Mathf.Rad2Deg;
         yield return new WaitForSeconds(Attack1Time);
         HandleCastSpell(angle, SpellPosition);
-        m_attackCooledDown = false;
-
+        attackCooledDown = false;
+        yield break;
     }
 
 }

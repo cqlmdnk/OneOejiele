@@ -126,6 +126,23 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void TakeDamage(float amount)
+    {
+        Debug.Log("Girdim");
+        stopForAttack = true;
+        animator.SetBool("takingDamage", true);
+        health -= amount;
+        damage = amount;
+        Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
+        GameObject _popUp = Instantiate(damagePopUp, popUpPos, Quaternion.identity);
+        _popUp.GetComponent<TextMesh>().text = damage.ToString("#.00");
+        _popUp.transform.SetParent(this.gameObject.transform);
+        _popUp.SetActive(true);
+        fluidParticles.gameObject.SetActive(true);
+        fluidParticles.Play();
+        meleeDamageTakeInterval = 0.6f;
+    }
+
 
     protected void OnBeforeDestroy() // creating dead body
     {
@@ -194,40 +211,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    void OnTriggerStay2D(Collider2D collision) // timer ekle
-    {
-        if (collision.gameObject.tag.Equals("Player"))
-        {
-            GameObject throwableObject = collision.gameObject;
-            if (collision.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            {
-                if(meleeDamageTakeInterval < 0)
-                {
-                    Debug.Log("Girdim");
-                    stopForAttack = true;
-                    animator.SetBool("takingDamage", true);
-                    health -= 25.0f;
-                    damage = 25;
-                    Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
-                    GameObject _popUp = Instantiate(damagePopUp, popUpPos, Quaternion.identity);
-                    _popUp.GetComponent<TextMesh>().text = damage.ToString("#.00");
-                    _popUp.transform.SetParent(this.gameObject.transform);
-                    _popUp.SetActive(true);
-                    fluidParticles.gameObject.SetActive(true);
-                    fluidParticles.Play();
-                    meleeDamageTakeInterval = 0.6f;
-                }
-                else
-                {
-                    meleeDamageTakeInterval -= Time.deltaTime;
-
-                }
-                
-
-                
-            }
-        }
-    }
+    
 
 
 

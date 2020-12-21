@@ -19,31 +19,31 @@ public class CharacterController : MonoBehaviour
 {
     
     // Start is called before the first frame update
-    protected   GameObject      m_healthBar;
-    protected   float           m_health = 100;
-    protected   bool            m_facingRight;
-    protected   GameObject      m_character;
-    protected   Rigidbody2D     m_charBody;
-    protected   Animator        m_charAnimator;
-    protected   bool            m_onGround;
+    protected   GameObject      healthBar;
+    protected   float           health = 100;
+    protected   bool            facingRight;
+    protected   GameObject      character;
+    protected   Rigidbody2D     charBody;
+    protected   Animator        charAnimator;
+    protected   bool            onGround;
     [SerializeField]
-    protected   CharacterState  m_characterState;
-    protected   float           m_damage = 0;
-    protected   float           m_damageAssesTime = 0.5f;
-    protected   bool            m_damageTaken = false;
+    protected   CharacterState  characterState;
+    protected   float           damage = 0;
+    protected   float           damageAssesTime = 0.5f;
+    protected   bool            damageTaken = false;
     [SerializeField]
-    protected   bool            m_attackCooledDown;
+    protected   bool            attackCooledDown;
     protected   Vector3         mousePos;
     protected void Start()
     {
-        m_characterState = CharacterState.Idle;
-        m_healthBar = GameObject.FindGameObjectWithTag("HealthBar");
-        m_charBody = GetComponent<Rigidbody2D>();
-        m_charAnimator = GetComponent<Animator>();
+        characterState = CharacterState.Idle;
+        healthBar = GameObject.FindGameObjectWithTag("HealthBar");
+        charBody = GetComponent<Rigidbody2D>();
+        charAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected virtual void Update()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         HandleMouseMovement();
@@ -56,32 +56,32 @@ public class CharacterController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
          // get input for horizontal movement
 
-        if (horizontalInput != 0.0f && m_characterState != CharacterState.Attack)
+        if (horizontalInput != 0.0f && characterState != CharacterState.Attack)
         {
-            if (m_onGround) // if character is on ground animation can change
+            if (onGround) // if character is on ground animation can change
             {
-                m_characterState = CharacterState.Run;
+                characterState = CharacterState.Run;
             }
             Vector3 move = new Vector3(horizontalInput, 0, 0.0f);
             MoveHorizontal(move); // although animation still fall or jump character can move on air like other platformers
 
         }
         
-        if (Input.GetKeyDown(KeyCode.W) && m_onGround) // jumping if character on ground or on something concrete
+        if (Input.GetKeyDown(KeyCode.W) && onGround) // jumping if character on ground or on something concrete
         {
 
-            m_characterState = CharacterState.Jump;
-            m_charBody.velocity = new Vector2(0.0f, 10.0f);
+            characterState = CharacterState.Jump;
+            charBody.velocity = new Vector2(0.0f, 10.0f);
 
         }
     }
     protected void MoveHorizontal(Vector3 move)
     {
-        if (m_facingRight && move[0] < 0.0f)
+        if (facingRight && move[0] < 0.0f)
         {
             faceMe(false);
         }
-        else if (!m_facingRight && move[0] > 0.0f)
+        else if (!facingRight && move[0] > 0.0f)
         {
             faceMe(true);
         }
@@ -93,30 +93,30 @@ public class CharacterController : MonoBehaviour
     {
         if (right)
         {
-            m_facingRight = true;
+            facingRight = true;
             transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
         else
         {
-            m_facingRight = false;
+            facingRight = false;
             transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         }
 
     }
 
-    protected void assesDamage() // tried to do damages discrete like other platformers
+    protected void DealDamage() // tried to do damages discrete like other platformers
     {
-        if (m_health < 0)
+        if (health < 0)
         {
 
         }
         else
         {
-            m_healthBar.transform.localScale -= new Vector3(m_damage, 0.0f, 0.0f);
+            healthBar.transform.localScale -= new Vector3(damage, 0.0f, 0.0f);
 
-            m_health -= m_damage * 100 / 55;
-            m_damageAssesTime = 0.5f;
-            m_damage = 0;
+            health -= damage * 100 / 55;
+            damageAssesTime = 0.5f;
+            damage = 0;
             transform.GetChild(0).gameObject.SetActive(false);
 
         }
@@ -124,7 +124,7 @@ public class CharacterController : MonoBehaviour
 
     protected void HandleMouseMovement()
     {
-        if (m_attackCooledDown || (m_characterState == CharacterState.Run))
+        if (attackCooledDown || (characterState == CharacterState.Run))
             return;
         if (mousePos.x > transform.position.x)
         {
@@ -140,42 +140,42 @@ public class CharacterController : MonoBehaviour
 
     public void addHealth(float addedHealth)
     {
-        if (m_health + addedHealth <= 100)
+        if (health + addedHealth <= 100)
         {
-            m_health += addedHealth;
-            m_healthBar.transform.localScale += new Vector3(addedHealth * 55 / 100, 0.0f, 0.0f);
+            health += addedHealth;
+            healthBar.transform.localScale += new Vector3(addedHealth * 55 / 100, 0.0f, 0.0f);
 
         }
         else
         {
-            m_health = 100.0f;
-            m_healthBar.transform.localScale = new Vector3(55, 10.5f, 1.0f);
+            health = 100.0f;
+            healthBar.transform.localScale = new Vector3(55, 10.5f, 1.0f);
         }
 
     }
 
     protected void HandleState()
     {
-        assesDamage();
-        if (m_characterState != CharacterState.Idle) // if state is not idle always turn idle except falling and jumping
+        DealDamage();
+        if (characterState != CharacterState.Idle) // if state is not idle always turn idle except falling and jumping
         {
-            if (m_charBody.velocity.y > 0.02)
+            if (charBody.velocity.y > 0.02)
             {
-                m_characterState = CharacterState.Jump;
+                characterState = CharacterState.Jump;
             }
-            else if (m_charBody.velocity.y < -0.02)
+            else if (charBody.velocity.y < -0.02)
             {
-                m_characterState = CharacterState.Fall;
+                characterState = CharacterState.Fall;
             }
-            if (!m_attackCooledDown)
+            if (!attackCooledDown)
             {
                 if (Input.GetAxis("Horizontal") == 0)
                 {
-                    m_characterState = CharacterState.Idle;
+                    characterState = CharacterState.Idle;
                 }
                 else
                 {
-                    m_characterState = CharacterState.Run;
+                    characterState = CharacterState.Run;
                 }
             }
             
@@ -185,7 +185,7 @@ public class CharacterController : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-
+        Debug.Log("Anam bişiler batladı");
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -195,12 +195,12 @@ public class CharacterController : MonoBehaviour
 
             if (col.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("attack_melee"))
             {
-                if (!m_damageTaken)
+                if (!damageTaken)
                 {
-                    m_damage += 1.0f;
+                    damage += 1.0f;
                     transform.GetChild(0).gameObject.SetActive(true);
-                    Debug.Log("Damage added. Total_damage: " + m_damage.ToString());
-                    m_damageTaken = true;
+                    Debug.Log("Damage added. Total_damage: " + damage.ToString());
+                    damageTaken = true;
                     StartCoroutine(DamageTakeTimer());
                 }
                 
@@ -214,9 +214,9 @@ public class CharacterController : MonoBehaviour
 
         if (col.gameObject.tag.Equals("Ground"))// hit ground
         {
-            m_onGround = true;
-            m_charAnimator.SetBool("onGround", true);
-            m_charAnimator.SetBool("onAir", false);
+            onGround = true;
+            charAnimator.SetBool("onGround", true);
+            charAnimator.SetBool("onAir", false);
         }
 
 
@@ -227,19 +227,19 @@ public class CharacterController : MonoBehaviour
 
         if (col.gameObject.tag.Equals("Ground"))
         {
-            m_onGround = false;
-            m_charAnimator.SetBool("onGround", false);
-            m_charAnimator.SetBool("onAir", true);
+            onGround = false;
+            charAnimator.SetBool("onGround", false);
+            charAnimator.SetBool("onAir", true);
 
         }
     }
     public CharacterState GetState()
     {
-        return m_characterState;
+        return characterState;
     }
     IEnumerator DamageTakeTimer()
     {
         yield return new WaitForSeconds(0.2f);
-        m_damageTaken = false;
+        damageTaken = false;
     }
 }

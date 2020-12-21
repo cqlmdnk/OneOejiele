@@ -10,22 +10,22 @@ namespace Assets.ArcherChar
     public class Item : MonoBehaviour
     {
         private Sprite sprite;
-        private int item_id = 0, price = 0;
+        private int iteid = 0, price = 0;
         private KeyValuePair<string, int> value;
 
 
        
-        public int Item_id { get => item_id; set => item_id = value; }
+        public int Iteid { get => iteid; set => iteid = value; }
         public Sprite Sprite { get => sprite; set => sprite = value; }
     
         public int Price { get => price; set => price = value; }
         public KeyValuePair<string, int> Value { get => value; set => this.value = value; }
 
         
-        private void Init(Sprite sprite,  int item_id = 0, int price = 0, KeyValuePair<string, int> value = default)
+        private void Init(Sprite sprite,  int iteid = 0, int price = 0, KeyValuePair<string, int> value = default)
         {
             this.sprite = sprite;
-            this.item_id = item_id;
+            this.iteid = iteid;
             this.price = price;
             this.value = value;
         }

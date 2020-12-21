@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5846552593963865739}
   - component: {fileID: 5846552593963865741}
   - component: {fileID: 5846552593963865738}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ZombieFluidParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4768,7 +4768,7 @@ GameObject:
   - component: {fileID: 5846552594213719460}
   - component: {fileID: 5846552594213719462}
   - component: {fileID: 5846552594213719465}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tankZombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -4900,7 +4900,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 1.04}
+    oldSize: {x: 0.85333335, y: 1.3866667}
     newSize: {x: 0.64, y: 1.04}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -4955,7 +4955,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5846552594492129447}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Plane Transform 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4987,7 +4987,7 @@ GameObject:
   - component: {fileID: 5846552594887931495}
   - component: {fileID: 5846552594887931497}
   - component: {fileID: 5846552594887931494}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ThrowUp
   m_TagString: EnemyDamageParticles
   m_Icon: {fileID: 0}
@@ -9839,7 +9839,7 @@ GameObject:
   - component: {fileID: 5846552595044546755}
   - component: {fileID: 5846552595044546757}
   - component: {fileID: 5846552595044546754}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ExplosionParticles
   m_TagString: EnemyDamageParticles
   m_Icon: {fileID: 0}

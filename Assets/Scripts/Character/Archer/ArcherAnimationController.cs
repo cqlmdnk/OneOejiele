@@ -7,10 +7,10 @@ public class ArcherAnimationController : MonoBehaviour
     // Start is called before the first frame update
     ArcherCharController ArcherCharController;
     CharacterState CharacterState;
-    Animator m_charAnimator;
+    Animator charAnimator;
     void Start()
     {
-        m_charAnimator = GetComponent<Animator>();
+        charAnimator = GetComponent<Animator>();
         ArcherCharController = GetComponent<ArcherCharController>();
         UpdateState();
     }
@@ -30,37 +30,37 @@ public class ArcherAnimationController : MonoBehaviour
         switch (CharacterState)
         {
             case CharacterState.Idle:
-                m_charAnimator.SetBool("idle", true);
+                charAnimator.SetBool("idle", true);
                 break;
             case CharacterState.Run:
-                m_charAnimator.SetBool("run", true);
+                charAnimator.SetBool("run", true);
                 break;
             case CharacterState.Jump:
-                m_charAnimator.SetBool("jump", true);
+                charAnimator.SetBool("jump", true);
                 break;
             case CharacterState.Dash:
-                m_charAnimator.SetBool("dash", true);
+                charAnimator.SetBool("dash", true);
                 break;
             case CharacterState.Melee:
-                m_charAnimator.SetBool("melee", true);
+                charAnimator.SetBool("melee", true);
                 break;
             case CharacterState.Attack:
-                m_charAnimator.SetBool("attack", true);
+                charAnimator.SetTrigger("attack");
                 break;
             case CharacterState.OnAir:
-                m_charAnimator.SetBool("onAir", true);
+                charAnimator.SetBool("onAir", true);
                 break;
         }
     }
     void clearAnim() // clearing animation parameters except onGround
     {
-        m_charAnimator.SetBool("idle", false);
-        m_charAnimator.SetBool("run", false);
-        m_charAnimator.SetBool("jump", false);
-        m_charAnimator.SetBool("attack", false);
-        m_charAnimator.SetBool("dash", false);
-        m_charAnimator.SetBool("melee", false);
-        m_charAnimator.SetBool("onAir", false);
+        charAnimator.SetBool("idle", false);
+        charAnimator.SetBool("run", false);
+        charAnimator.SetBool("jump", false);
+        charAnimator.SetBool("attack", false);
+        charAnimator.SetBool("dash", false);
+        charAnimator.SetBool("melee", false);
+        charAnimator.SetBool("onAir", false);
 
     }
 }
