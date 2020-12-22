@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,64 +9,81 @@ public class Enemy : MonoBehaviour
     protected float health, damage, damageTimer;
 
     public GameObject damagePopUp;
-    public GameObject coin , arrowSack;
+    public GameObject coin, arrowSack;
     public Sprite deadBody;
     protected Rigidbody2D player;
     protected Animator animator;
-    public ParticleSystem fluidParticles, explosion;
+    public ParticleSystem explosion;
     protected bool stopForAttack;
+    [SerializeField]
     protected float length;
-    protected float meleeDamageTakeInterval = 0.9f;
-   protected void Init()
+    protected bool lockedTarget = false, attackCooledDown = true;
+    public float attackRate = 1.0f;
+    private float nextAttackTime;
+    CharacterState enemyState;
+
+    protected virtual void Update()
     {
-       
+        if (HandleDeath())
+            return;
+
+        HandleNewPath();
+        HandleMovement();
+    }
+
+
+    protected void Init()
+    {
+
         animator = GetComponent<Animator>();
         player = GetComponent<Rigidbody2D>();
+        length = UnityEngine.Random.Range(-2, 2);
 
     }
 
 
     protected void HandleNewPath()
     {
-        if (length > -0.01 && length < 0.01)
+        if (!stopForAttack && length > -0.01 && length < 0.01)
         {
             length = UnityEngine.Random.Range(-1, 2);
 
         }
     }
 
-
-    protected void HandleDamageAssesment()
+    protected void HandleState()
     {
-        if (damage != 0)
+        if (enemyState != CharacterState.Idle) // if state is not idle always turn idle except falling and jumping
         {
-            damageTimer -= Time.deltaTime;
-            if (damageTimer < 0)
+            if (!attackCooledDown)
             {
-                damageEnd();
-                damageTimer = 0.717f;
+                if (!stopForAttack || attackCooledDown)
+                {
+                    enemyState = CharacterState.Idle;
+                }
+                else
+                {
+                    enemyState = CharacterState.Run;
+                }
             }
+
+
         }
     }
 
-    protected void damageEnd()
-    {
-        stopForAttack = false;
-        damage = 0;
-        animator.SetBool("takingDamage", false);
 
 
-        
-    }
 
     protected bool HandleDeath()
     {
         if (health < 0.0f)
         {
-            if(explosion != null)
+            if (explosion != null)
                 explosion.transform.parent = null;
             animator.SetBool("dead", true);
             Destroy(this.gameObject, 4.0f);
+            Destroy(GetComponent<Rigidbody2D>());
+            Destroy(GetComponent<BoxCollider2D>());
             return true;
         }
         return false;
@@ -101,22 +119,18 @@ public class Enemy : MonoBehaviour
                 sighttest.Add(Physics2D.Raycast(transform.position, new Vector3((i / 10.0f), 1.0f - (i / 10.0f), 0.0f)));
             }
         }
-       
-
-
-
-        foreach (RaycastHit2D testc in sighttest)
+        foreach (RaycastHit2D raycast in sighttest)
         {
-            if (testc.collider != null)
+            if (raycast.collider != null)
             {
-                if (testc.collider.tag == "Player" && testc.distance < 6.0f)
+                if (raycast.collider.tag == "Player" && raycast.distance < 6.0f)
                 {
 
-                    collider =  testc.collider.gameObject;
+                    collider = raycast.collider.gameObject;
                 }
-                else if(testc.collider.tag == "EnemyTarget" && testc.distance < 10.0f)
+                else if (raycast.collider.tag == "NPC" && raycast.distance < 10.0f)
                 {
-                    collider = testc.collider.gameObject;
+                    collider = raycast.collider.gameObject;
                 }
 
             }
@@ -126,11 +140,56 @@ public class Enemy : MonoBehaviour
 
     }
 
+    protected void DetermineDirection(float moveX)
+    {
+        if (moveX < 0)
+        {
+            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            foreach (Transform child in transform) // child class a alınacak
+            {
+                child.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            }
+        }
+        else
+        {
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            foreach (Transform child in transform)
+            {
+                child.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
+        }
+    }
+
+    protected void HandleMovement()
+    {
+        GameObject seenObject = SightCheck();
+
+        lockedTarget = seenObject == null ? false : true;
+
+        if (!stopForAttack)
+        {
+            if (!lockedTarget)
+            {
+                Vector3 move = new Vector3(((0.1f) * Math.Sign(length) + length / 30), 0, 0.0f);
+                transform.position = transform.position + 5 * move * Time.deltaTime;
+                length -= move.x * Time.deltaTime;
+                DetermineDirection(move.x);
+            }
+            else
+            {
+                Vector3 move = new Vector3((0.1f) * Math.Sign(seenObject.transform.position.x - transform.position.x) + seenObject.transform.position.x - transform.position.x, 0, 0);
+                transform.position = transform.position + 4 * move.normalized * Time.deltaTime;
+                DetermineDirection(move.x);
+                length = move.x > 0 ? 1.0f : -1.0f;
+
+
+            }
+        }
+    }
     public void TakeDamage(float amount)
     {
         Debug.Log("Girdim");
-        stopForAttack = true;
-        animator.SetBool("takingDamage", true);
+        animator.SetTrigger("takingDamage");
         health -= amount;
         damage = amount;
         Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
@@ -138,9 +197,7 @@ public class Enemy : MonoBehaviour
         _popUp.GetComponent<TextMesh>().text = damage.ToString("#.00");
         _popUp.transform.SetParent(this.gameObject.transform);
         _popUp.SetActive(true);
-        fluidParticles.gameObject.SetActive(true);
-        fluidParticles.Play();
-        meleeDamageTakeInterval = 0.6f;
+        animator.ResetTrigger("takingDamage");
     }
 
 
@@ -151,10 +208,10 @@ public class Enemy : MonoBehaviour
 
         GameObject dead_zombie = new GameObject("dead_zombie");
         SpriteRenderer renderer = dead_zombie.AddComponent<SpriteRenderer>();
-       
+
         renderer.sprite = deadBody;
         renderer.sortingOrder = 109;
-        
+
         dead_zombie.transform.position = this.gameObject.transform.position;
         dead_zombie.transform.rotation = this.gameObject.transform.rotation;
         dead_zombie.gameObject.SetActive(true);
@@ -163,55 +220,76 @@ public class Enemy : MonoBehaviour
         dead_zombie.transform.localScale = this.transform.localScale;
         renderer.material = GetComponent<SpriteRenderer>().material;
         //DROP SYSTEM WILL BE WRITTEN HERE FURTHER
-        int coin_count = (int)Random.Range(2.0f, 7.0f);
+        int coin_count = (int)UnityEngine.Random.Range(2.0f, 7.0f);
 
         for (int i = 0; i < coin_count; i++)
         {
-            if(i%2 == 0)
+            if (i % 2 == 0)
             {
-                Instantiate(coin, new Vector3(transform.position.x + i* 0.1f, transform.position.y, transform.position.z), Quaternion.identity);
+                Instantiate(coin, new Vector3(transform.position.x + i * 0.1f, transform.position.y, transform.position.z), Quaternion.identity);
             }
             else
             {
                 Instantiate(coin, new Vector3(transform.position.x - i * 0.1f, transform.position.y, transform.position.z), Quaternion.identity);
-
             }
-
-
         }
-
         Instantiate(arrowSack, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
 
 
     }
-    protected void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject throwableObject = collision.gameObject;
-        Rigidbody2D throwableObjectBody = throwableObject.GetComponent<Rigidbody2D>();
-        if (throwableObject.tag.Equals("Throwable"))
+        GameObject collidedObject = collision.gameObject;
+        Rigidbody2D throwableObjectBody = collidedObject.GetComponent<Rigidbody2D>();
+        if (collidedObject.tag.Equals("Throwable"))
         {
-            stopForAttack = true;
             animator.SetBool("takingDamage", true);
-            ThrowableController throwableController = throwableObject.GetComponent<ThrowableController>();
+            ThrowableController throwableController = collidedObject.GetComponent<ThrowableController>();
             damage = throwableController.GetDamage();
-            health -= damage;
-            
-            Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
-            GameObject _popUp = Instantiate(damagePopUp, popUpPos, Quaternion.identity);
-            _popUp.GetComponent<TextMesh>().text = damage.ToString("#.00");
-            _popUp.transform.SetParent(this.gameObject.transform);
-            _popUp.SetActive(true);
-            fluidParticles.gameObject.SetActive(true);
-            fluidParticles.Play();
-
-            length = transform.position.x- throwableObject.transform.position.x > 0 ? -1.0f : 1.0f; // change direction to damage taken side
+            TakeDamage(damage);
         }
 
-        
-
+    }
+    protected virtual void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Player") || collision.gameObject.tag.Equals("NPC"))
+        {
+            stopForAttack = false;
+            animator.SetBool("attack", false);
+        }
     }
 
-    
+    protected void OnCollisionStay2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.tag.Equals("Player") || collision.gameObject.tag.Equals("NPC"))
+        {
+            if (Time.time >= nextAttackTime)
+            {
+                StartCoroutine(MeleeAttack(collision.gameObject));
+            }
+
+        }
+    }
+
+    IEnumerator MeleeAttack(GameObject gameObject)
+    {
+        attackCooledDown = false;
+        length = 0;
+        stopForAttack = true;
+        lockedTarget = false;
+        animator.SetBool("attack", true);
+        nextAttackTime = Time.time + 1.0f / attackRate;
+        yield return new WaitForSeconds(0.5f);
+        gameObject.GetComponent<CharacterController>().TakeDamage(2f);
+        
+        attackCooledDown = true;
+        yield break;
+    }
+
+
+
+
 
 
 

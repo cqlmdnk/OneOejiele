@@ -31,9 +31,11 @@ public class ArcherAnimationController : MonoBehaviour
         {
             case CharacterState.Idle:
                 charAnimator.SetBool("idle", true);
+                charAnimator.SetBool("onGround", true);
                 break;
             case CharacterState.Run:
                 charAnimator.SetBool("run", true);
+                charAnimator.SetBool("onGround", true);
                 break;
             case CharacterState.Jump:
                 charAnimator.SetBool("jump", true);
@@ -47,8 +49,8 @@ public class ArcherAnimationController : MonoBehaviour
             case CharacterState.Attack:
                 charAnimator.SetTrigger("attack");
                 break;
-            case CharacterState.OnAir:
-                charAnimator.SetBool("onAir", true);
+            case CharacterState.Fall:
+                charAnimator.SetBool("onGround", false);
                 break;
         }
     }
@@ -57,7 +59,7 @@ public class ArcherAnimationController : MonoBehaviour
         charAnimator.SetBool("idle", false);
         charAnimator.SetBool("run", false);
         charAnimator.SetBool("jump", false);
-        charAnimator.SetBool("attack", false);
+        charAnimator.ResetTrigger("attack");
         charAnimator.SetBool("dash", false);
         charAnimator.SetBool("melee", false);
         charAnimator.SetBool("onAir", false);

@@ -27,9 +27,11 @@ public class BanditAnimationController : MonoBehaviour
         switch (CharacterState)
         {
             case CharacterState.Idle:
+                charAnimator.SetBool("onGround", true);
                 charAnimator.SetBool("idle", true);
                 break;
             case CharacterState.Run:
+                charAnimator.SetBool("onGround", true);
                 charAnimator.SetBool("run", true);
                 break;
             case CharacterState.Jump:
@@ -44,8 +46,8 @@ public class BanditAnimationController : MonoBehaviour
             case CharacterState.Attack:
                 charAnimator.SetTrigger("attack");
                 break;
-            case CharacterState.OnAir:
-                charAnimator.SetBool("onAir", true);
+            case CharacterState.Fall:
+                charAnimator.SetBool("onGround", false);
 
                 break;
         }
@@ -55,7 +57,7 @@ public class BanditAnimationController : MonoBehaviour
         charAnimator.SetBool("idle", false);
         charAnimator.SetBool("run", false);
         charAnimator.SetBool("jump", false);
-        charAnimator.SetBool("attack", false);
+        charAnimator.ResetTrigger("attack");
         charAnimator.SetBool("dash", false);
         charAnimator.SetBool("melee", false);
         charAnimator.SetBool("onAir", false);

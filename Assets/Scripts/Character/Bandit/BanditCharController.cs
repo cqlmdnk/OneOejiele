@@ -39,7 +39,7 @@ public class BanditCharController : CharacterController
             enemy.GetComponent<Enemy>().TakeDamage(25.0f);
         }
 
-        
+        characterState = CharacterState.Idle;
         yield break;
     }
     private void OnDrawGizmosSelected()

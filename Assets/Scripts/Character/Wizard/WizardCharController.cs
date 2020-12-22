@@ -26,9 +26,9 @@ public class WizardCharController : CharacterController
         if (Input.GetMouseButtonDown(0) && !attackCooledDown)
         {
             if (mousePos.x > transform.position.x)
-                faceMe(true);
+                FaceMe(true);
             else
-                faceMe(false);
+                FaceMe(false);
             characterState = CharacterState.Attack;
             attackCooledDown = true;
             StartCoroutine(Attack1Timer());

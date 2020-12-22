@@ -51,8 +51,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8b435a8dc3f604e9a13c4acd7081c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  platformLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   characterState: 0
   attackCooledDown: 0
+  maxHealth: 0
+  healthBarScale: 0
   attackRange: 0.4
   attackPoint: {fileID: 6754674869375999193}
   enemyLayers:
@@ -149,10 +155,10 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
-  m_Mass: 0.775716
-  m_LinearDrag: 0.5
-  m_AngularDrag: 0.05
+  m_UseAutoMass: 0
+  m_Mass: 120
+  m_LinearDrag: 0
+  m_AngularDrag: 0
   m_GravityScale: 2
   m_Material: {fileID: 6200000, guid: 5f3d21b8b76997e47b825c039df2abe2, type: 2}
   m_Interpolate: 0

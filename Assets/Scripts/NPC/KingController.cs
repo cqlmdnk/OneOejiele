@@ -2,26 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KingController : MonoBehaviour
+public class KingController : CharacterController
 {
-    CharacterState KingState;
+   
     private float PathLenght;
     private Vector3 MoveVector;
+    
     private bool FacingRight = true;
     private float StateChangeInterval , DirectionChangeInterval;
     // Start is called before the first frame update
-    void Start()
+     protected override void Start()
     {
-        KingState = Random.Range(0, 2) == 0 ? CharacterState.Idle : CharacterState.Run;
+        
+        base.Start();
+        maxHealth = 100.0f;
+        health = maxHealth;
+        characterState = Random.Range(0, 2) == 0 ? CharacterState.Idle : CharacterState.Run;
         PathLenght = Random.Range(2.0f, 4.0f);
         MoveVector = new Vector3(PathLenght, 0, 0);
         StateChangeInterval = Random.Range(0.0f, 5.0f);
+        healthBarScale = healthBar.transform.localScale.x;
+
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    protected override void Update()
     {
-        if(KingState == CharacterState.Run)
+        if(characterState == CharacterState.Run)
         {
             if (FacingRight)
                 this.transform.position = this.transform.position + 2 * MoveVector.normalized * Time.deltaTime;
@@ -54,17 +61,16 @@ public class KingController : MonoBehaviour
         if (StateChangeInterval < 0)
         {
             StateChangeInterval = Random.Range(0.0f, 5.0f);
-            KingState = Random.Range(0, 2) == 0 ? CharacterState.Idle : CharacterState.Run;
+            characterState = Random.Range(0, 2) == 0 ? CharacterState.Idle : CharacterState.Run;
 
         }
         GetComponent<SpriteRenderer>().flipX = !FacingRight;
         
         
     }
-    public CharacterState GetState()
-    {
-        return KingState;
-    }
+
+    
+    
 
 
 

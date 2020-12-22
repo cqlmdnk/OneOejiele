@@ -49,7 +49,6 @@ public class ArrowController : ThrowableController
         else if (col.gameObject.tag.Equals("Ground") && !hit)
         {
             DetachParticles();
-            Destroy(GetComponent<Rigidbody2D>());
             Destroy(GetComponent<BoxCollider2D>());
             this.transform.SetParent(GameObject.Find("Container").transform);
         }

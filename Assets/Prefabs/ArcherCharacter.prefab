@@ -4874,7 +4874,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c4fc791834432429bbaf29968e5c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_healthBar: {fileID: 0}
+  health: 0
+  platformLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  characterState: 0
+  attackCooledDown: 0
+  maxHealth: 0
+  healthBarScale: 0
   arrow: {fileID: 7069377424074222013, guid: 503b3200a86a497468a0810660f062e8, type: 3}
   arrow_count: 30
 --- !u!50 &473662778405831328
@@ -4915,7 +4922,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.6571429, y: 0.94285715}
+    oldSize: {x: 0.6969697, y: 1}
     newSize: {x: 0.23, y: 0.33}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -26,6 +26,9 @@ TextureImporter:
   - first:
       213: 3171384553123722362
     second: walk-idle_7
+  - first:
+      213: 3066104252741115557
+    second: walk-idle_8
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -69,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 75
+  spritePixelsToUnits: 80
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,7 +116,7 @@ TextureImporter:
       name: walk-idle_0
       rect:
         serializedVersion: 2
-        x: 28
+        x: 36
         y: 0
         width: 64
         height: 104
@@ -124,7 +127,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 50f123adc6f47db4fbd47d64a247a7e9
+      spriteID: 753565ae6e7a844499be7444580517d1
       internalID: 3186152373188854900
       vertices: []
       indices: 
@@ -134,7 +137,28 @@ TextureImporter:
       name: walk-idle_1
       rect:
         serializedVersion: 2
-        x: 156
+        x: 161
+        y: 0
+        width: 67
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb3344f3739e6274cba93dfbc73a7528
+      internalID: -1815028027309783833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: walk-idle_2
+      rect:
+        serializedVersion: 2
+        x: 292
         y: 0
         width: 64
         height: 104
@@ -145,17 +169,38 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc5d123cb0a8fd24cbbc6c844df2df01
-      internalID: -1815028027309783833
+      spriteID: 5d716bd777fa36d41a6ae06403342864
+      internalID: -4055172622738127387
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: walk-idle_2
+      name: walk-idle_3
       rect:
         serializedVersion: 2
-        x: 284
+        x: 420
+        y: 0
+        width: 64
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5592e39ac16b444d944910b82ed325d
+      internalID: -4739549131447143051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: walk-idle_4
+      rect:
+        serializedVersion: 2
+        x: 545
         y: 0
         width: 67
         height: 102
@@ -166,49 +211,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7323f5f05c95ab4438f8eaa695b47e62
-      internalID: -4055172622738127387
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: walk-idle_3
-      rect:
-        serializedVersion: 2
-        x: 412
-        y: 0
-        width: 64
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 15df8855f104e304cb2b3ee7b2f35004
-      internalID: -4739549131447143051
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: walk-idle_4
-      rect:
-        serializedVersion: 2
-        x: 540
-        y: 0
-        width: 67
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 70db285792fafe540a3fcc3663dd092f
+      spriteID: 7405bf2afa0c48143be7d77456ebf6d9
       internalID: -1634003583984584522
       vertices: []
       indices: 
@@ -218,28 +221,7 @@ TextureImporter:
       name: walk-idle_5
       rect:
         serializedVersion: 2
-        x: 668
-        y: 0
-        width: 67
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f6b46a22a250c8546b24fc486c1fea28
-      internalID: 4157155109078059660
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: walk-idle_6
-      rect:
-        serializedVersion: 2
-        x: 796
+        x: 676
         y: 0
         width: 64
         height: 104
@@ -250,7 +232,28 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d947bc3b12fb5b4c8aef0128db41739
+      spriteID: 60ed8e4b9673e234183c97b81062b96d
+      internalID: 4157155109078059660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: walk-idle_6
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 0
+        width: 64
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06a6b39c0fb232c42a035fe795c09aa8
       internalID: -2875360521084894331
       vertices: []
       indices: 
@@ -260,9 +263,9 @@ TextureImporter:
       name: walk-idle_7
       rect:
         serializedVersion: 2
-        x: 924
+        x: 932
         y: 0
-        width: 67
+        width: 66
         height: 104
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -271,8 +274,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a4ef9753435ec544b00933ffb3df8a7
+      spriteID: 140b8b5182874d04987bdca4c06530cd
       internalID: 3171384553123722362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: walk-idle_8
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 0
+        width: 64
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ea8e6ea4c4f40241be7008492879710
+      internalID: 3066104252741115557
       vertices: []
       indices: 
       edges: []

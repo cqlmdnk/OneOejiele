@@ -52,7 +52,7 @@ public class ArcherCharController : CharacterController
             Debug.Log("Oku aldım");
             characterState = CharacterState.Attack;
             DetermineDrawingDirection();
-            faceMe(drawRight);
+            FaceMe(drawRight);
             attackCooledDown= true;
         }
     }
@@ -113,15 +113,15 @@ public class ArcherCharController : CharacterController
             else
                 arrowDrop = -0.01f;
 
-            faceMe(drawRight);
+            FaceMe(drawRight);
 
             GameObject _arrow = Instantiate(arrow, transPos, Quaternion.AngleAxis(angle, Vector3.forward));
             _arrow.SetActive(true);
             Rigidbody2D arrow_body = _arrow.GetComponent<Rigidbody2D>();
             Vector3 veloctiy3d = Quaternion.AngleAxis(angle, Vector3.forward) * new Vector3((float)Math.Log((double)drawingTime, 2.0) * 20, arrowDrop, 0);
             arrow_body.velocity = (new Vector2(veloctiy3d.x, veloctiy3d.y));
-            _arrow.GetComponent<ArrowController>().SetDamage(arrow_body.velocity.magnitude);
-
+            _arrow.GetComponent<ThrowableController>().SetDamage(arrow_body.velocity.magnitude);
+            Debug.Log("Ok hızı" + arrow_body.velocity.magnitude);
             arrow_count--;
             drawingTime = 1.5f;
             charAnimator.enabled = true;

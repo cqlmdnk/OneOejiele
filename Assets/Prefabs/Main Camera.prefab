@@ -195,7 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c327137e7c625fa4090f339fc38f4ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_pos: {fileID: 0}
   lookAhead: 5
   cameraFollowSpeed: 8
 --- !u!1 &2776217317896488634
@@ -6274,7 +6273,7 @@ GameObject:
   - component: {fileID: 2776217318760145047}
   - component: {fileID: 2776217318760145040}
   - component: {fileID: 2776217318760145046}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Layer_0000_9
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -7121,7 +7120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2776217319025377385}
   - component: {fileID: 2776217319025377384}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Layer_0000_9 (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -7281,7 +7280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2776217319095701494}
   - component: {fileID: 2776217319095701493}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Layer_0000_9 (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}

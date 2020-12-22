@@ -27,14 +27,16 @@ public class WizardAnimationController : MonoBehaviour
         switch (CharacterState)
         {
             case CharacterState.Idle:
-                clearAnim();
                 charAnimator.SetBool("idle", true);
+                charAnimator.SetBool("onGround", true);
                 break;
             case CharacterState.Run:
                 charAnimator.SetBool("run", true);
+                charAnimator.SetBool("onGround", true);
                 break;
             case CharacterState.Jump:
                 charAnimator.SetBool("jump", true);
+                charAnimator.SetBool("onGround", false);
                 break;
             case CharacterState.Dash:
                 charAnimator.SetTrigger("attack2");
@@ -46,7 +48,7 @@ public class WizardAnimationController : MonoBehaviour
                 charAnimator.SetTrigger("attack1");
                 break;
             case CharacterState.Fall:
-                charAnimator.SetBool("fall", true);
+                charAnimator.SetBool("onGround", false);
                 break;
             default:
                 charAnimator.SetBool("idle", true);
@@ -59,8 +61,8 @@ public class WizardAnimationController : MonoBehaviour
         charAnimator.SetBool("idle", false);
         charAnimator.SetBool("run", false);
         charAnimator.SetBool("jump", false);
-        charAnimator.SetBool("attack1", false);
-        charAnimator.SetBool("attack2", false);
+        charAnimator.ResetTrigger("attack1");
+        charAnimator.ResetTrigger("attack2");
         charAnimator.SetBool("dash", false);
         charAnimator.SetBool("fall", false);
         charAnimator.SetBool("onAir", false);

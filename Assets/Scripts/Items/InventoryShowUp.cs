@@ -68,7 +68,7 @@ public class InventoryShowUp : MonoBehaviour
             }
             else
             {
-                charController.addHealth(item.Value.Value);
+                charController.AddHealth(item.Value.Value);
             }
         }
         else if (item.Value.Key.Contains("MANA"))

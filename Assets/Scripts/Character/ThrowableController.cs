@@ -25,6 +25,6 @@ public class ThrowableController : MonoBehaviour
     }
     public void SetDamage(float damage)
     {
-        damage = damage;
+        this.damage = damage;
     }
 }

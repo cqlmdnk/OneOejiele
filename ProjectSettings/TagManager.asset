@@ -14,6 +14,9 @@ TagManager:
   - BanditButton
   - WizardButton
   - HealthBar
+  - NPC
+  - Explosion
+  - ThrowUp
   layers:
   - Default
   - TransparentFX
@@ -25,7 +28,7 @@ TagManager:
   - 
   - Environment
   - Enemy
-  - 
+  - Ground
   - 
   - 
   - 

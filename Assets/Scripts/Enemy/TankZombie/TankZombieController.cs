@@ -15,41 +15,21 @@ public class TankZombieController : Enemy
         Init();
         explosion.Stop();
         health = 200;
-        length = UnityEngine.Random.Range(-1, 1);
-        if (length < 0)
-        {
-            transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 0, 0);
-            GetComponent<SpriteRenderer>().flipX = false;
-        }
-
-
-        else
-        {
-            GetComponent<SpriteRenderer>().flipX = true;
-            transform.Find("ThrowUp").transform.localRotation = Quaternion.Euler(0, 180, 0);
-        }
+        
             
        
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        if (HandleDeath())
-            return;
+        base.Update();
         HandleThrowUp();
-        HandleNewPath();
-        HandleMovement();
+        
 
     }
 
-    private void HandleMovement()
-    {
-        Vector3 move = new Vector3(((0.1f) * Math.Sign(length) + length / 100), 0, 0.0f);
-        DetermineDirection(move.x);
-        transform.position = transform.position + 2 * move * Time.deltaTime;
-        length -= 2 * move.x * Time.deltaTime;
-    }
+   
 
     
 
@@ -67,35 +47,14 @@ public class TankZombieController : Enemy
         }
     }
 
-    private void DetermineDirection(float moveX)
-    {
-        if (moveX < 0)
-        {
-            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            
-        }
-        else
-        {
-            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-            
-        }
-    }
 
-    void OnCollisionEnter2D(Collision2D col)
+    protected override void OnCollisionEnter2D(Collision2D col)
     {
 
         base.OnCollisionEnter2D(col);
     }
 
-    void OnCollisionExit2D(Collision2D col)
-    {
-        if (col.gameObject.tag.Equals("Player"))
-        {
-            stopForAttack = false;
-            animator.SetBool("attack", false);
-        }
-
-    }
+ 
 
     void OnDestroy() // creating dead body
     {
