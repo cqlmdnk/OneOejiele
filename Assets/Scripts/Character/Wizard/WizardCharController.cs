@@ -11,9 +11,9 @@ public class WizardCharController : CharacterController
     
     public GameObject MagicSpell;
     private float Attack1Time = 0.7f;
-    void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
     }
     // Update is called once per frame
     protected override void Update()
@@ -23,20 +23,20 @@ public class WizardCharController : CharacterController
     }
     private void HandleAttack()
     {
-        if (Input.GetMouseButtonDown(0) && !attackCooledDown)
+        if (attackCooledDown && Input.GetMouseButtonDown(0))
         {
             if (mousePos.x > transform.position.x)
                 FaceMe(true);
             else
                 FaceMe(false);
             characterState = CharacterState.Attack;
-            attackCooledDown = true;
+            attackCooledDown = false;
             StartCoroutine(Attack1Timer());
         }
-        else if (Input.GetMouseButtonDown(1) && !attackCooledDown)
+        else if (Input.GetMouseButtonDown(1) && attackCooledDown)
         { // will be initiate the AttackTimer2 in future
             characterState = CharacterState.Dash;
-            attackCooledDown = true;
+            attackCooledDown = false;
             StartCoroutine(Attack1Timer());
         }
     }
@@ -64,7 +64,7 @@ public class WizardCharController : CharacterController
         float angle = (float)Math.Atan2(mousePos.y - SpellPosition.y, mousePos.x - SpellPosition.x) * Mathf.Rad2Deg;
         yield return new WaitForSeconds(Attack1Time);
         HandleCastSpell(angle, SpellPosition);
-        attackCooledDown = false;
+        attackCooledDown = true;
         yield break;
     }
 

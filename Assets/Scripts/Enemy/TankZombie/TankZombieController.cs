@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankZombieController : Enemy
+public class TankZombieController : EnemyController
 {
     // Start is called before the first frame update
     
     bool isParticlesAnimating = false;
     public ParticleSystem throwUp;
     float particleTimer = -0.1f;
-    void Start()
+    protected override void Awake()
     {
-        Init();
+        base.Awake();
         explosion.Stop();
         health = 200;
         

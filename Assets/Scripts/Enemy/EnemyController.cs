@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyController : ActorController
 {
     // Start is called before the first frame update
     protected float health, damage, damageTimer;
@@ -11,8 +11,6 @@ public class Enemy : MonoBehaviour
     public GameObject damagePopUp;
     public GameObject coin, arrowSack;
     public Sprite deadBody;
-    protected Rigidbody2D player;
-    protected Animator animator;
     public ParticleSystem explosion;
     protected bool stopForAttack;
     [SerializeField]
@@ -20,9 +18,8 @@ public class Enemy : MonoBehaviour
     protected bool lockedTarget = false, attackCooledDown = true;
     public float attackRate = 1.0f;
     private float nextAttackTime;
-    CharacterState enemyState;
 
-    protected virtual void Update()
+    protected override void Update()
     {
         if (HandleDeath())
             return;
@@ -32,11 +29,10 @@ public class Enemy : MonoBehaviour
     }
 
 
-    protected void Init()
+    protected override void Awake()
     {
 
-        animator = GetComponent<Animator>();
-        player = GetComponent<Rigidbody2D>();
+        base.Awake();
         length = UnityEngine.Random.Range(-2, 2);
 
     }
@@ -53,17 +49,17 @@ public class Enemy : MonoBehaviour
 
     protected void HandleState()
     {
-        if (enemyState != CharacterState.Idle) // if state is not idle always turn idle except falling and jumping
+        if (characterState != CharacterState.Idle) // if state is not idle always turn idle except falling and jumping
         {
             if (!attackCooledDown)
             {
                 if (!stopForAttack || attackCooledDown)
                 {
-                    enemyState = CharacterState.Idle;
+                    characterState = CharacterState.Idle;
                 }
                 else
                 {
-                    enemyState = CharacterState.Run;
+                    characterState = CharacterState.Run;
                 }
             }
 
@@ -80,7 +76,7 @@ public class Enemy : MonoBehaviour
         {
             if (explosion != null)
                 explosion.transform.parent = null;
-            animator.SetBool("dead", true);
+            charAnimator.SetBool("dead", true);
             Destroy(this.gameObject, 4.0f);
             Destroy(GetComponent<Rigidbody2D>());
             Destroy(GetComponent<BoxCollider2D>());
@@ -89,31 +85,20 @@ public class Enemy : MonoBehaviour
         return false;
     }
 
-    protected GameObject SightCheck()
+    protected GameObject SightCheck() // check for Player NPC and King
     {
-        /*             * * *    raycasting more than 90 degrees per direction         
-                     *    I *
-                   *      I
-                 *        I
-                *         I           
-                ---------------------        
-         */
         GetComponent<CircleCollider2D>().enabled = false;
         GameObject collider = null;
         List<RaycastHit2D> sighttest = new List<RaycastHit2D>();
         if (length < 0)
         {
-
             for (int i = 0; i < 12; i++)
             {
                 sighttest.Add(Physics2D.Raycast(transform.position, new Vector3(-1.0f + (i / 10.0f), (i / 10.0f), 0.0f)));
             }
-
         }
-
         else
         {
-
             for (int i = 0; i < 12; i++)
             {
                 sighttest.Add(Physics2D.Raycast(transform.position, new Vector3((i / 10.0f), 1.0f - (i / 10.0f), 0.0f)));
@@ -123,12 +108,16 @@ public class Enemy : MonoBehaviour
         {
             if (raycast.collider != null)
             {
-                if (raycast.collider.tag == "Player" && raycast.distance < 6.0f)
+                if (raycast.collider.tag == "Player" && raycast.distance < 4.0f)
                 {
 
                     collider = raycast.collider.gameObject;
                 }
-                else if (raycast.collider.tag == "NPC" && raycast.distance < 10.0f)
+                else if (raycast.collider.tag == "WallsTowers" && raycast.distance < 10.0f)
+                {
+                    collider = raycast.collider.gameObject;
+                }
+                else if (raycast.collider.tag == "King" && raycast.distance < 12.0f)
                 {
                     collider = raycast.collider.gameObject;
                 }
@@ -137,33 +126,23 @@ public class Enemy : MonoBehaviour
         }
         GetComponent<CircleCollider2D>().enabled = true;
         return collider;
-
     }
 
     protected void DetermineDirection(float moveX)
     {
         if (moveX < 0)
         {
-            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-            foreach (Transform child in transform) // child class a alınacak
-            {
-                child.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-            }
+            FaceMe(false);
         }
         else
         {
-            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            foreach (Transform child in transform)
-            {
-                child.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            }
+            FaceMe(true);
         }
     }
 
     protected void HandleMovement()
     {
         GameObject seenObject = SightCheck();
-
         lockedTarget = seenObject == null ? false : true;
 
         if (!stopForAttack)
@@ -181,15 +160,14 @@ public class Enemy : MonoBehaviour
                 transform.position = transform.position + 4 * move.normalized * Time.deltaTime;
                 DetermineDirection(move.x);
                 length = move.x > 0 ? 1.0f : -1.0f;
-
-
             }
         }
     }
+
     public void TakeDamage(float amount)
     {
-        Debug.Log("Girdim");
-        animator.SetTrigger("takingDamage");
+
+        charAnimator.SetTrigger("takingDamage");
         health -= amount;
         damage = amount;
         Vector3 popUpPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
@@ -197,7 +175,7 @@ public class Enemy : MonoBehaviour
         _popUp.GetComponent<TextMesh>().text = damage.ToString("#.00");
         _popUp.transform.SetParent(this.gameObject.transform);
         _popUp.SetActive(true);
-        animator.ResetTrigger("takingDamage");
+        charAnimator.ResetTrigger("takingDamage");
     }
 
 
@@ -243,26 +221,38 @@ public class Enemy : MonoBehaviour
         Rigidbody2D throwableObjectBody = collidedObject.GetComponent<Rigidbody2D>();
         if (collidedObject.tag.Equals("Throwable"))
         {
-            animator.SetBool("takingDamage", true);
+            charAnimator.SetBool("takingDamage", true);
             ThrowableController throwableController = collidedObject.GetComponent<ThrowableController>();
             damage = throwableController.GetDamage();
+            TurnToAttacker(collidedObject);
             TakeDamage(damage);
         }
 
     }
-    protected virtual void OnCollisionExit2D(Collision2D collision)
+
+    private void TurnToAttacker(GameObject collidedObject)
     {
-        if (collision.gameObject.tag.Equals("Player") || collision.gameObject.tag.Equals("NPC"))
+        if (collidedObject.transform.position.x < transform.position.x)
         {
-            stopForAttack = false;
-            animator.SetBool("attack", false);
+            length = length < 0 ? length : -length;
+        }
+        else
+        {
+            length = length < 0 ? -length : length;
         }
     }
-
+    protected virtual void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Player") || collision.gameObject.tag.Equals("NPC") || collision.gameObject.tag.Equals("King") || collision.gameObject.tag.Equals("WallsTowers"))
+        {
+            stopForAttack = false;
+            charAnimator.SetBool("attack", false);
+        }
+    }
     protected void OnCollisionStay2D(Collision2D collision)
     {
 
-        if (collision.gameObject.tag.Equals("Player") || collision.gameObject.tag.Equals("NPC"))
+        if (collision.gameObject.tag.Equals("Player") || collision.gameObject.tag.Equals("NPC") || collision.gameObject.tag.Equals("King") || collision.gameObject.tag.Equals("WallsTowers"))
         {
             if (Time.time >= nextAttackTime)
             {
@@ -278,10 +268,10 @@ public class Enemy : MonoBehaviour
         length = 0;
         stopForAttack = true;
         lockedTarget = false;
-        animator.SetBool("attack", true);
+        charAnimator.SetBool("attack", true);
         nextAttackTime = Time.time + 1.0f / attackRate;
         yield return new WaitForSeconds(0.5f);
-        gameObject.GetComponent<CharacterController>().TakeDamage(2f);
+        gameObject.GetComponent<HealthController>().TakeDamage(2f);
         
         attackCooledDown = true;
         yield break;

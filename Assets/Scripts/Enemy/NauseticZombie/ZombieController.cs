@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ZombieController : Enemy
+public class ZombieController : EnemyController
 {
     // Start is called before the first frame update
 
     public float zombieRecoverTime;
 
-    void Start()
+    protected override void Awake()
     {
-        Init();
+        base.Awake();
         health = 100;
         Physics2D.queriesStartInColliders = false;
 

@@ -2,53 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CharacterState
-{
-    Idle,
-    Run,
-    Melee,
-    Dash,
-    Jump,
-    OnAir,
-    Fall,
-    Attack,
-    AimUp
-}
 
-public class CharacterController : MonoBehaviour
+
+public class CharacterController : ActorController
 {
     
     // Start is called before the first frame update
-    public   Transform      healthBar;
+    
+    
     [SerializeField]
-    protected   float           health;
-    protected   bool            facingRight;
-    protected   GameObject      character;
-    protected   Rigidbody2D     charBody;
-    protected   BoxCollider2D   boxCollider2D;
-    [SerializeField]
-    private     LayerMask       platformLayerMask;
-    protected   Animator        charAnimator;
-    [SerializeField]
-    protected   CharacterState  characterState;
-    protected   float           damage = 0;
-    protected   bool            damageTaken = false;
-    [SerializeField]
-    protected   bool            attackCooledDown;
-    protected   Vector3         mousePos;
-    public float maxHealth;
-    public float healthBarScale;
-    protected virtual void Start()
+    private     LayerMask        groundLayerMask;
+    [SerializeField] 
+    protected   bool             attackCooledDown = true;
+    protected   Vector3          mousePos;
+    
+
+    protected override void Awake()
     {
-        characterState = CharacterState.Idle;
-        if(healthBar == null)
-            healthBar = GameObject.FindGameObjectWithTag("HealthBar").transform;
-        charBody = GetComponent<Rigidbody2D>();
-        charAnimator = GetComponent<Animator>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
-        maxHealth = 100.0f;
-        health = maxHealth;
-        healthBarScale = healthBar.localScale.x;
+        base.Awake();
+       
     }
 
     // Update is called once per frame
@@ -66,7 +38,7 @@ public class CharacterController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
          // get input for horizontal movement
 
-        if (horizontalInput != 0.0f && characterState != CharacterState.Attack)
+        if (horizontalInput != 0.0f && attackCooledDown)
         {
             if (IsGrounded()) // if character is on ground animation can change
             {
@@ -99,38 +71,13 @@ public class CharacterController : MonoBehaviour
         this.transform.position = this.transform.position + vel * move * Time.deltaTime;
 
     }
-    protected void FaceMe(bool right) // changing local facing
-    {
-        if (right)
-        {
-            facingRight = true;
-            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        }
-        else
-        {
-            facingRight = false;
-            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-        }
+    
 
-    }
-
-    public void TakeDamage(float amount) // tried to do damages discrete like other platformers
-    {
-        if (health < 0)
-        {
-            Debug.Log("karakter öldü"); 
-            //die();
-        }
-        else
-        {
-            healthBar.localScale -= new Vector3(amount* healthBarScale / maxHealth, 0.0f, 0.0f);
-            health -= amount;
-        }
-    }
+    
 
     protected void HandleMouseMovement()
     {
-        if (attackCooledDown || (characterState == CharacterState.Run))
+        if (!attackCooledDown || (characterState == CharacterState.Run))
             return;
         if (mousePos.x > transform.position.x)
         {
@@ -144,21 +91,7 @@ public class CharacterController : MonoBehaviour
 
     }
 
-    public void AddHealth(float addedHealth)
-    {
-        if (health + addedHealth <= 100)
-        {
-            health += addedHealth;
-            healthBar.localScale += new Vector3(addedHealth * 55 / 100, 0.0f, 0.0f);
-
-        }
-        else
-        {
-            health = 100.0f;
-            healthBar.localScale = new Vector3(55, 10.5f, 1.0f);
-        }
-
-    }
+    
 
     protected void HandleState()
     {
@@ -173,7 +106,7 @@ public class CharacterController : MonoBehaviour
                 characterState = CharacterState.Fall;
             }
             
-            else if (!attackCooledDown)
+            else if (attackCooledDown )
             {
                 if (Input.GetAxis("Horizontal") == 0)
                 {
@@ -192,9 +125,9 @@ public class CharacterController : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         if (other.tag.Equals("ThrowUp"))
-            TakeDamage(0.1f);
+            healthController.TakeDamage(0.1f);
         else if (other.tag.Equals("Explosion"))
-            TakeDamage(0.2f);
+            healthController.TakeDamage(0.2f);
     }
 
 
@@ -202,7 +135,7 @@ public class CharacterController : MonoBehaviour
     protected bool IsGrounded()
     {
         float extraHeight = 0.1f;
-        RaycastHit2D raycastHit2D = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, extraHeight, platformLayerMask);
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, extraHeight, groundLayerMask);
         
         if (raycastHit2D.collider == null)
         {
@@ -216,5 +149,7 @@ public class CharacterController : MonoBehaviour
     {
         return characterState;
     }
+
+
    
 }

@@ -4769,6 +4769,7 @@ GameObject:
   - component: {fileID: 7460159184549026918}
   - component: {fileID: 1558034200193272440}
   - component: {fileID: -76352450077587577}
+  - component: {fileID: 1685932922950086731}
   m_Layer: 0
   m_Name: WizardCharacter
   m_TagString: Player
@@ -4919,14 +4920,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef5bced1d5a2ef49af9d2fdefd8f490, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  platformLayerMask:
+  groundLayerMask:
     serializedVersion: 2
     m_Bits: 1024
   characterState: 0
   attackCooledDown: 0
-  maxHealth: 0
-  healthBarScale: 0
   MagicSpell: {fileID: 8329985936185093679, guid: dad385ea5f7fe464c84c324cafe625ef,
     type: 3}
 --- !u!114 &1558034200193272440
@@ -4955,3 +4953,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 0}
   coin: {fileID: 0}
+--- !u!114 &1685932922950086731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7460159184549026844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d90fed4435d344b89c5d851c92f0d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthBar: {fileID: 0}
+  health: 0

@@ -12,10 +12,18 @@ public class GameManager : MonoBehaviour
     public GameObject inventory;
     public GameObject characterSelection;
     public GameObject archer, bandit, wizard;
+    public GameObject zombie, tankZombie;
+    public Transform zombieLeftSpawn, zombieRightSpawn;
     public Button archerButton, banditButton, wizardButton;
-    void Start()
+    HealthController kingHealthController;
+    private float enemySpawnTime = 3f;
+    [SerializeField]
+    private bool enemySpawnCooledDown = true;
+    void Awake()
     {
+
         Time.timeScale = 1;
+        kingHealthController = GameObject.FindGameObjectWithTag("King").GetComponent<HealthController>();
         archerButton.onClick.AddListener(delegate { InstantiateArcher(); });
         banditButton.onClick.AddListener(delegate { InstantiateBandit(); });
         wizardButton.onClick.AddListener(delegate { InstantiateWizard(); });
@@ -25,16 +33,24 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(IsSpawnCooledDown())
+            HandleNewEnemies();
+        IsGameOver();
+        HandleUI();
+    }
+
+    private void HandleUI()
+    {
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (paused)
             {
                 Time.timeScale = 1;
                 inventory.SetActive(false);
-                
+
             }
-            else 
-            { 
+            else
+            {
                 Time.timeScale = 0;
                 inventory.SetActive(true);
                 paused = true;
@@ -43,19 +59,37 @@ public class GameManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Tab))
         {
 
-            
-            if(!paused)
+
+            if (!paused)
             {
-                
+
 
                 DestroyImmediate(GameObject.FindGameObjectWithTag("Player"));
                 characterSelection.SetActive(true);
                 Time.timeScale = 0;
-                
+
                 paused = true;
             }
         }
     }
+
+    private void IsGameOver()
+    {
+        if (kingHealthController.GetHealth() < 0f)
+        {
+            if (!paused)
+            {
+
+
+                DestroyImmediate(GameObject.FindGameObjectWithTag("Player"));
+                characterSelection.SetActive(true);
+                Time.timeScale = 0;
+
+                paused = true;
+            }
+        }
+    }
+
     void InstantiateArcher()
     {
         Instantiate(archer,new Vector3(0, 0, 2), Quaternion.identity);
@@ -79,5 +113,51 @@ public class GameManager : MonoBehaviour
         characterSelection.SetActive(false);
         Time.timeScale = 1;
         paused = false;
+    }
+
+    void HandleNewEnemies()
+    {
+        int creationChance = Random.Range(0, 100);
+        if(creationChance >= 50)
+        {
+            int direction = Random.Range(0, 2);
+
+            if(direction == 0)
+            {
+                InstantiateNewEnemy(zombieLeftSpawn);
+            }
+            else
+            {
+                InstantiateNewEnemy(zombieRightSpawn);
+            }
+        }
+    }
+    void InstantiateNewEnemy(Transform spawnPoint)
+    {
+
+        int kind = Random.Range(0, 2);
+        if (kind == 0)
+        {
+            Instantiate(zombie, spawnPoint.position, spawnPoint.rotation);
+        }
+        else
+        {
+
+            Instantiate(tankZombie, spawnPoint.position, spawnPoint.rotation);
+        }
+        enemySpawnCooledDown = false;
+        StartCoroutine(HandleSpawnTimer());
+    }
+
+    IEnumerator HandleSpawnTimer()
+    {
+        yield return new WaitForSeconds(enemySpawnTime);
+        enemySpawnCooledDown = true;
+        yield break;
+    }
+
+   bool IsSpawnCooledDown()
+    {
+        return enemySpawnCooledDown;
     }
 }
