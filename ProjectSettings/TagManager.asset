@@ -17,6 +17,9 @@ TagManager:
   - NPC
   - Explosion
   - ThrowUp
+  - HealthBarPlayer
+  - King
+  - WallsTowers
   layers:
   - Default
   - TransparentFX
