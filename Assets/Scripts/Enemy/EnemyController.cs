@@ -18,6 +18,7 @@ public class EnemyController : ActorController
     protected bool lockedTarget = false, attackCooledDown = true;
     public float attackRate = 1.0f;
     private float nextAttackTime;
+    protected float distanceToEnemy;
 
     protected override void Update()
     {
@@ -87,7 +88,8 @@ public class EnemyController : ActorController
 
     protected GameObject SightCheck() // check for Player NPC and King
     {
-        GetComponent<CircleCollider2D>().enabled = false;
+        if (GetComponent<CircleCollider2D>() != null)
+            GetComponent<CircleCollider2D>().enabled = false;
         GameObject collider = null;
         List<RaycastHit2D> sighttest = new List<RaycastHit2D>();
         if (length < 0)
@@ -112,19 +114,23 @@ public class EnemyController : ActorController
                 {
 
                     collider = raycast.collider.gameObject;
+                    distanceToEnemy = raycast.distance;
                 }
                 else if (raycast.collider.tag == "WallsTowers" && raycast.distance < 10.0f)
                 {
                     collider = raycast.collider.gameObject;
+                    distanceToEnemy = raycast.distance;
                 }
                 else if (raycast.collider.tag == "King" && raycast.distance < 12.0f)
                 {
                     collider = raycast.collider.gameObject;
+                    distanceToEnemy = raycast.distance;
                 }
 
             }
         }
-        GetComponent<CircleCollider2D>().enabled = true;
+        if (GetComponent<CircleCollider2D>() != null)
+            GetComponent<CircleCollider2D>().enabled = true;
         return collider;
     }
 
@@ -227,6 +233,7 @@ public class EnemyController : ActorController
             TurnToAttacker(collidedObject);
             TakeDamage(damage);
         }
+        
 
     }
 
@@ -248,6 +255,7 @@ public class EnemyController : ActorController
             stopForAttack = false;
             charAnimator.SetBool("attack", false);
         }
+        
     }
     protected void OnCollisionStay2D(Collision2D collision)
     {

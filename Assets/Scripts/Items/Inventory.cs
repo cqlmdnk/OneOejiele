@@ -10,14 +10,18 @@ namespace Assets.ArcherChar
     public class Inventory 
     {
         private List<Item> items;
-        private int coinsack, arrowsack;
         public Inventory()
         {
             Items = new List<Item>();
+            AddItem(new Item { itemType = Item.ItemType.Apple, amount = 1 });
+            AddItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
+
+            AddItem(new Item { itemType = Item.ItemType.Cookie, amount = 1 });
+            AddItem(new Item { itemType = Item.ItemType.ManaPotion, amount = 1 });
+
         }
 
-        public int Coinsack { get => coinsack; set => coinsack = value; }
-        public int Arrowsack { get => arrowsack; set => arrowsack = value; }
+       
         public List<Item> Items { get => items; set => items = value; }
 
         public int GetSizeOfItems() { return Items.Count; }
@@ -25,9 +29,14 @@ namespace Assets.ArcherChar
         {
             Items.Add(item);
         }
+        
         public bool RemoveItem(Item item)
         {
             return Items.Remove(item);
+        }
+        public List<Item> GetItemList()
+        {
+            return items;
         }
     }
 }

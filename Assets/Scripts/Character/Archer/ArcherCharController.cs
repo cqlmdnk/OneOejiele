@@ -26,6 +26,7 @@ public class ArcherCharController : CharacterController
     protected override void Awake()
     {
         base.Awake();
+        characterState = CharacterState.Idle;
     }
 
     protected override void Update()
@@ -38,7 +39,6 @@ public class ArcherCharController : CharacterController
         HandleMeleeAttack();
         if(characterState == CharacterState.Run || characterState == CharacterState.Idle)
             HandleDashMechanic();
-        Debug.Log(characterState);
     }
     private void HandleMeleeAttack()
     {

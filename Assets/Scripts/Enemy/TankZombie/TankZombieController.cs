@@ -25,7 +25,7 @@ public class TankZombieController : EnemyController
     {
         base.Update();
         HandleThrowUp();
-        
+
 
     }
 
@@ -35,16 +35,27 @@ public class TankZombieController : EnemyController
 
     private void HandleThrowUp()
     {
-        if (UnityEngine.Random.Range(0, 100) < 1.0f && SightCheck() && particleTimer < 0)
+        bool enemySight = SightCheck();
+        if (distanceToEnemy < 4f && enemySight )
         {
-            throwUp.Play();
-            isParticlesAnimating = true;
-            particleTimer = 3.0f;
+            stopForAttack = true;
+            if (particleTimer < 0)
+            {
+                throwUp.Play();
+                isParticlesAnimating = true;
+                particleTimer = 5.0f;
+                stopForAttack = true;
+            }
+            else
+            {
+                particleTimer -= Time.deltaTime;
+            }
         }
-        else if (isParticlesAnimating)
+        else
         {
-            particleTimer -= Time.deltaTime;
+            stopForAttack = false;
         }
+        
     }
 
 

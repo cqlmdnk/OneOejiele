@@ -33,10 +33,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(IsSpawnCooledDown())
+        
+         if(IsSpawnCooledDown())
             HandleNewEnemies();
+         
         IsGameOver();
         HandleUI();
+        if (!paused)
+        {
+            GameObject.Find("CoinCount").GetComponent<CoinCounter>().enabled = true;
+        }
+    
     }
 
     private void HandleUI()
@@ -47,6 +54,7 @@ public class GameManager : MonoBehaviour
             {
                 Time.timeScale = 1;
                 inventory.SetActive(false);
+                paused = false;
 
             }
             else
@@ -118,7 +126,7 @@ public class GameManager : MonoBehaviour
     void HandleNewEnemies()
     {
         int creationChance = Random.Range(0, 100);
-        if(creationChance >= 50)
+        if(creationChance >= 95)
         {
             int direction = Random.Range(0, 2);
 

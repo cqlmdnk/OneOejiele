@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5846552594213719459}
   - component: {fileID: 5846552594213719463}
   - component: {fileID: 5846552594213719460}
-  - component: {fileID: 5846552594213719465}
   - component: {fileID: 5846552594213719462}
   m_Layer: 9
   m_Name: tankZombie
@@ -141,7 +140,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.020831436, y: -0.0073857605}
+  m_Offset: {x: 0.0066375732, y: 0.0020771027}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -152,24 +151,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2942794, y: 1.0252285}
+  m_Size: {x: 0.6822586, y: 1.299653}
   m_EdgeRadius: 0
---- !u!58 &5846552594213719465
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5846552594213719456}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.027716836, y: -0.1237247}
-  serializedVersion: 2
-  m_Radius: 0.23175061
 --- !u!114 &5846552594213719462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4086,7 +4069,7 @@ ParticleSystem:
     radiusScale: 0.01
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 1
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -8776,7 +8759,7 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 55
+      m_Bits: 1335
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5

@@ -9,13 +9,17 @@ public class InventoryController : MonoBehaviour
     // Start is called before the first frame update
     public Inventory inventory;
     public Text arrow, coin;
+
+    private UI_Inventory uiInventory;
     void Start()
     {
         inventory = new Inventory();
+        uiInventory = GameObject.Find("Inventory").GetComponent<UI_Inventory>();
+        uiInventory.SetInventory(inventory);
     }
 
     // Update is called once per frame
-    void Update()
+    void Awake()
     {
        //arrow.text = inventory.Arrowsack.ToString();
        //coin.text = inventory.Coinsack.ToString();
@@ -25,20 +29,21 @@ public class InventoryController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col) // all item capture from will be here
     {
-        if (col.gameObject.tag.Equals("Collectable"))
+        /*
+         if (col.gameObject.tag.Equals("Collectable"))
         {
 
             if (col.gameObject.name.Contains("Coin"))
             {
-                inventory.Coinsack++;
+                inventory.IncreaseCoin();
 
 
             }
             else if (col.gameObject.name.Contains("ArrowSack"))
             {
 
-                int arrowTaken = (int)UnityEngine.Random.Range(4.0f, 9.0f);
-                inventory.Arrowsack += arrowTaken;
+                
+                inventory.AddArrow();
 
             }
             else // if there are same kind items stack them
@@ -49,7 +54,7 @@ public class InventoryController : MonoBehaviour
                
             }
             Destroy(col.gameObject);
-        }
+        }*/
 
     }
 }

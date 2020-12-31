@@ -65,7 +65,6 @@ public class WizardAnimationController : MonoBehaviour
         charAnimator.ResetTrigger("attack2");
         charAnimator.SetBool("dash", false);
         charAnimator.SetBool("fall", false);
-        charAnimator.SetBool("onAir", false);
 
     }
 

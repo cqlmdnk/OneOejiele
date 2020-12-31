@@ -12,7 +12,6 @@ public class CharacterController : ActorController
     
     [SerializeField]
     private     LayerMask        groundLayerMask;
-    [SerializeField] 
     protected   bool             attackCooledDown = true;
     protected   Vector3          mousePos;
     

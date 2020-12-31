@@ -7,21 +7,39 @@ using UnityEngine;
 
 namespace Assets.ArcherChar
 {
-    public class Item : MonoBehaviour
+    public class Item 
     {
-        private Sprite sprite;
-        private int iteid = 0, price = 0;
-        private KeyValuePair<string, int> value;
+        public enum ItemType
+        {
+            Arrow,
+            HealthPotion,
+            ManaPotion,
+            Coin,
+            Cookie,
+            Apple
+        }
 
+        public Sprite GetSprite()
+        {
+            switch (itemType)
+            {
+                
+                case ItemType.HealthPotion:
+                    return ItemAssets.Instance.healtPoitonSprite;
+                case ItemType.ManaPotion:
+                    return ItemAssets.Instance.manaPotionSprite;
+                case ItemType.Cookie:
+                    return ItemAssets.Instance.coinSprite; 
+                case ItemType.Apple:
+                    return ItemAssets.Instance.appleSprite;
+               
+            }
+            return null;
+        }
 
-       
-        public int Iteid { get => iteid; set => iteid = value; }
-        public Sprite Sprite { get => sprite; set => sprite = value; }
-    
-        public int Price { get => price; set => price = value; }
-        public KeyValuePair<string, int> Value { get => value; set => this.value = value; }
-
-        
+        public ItemType itemType;
+        public int amount;
+        /*
         private void Init(Sprite sprite,  int iteid = 0, int price = 0, KeyValuePair<string, int> value = default)
         {
             this.sprite = sprite;
@@ -53,7 +71,7 @@ namespace Assets.ArcherChar
             {
                 Init(sprite,  6, 25, new KeyValuePair<string, int>("MANA",35));
             }
-        }
+        }*/
 
 
     }

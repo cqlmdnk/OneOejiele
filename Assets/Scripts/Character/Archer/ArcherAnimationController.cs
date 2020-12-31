@@ -62,7 +62,6 @@ public class ArcherAnimationController : MonoBehaviour
         charAnimator.ResetTrigger("attack");
         charAnimator.SetBool("dash", false);
         charAnimator.SetBool("melee", false);
-        charAnimator.SetBool("onAir", false);
 
     }
 }
